@@ -1,4 +1,4 @@
-// 南京大学学位论文模板 modern-nju-thesis
+// 西安电子科技大学学位论文模板 modern-nju-thesis
 // Author: https://github.com/OrangeX4
 // Repo: https://github.com/nju-lug/modern-nju-thesis
 // 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
@@ -44,7 +44,7 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
+    title: ("基于 Typst 的", "西安电子科技大学学位论文"),
     title-en: "NJU Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
@@ -70,7 +70,7 @@
     clc: "O643.12",
     udc: "544.4",
     secret-level: "公开",
-    supervisor-contact: "南京大学 江苏省南京市栖霞区仙林大道163号",
+    supervisor-contact: "西安电子科技大学 江苏省南京市栖霞区仙林大道163号",
     email: "xyz@smail.nju.edu.cn",
     school-code: "10284",
     degree: auto,

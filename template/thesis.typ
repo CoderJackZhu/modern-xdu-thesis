@@ -4,7 +4,7 @@
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
 
 #let (
-  // 布局函数
+  // // // // 布局函数
   twoside, doc, preface, mainmatter, mainmatter-end, appendix,
   // 页面函数
   fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
@@ -24,7 +24,7 @@
     author: "张三",
     author-en: "Ming Xing",
     department: "某学院",
-    department-en: "School of Chemistry and Chemical Engineering",
+    department-en: "School of Artificial Intelligence",
     major: "某专业",
     major-en: "Chemistry",
     supervisor: ("李四", "教授"),
