@@ -13,9 +13,9 @@ Typst是一种新的排版标记语言，由rust编写，比latex性能优异，
 在 VS Code 中安装 Tinymist Typst 和 Typst Preview 插件。前者负责语法高亮和错误检查等功能，后者负责预览。
 也推荐下载 Typst Companion 插件，其提供了例如 Ctrl + B 进行加粗等便捷的快捷键。
 你还可以下载我开发的 Typst Sync 和 Typst Sympy Calculator 插件，前者提供了本地包的云同步功能，后者提供了基于 Typst 语法的科学计算器功能。
-按下 Ctrl + Shift + P 打开命令界面，输入 Typst: Show available Typst templates (gallery) for picking up a template 打开 Tinymist 提供的 Template Gallery，然后从里面找到 modern-nju-thesis，点击 ❤ 按钮进行收藏，以及点击 + 号，就可以创建对应的论文模板了。
-最后用 VS Code 打开生成的目录，打开 template文件夹下的thesis.typ 文件，并按下 Ctrl + K V 进行实时编辑和预览。
 
+最后用 VS Code 打开生成的目录，打开 template文件夹下的thesis.typ 文件，并按下 Ctrl + K V 进行实时编辑和预览。
+<!--  -->
 本科生和研究生的毕业论文都支持，在thesis.typ下按照要求更改选项即可，所有内容都在一个文件下了，语法简洁方便修改。
 
 学习 Typst 需要多久？
