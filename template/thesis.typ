@@ -1,4 +1,4 @@
-#import "@preview/modern-nju-thesis:0.4.0": documentclass
+#import "../lib.typ": documentclass
 
 // 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
@@ -8,7 +8,7 @@
   twoside, doc, preface, mainmatter, appendix,
   // 页面函数
   fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
-  outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
+  outline-page, list-of-figures, list-of-tables, notation, acknowledgement
 ) = documentclass(
   doctype: "master",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为硕士生 master
 degree: "professional",  // "academic" | "professional", 学位类型，默认为专业型 professional
@@ -156,7 +156,7 @@ degree: "professional",  // "academic" | "professional", 学位类型，默认�
 ]))
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  image("images/xidian-logo.jpg", width: 20%),
   caption: [图片测试],
 ) <nju-logo>
 
@@ -240,6 +240,6 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
 #figure(
-  image("images/nju-emblem.svg", width: 20%),
+  image("images/xidian-text.jpg", width: 100%),
   caption: [图片测试],
 ) <appendix-img>

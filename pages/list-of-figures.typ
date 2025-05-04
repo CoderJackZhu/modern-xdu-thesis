@@ -1,5 +1,6 @@
 #import "@preview/i-figured:0.2.4"
 #import "../utils/invisible-heading.typ": invisible-heading
+#import "../utils/double-underline.typ": double-underline, double-underline-full
 #import "../utils/style.typ": 字号, 字体
 
 // 表格目录生成
@@ -8,7 +9,7 @@
   twoside: false,
   fonts: (:),
   // 其他参数
-  title: "插图目录",
+  title: "插图索引",
   outlined: false,
   title-vspace: 32pt,
   title-text-args: auto,
@@ -18,6 +19,8 @@
   // 垂直间距
   above: 14pt,
   below: 14pt,
+  leading: 1.27em,
+  spacing: 1.27em,
   ..args,
 ) = {
   // 1.  默认参数
@@ -33,15 +36,23 @@
   // 2.  正式渲染
   pagebreak(weak: true, to: if twoside { "odd" })
 
-  // 默认显示的字体
-  set text(font: font, size: size)
+  [
+    // #set text(font: fonts.楷体, size: 字号.四号)
+    #set par(leading: leading, spacing: spacing,justify: true)
 
-  {
-    set align(center)
-    text(..title-text-args, title)
     // 标记一个不可见的标题用于目录生成
-    invisible-heading(level: 1, outlined: outlined, title)
-  }
+    #invisible-heading(level: 1, outlined: outlined, title)
+
+    #align(center)[
+      #set text(font: fonts.楷体,size: 字号.小二, weight: "bold")
+
+      #v(8pt)
+
+      #double-underline-full("插图索引")
+
+      #v(-5pt)
+    ]
+  ]
 
   v(title-vspace)
 

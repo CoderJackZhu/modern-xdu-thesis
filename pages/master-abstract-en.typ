@@ -89,31 +89,12 @@
 
       #v(8pt)
 
-      #double-underline((if not anonymous { "南京大学" }) + "研究生毕业论文英文摘要首页用纸")
+      #double-underline(if not anonymous { "ABSTRACT" })
 
       #v(-5pt)
     ]
 
-    #gridx(
-      columns: (56pt, auto, auto, 1fr),
-      inset: grid-inset,
-      column-gutter: column-gutter,
-      row-gutter: row-gutter,
-      info-key[#pin("title-en")THESIS:], colspanx(3, info-value("", " ")),
-      colspanx(4, info-value("", " ")),
-      colspanx(3, info-key[SPECIALIZATION:]), info-value("major-en", info.major-en),
-      colspanx(3, info-key[POSTGRADUATE:]), info-value("author-en", info.author-en),
-      colspanx(2, info-key[MENTOR:]), colspanx(2, info-value("supervisor-en", info.supervisor-en + if info.supervisor-ii-en != "" { h(1em) + info.supervisor-ii-en })),
-    )
-
-    // 用了很 hack 的方法来实现不规则表格长标题换行...
-    #pinit-place("title-en", {
-      set text(font: fonts.楷体, size: 字号.四号)
-      set par(leading: 1.3em)
-      h(58pt) + (("",)+ info.title-en).intersperse(" ").sum()
-    })
-
-    #v(3pt)
+    
 
     #align(center, text(font: fonts.黑体, size: 字号.小三, weight: abstract-title-weight, "ABSTRACT"))
 

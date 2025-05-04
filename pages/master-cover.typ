@@ -20,7 +20,10 @@
   info-key-width: 86pt,
   info-column-gutter: 18pt,
   info-row-gutter: 12pt,
-  meta-block-inset: (left: -15pt),
+  //左上角
+  meta-block-inset-left: (left: -15pt,  top: 0pt),
+  //右上角
+  meta-block-inset-right: (left: 325pt, right: -400pt, top: 0pt),
   meta-info-inset: (x: 0pt, bottom: 2pt),
   meta-info-key-width: 35pt,
   meta-info-column-gutter: 10pt,
@@ -35,16 +38,6 @@
 ) = {
   // 1.  默认参数
   fonts = 字体 + fonts
-  info = (
-    title: ("基于 Typst 的", "南京大学学位论文"),
-    grade: "20XX",
-    student-id: "1234567890",
-    author: "张三",
-    department: "某学院",
-    major: "某专业",
-    supervisor: ("李四", "教授"),
-    submit-date: datetime.today(),
-  ) + info
 
   // 2.  对参数进行处理
   // 2.1 如果是字符串，则使用换行符将标题分隔为列表
@@ -128,7 +121,7 @@
   // 4.  正式渲染
   pagebreak(weak: true, to: if twoside { "odd" })
 
-  block(width: 70pt, inset: meta-block-inset, grid(
+  block(width: 70pt, inset: meta-block-inset-left, grid(
     columns: (meta-info-key-width, 1fr),
     column-gutter: meta-info-column-gutter,
     row-gutter: meta-info-row-gutter,
@@ -136,10 +129,15 @@
     meta-info-value("school-code", info.school-code),
     meta-info-key("分类号"),
     meta-info-value("clc", info.clc),
+  ))
+
+    block(width: 70pt, inset: meta-block-inset-right, grid(
+    columns: (meta-info-key-width, 1fr), 
+    //右对齐
+    column-gutter: meta-info-column-gutter,
+    row-gutter: meta-info-row-gutter,
     meta-info-key("密级"),
     meta-info-value("secret-level", info.secret-level),
-    meta-info-key("UDC"),
-    meta-info-value("udc", info.udc),
     meta-info-key("学号"),
     meta-info-value("student-id", info.student-id),
   ))
@@ -151,48 +149,52 @@
   if anonymous {
     v(70pt)
   } else {
-    // 封面图标
     
-    v(100pt)
+  text(size: 28pt, font: fonts.宋体, spacing: 200%, weight: "bold",
+    { "西安电子科技大学"}
+  )
+    
+    v(30pt)
   }
 
   // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
-  text(size: 28pt, font: fonts.宋体, spacing: 200%, weight: "bold",
+  text(size: 24pt, font: fonts.宋体,
     if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" },
   )
   
   if anonymous {
     v(132pt)
   } else {
-    v(30pt)
+    v(100pt)
   }
 
+  text(size: 24pt, font: fonts.宋体, spacing: 200%, weight: "bold",
+    { info.title.intersperse("\n").sum() }
+  )
+
+  v(30pt)
+  
   block(width: 294pt, grid(
     columns: (info-key-width, 1fr),
     column-gutter: info-column-gutter,
     row-gutter: info-row-gutter,
-    info-key("论文题目"),
-    ..info.title.map((s) => info-value("title", s)).intersperse(info-key("　")),
+    
     info-key("作者姓名"),
     info-value("author", info.author),
     ..(if degree == "professional" {(
       {
         set text(font: fonts.楷体, size: 字号.三号, weight: "bold")
-        move(dy: 0.3em, scale(x: 55%, box(width: 10em, "专业学位类别（领域）")))
+        info-key("领域")
       },
-      info-value("major", info.degree + "（" + info.major + "）"),
+      info-value("domain", info.domain ),
     )} else {(
       info-key("专业名称"),
       info-value("major", info.major),
     )}),
-    info-key("研究方向"),
-    info-value("field", info.field),
-    info-key("导师姓名"),
+    info-key("学校导师姓名、职称："),
     info-value("supervisor", info.supervisor.intersperse(" ").sum()),
-    ..(if info.supervisor-ii != () {(
-      info-key("　"),
-      info-value("supervisor-ii", info.supervisor-ii.intersperse(" ").sum()),
-    )} else { () })
+    info-key("企业导师姓名、职称："),
+    info-value("supervisor", info.supervisor.intersperse(" ").sum()),
   ))
 
   v(50pt)
@@ -282,7 +284,7 @@
   v(46pt)
 
   if not anonymous {
-    image("../assets/vi/nju-emblem.svg", width: 2.14cm)
+    [Xidian University]
   }
 
   v(28pt)

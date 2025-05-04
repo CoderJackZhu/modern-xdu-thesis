@@ -8,13 +8,9 @@
 #import "layouts/mainmatter.typ": mainmatter
 #import "layouts/appendix.typ": appendix
 #import "pages/fonts-display-page.typ": fonts-display-page
-#import "pages/bachelor-cover.typ": bachelor-cover
 #import "pages/master-cover.typ": master-cover
-#import "pages/bachelor-decl-page.typ": bachelor-decl-page
 #import "pages/master-decl-page.typ": master-decl-page
-#import "pages/bachelor-abstract.typ": bachelor-abstract
 #import "pages/master-abstract.typ": master-abstract
-#import "pages/bachelor-abstract-en.typ": bachelor-abstract-en
 #import "pages/master-abstract-en.typ": master-abstract-en
 #import "pages/bachelor-outline-page.typ": bachelor-outline-page
 #import "pages/list-of-figures.typ": list-of-figures
@@ -46,8 +42,8 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
-    clc = {TP75}, //中图分类号
-    title: ("基于 Typst 的", "西安电子科技大学学位论文"),
+    clc : {"TP75"}, //中图分类号
+    title: ("基于 Typst 的西安电子科技大学学位论文"),
     title-en: "XDU Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
@@ -70,7 +66,6 @@
     bottom-date: datetime.today(),
     chairman: "某某某 教授",
     reviewer: ("某某某 教授", "某某某 教授"),
-    clc: "O643.12",
     udc: "544.4",
     secret-level: "公开",
     supervisor-contact: "南京大学 江苏省南京市栖霞区仙林大道163号",
@@ -265,9 +260,11 @@
         ..args,
       )
     },
+
     //略缩词表页
-    loa: (..args) => {
-      loa(
+    acknowledgement: (..args) => {
+      acknowledgement(
+        anonymous: anonymous,
         twoside: twoside,
         ..args,
       )
@@ -282,8 +279,8 @@
     },
 
     // 致谢页
-    acknowledgement: (..args) => {
-      acknowledgement(
+    loa: (..args) => {
+      loa(
         anonymous: anonymous,
         twoside: twoside,
         ..args,

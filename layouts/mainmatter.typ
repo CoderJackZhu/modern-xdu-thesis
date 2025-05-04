@@ -17,7 +17,7 @@
   // 正文字体与字号参数
   text-args: auto,
   // 标题字体与字号
-  heading-font: auto,
+  heading-font: ("SimHei","SimSun","SimSun"),
   heading-size: (字号.四号,),
   heading-weight: ("regular",),
   heading-above: (2 * 15.6pt - 0.7em, 2 * 15.6pt - 0.7em),
