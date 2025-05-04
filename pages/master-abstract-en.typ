@@ -1,6 +1,5 @@
-#import "@preview/pinit:0.1.3": pin, pinit-place
+#import "@preview/pinit:0.2.2": pin, pinit-place
 #import "../utils/style.typ": 字号, 字体
-#import "../utils/indent.typ": fake-par
 #import "../utils/double-underline.typ": double-underline
 #import "../utils/custom-tablex.typ": gridx, colspanx
 #import "../utils/invisible-heading.typ": invisible-heading
@@ -66,7 +65,7 @@
         font: fonts.楷体,
         size: 字号.四号,
         bottom-edge: "descender",
-        if (anonymous and (key in anonymous-info-keys)) {
+        if anonymous and (key in anonymous-info-keys) {
           "█████"
         } else {
           body
@@ -79,19 +78,18 @@
   pagebreak(weak: true, to: if twoside { "odd" })
 
   [
-    #set text(font: fonts.楷体, size: 字号.四号)
-    #set par(leading: leading, justify: true)
-    #show par: set block(spacing: spacing)
+    
+    #set par(leading: leading, spacing: spacing,justify: true)
 
     // 标记一个不可见的标题用于目录生成
     #invisible-heading(level: 1, outlined: outlined, outline-title)
 
     #align(center)[
-      #set text(size: 字号.小二, weight: "bold")
+      #set text(font: fonts.楷体,size: 字号.小二, weight: "bold")
 
       #v(8pt)
 
-      #double-underline((if not anonymous { "西安电子科技大学" }) + "研究生毕业论文英文摘要首页用纸")
+      #double-underline((if not anonymous { "南京大学" }) + "研究生毕业论文英文摘要首页用纸")
 
       #v(-5pt)
     ]
@@ -121,18 +119,18 @@
 
     #v(-5pt)
 
-    #set text(font: fonts.楷体, size: 字号.小四)
+    
 
-    #[
-      #set par(first-line-indent: 2em)
+    #[#set text(font: fonts.楷体, size: 字号.小四)
+      #set par(first-line-indent: (amount: 2em, all: true))
 
-      #fake-par
-      
       #body
     ]
 
     #v(10pt)
 
-    KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
+    #[#set text(font: fonts.楷体, size: 字号.小四)
+      KEYWORDS: #(("",)+ keywords.intersperse("; ")).sum()
+      ]
   ]
 }

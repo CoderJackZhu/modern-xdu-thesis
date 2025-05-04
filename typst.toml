@@ -1,16 +1,17 @@
 [package]
-name = "XDUthesis-typst"
-version = "0.3.4"
+name = "XDUthesis-Typst"
+version = "0.4.0"
 entrypoint = "lib.typ"
 authors = ["OrangeX4"]
 license = "MIT"
-description = "西安电子科技大学硕士学位论文Typst模板"
+description = "西安电子科技大学学位论文模板。"
 repository = "https://github.com/CoderJackZhu/XDUthesis-Typst"
 keywords = ["Xidian University", "thesis"]
 categories = ["thesis"]
 exclude = ["imgs"]
+compiler = "0.13.0"
 
 [template]
 path = "template"
-entrypoint = "master-proposal.typ"
+entrypoint = "thesis.typ"
 thumbnail = "thumbnail.png"

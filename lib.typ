@@ -1,9 +1,8 @@
-// 西安电子科技大学学位论文模板 modern-nju-thesis
+// 南京大学学位论文模板 modern-nju-thesis
 // Author: https://github.com/OrangeX4
 // Repo: https://github.com/nju-lug/modern-nju-thesis
 // 在线模板可能不会更新得很及时，如果需要最新版本，请关注 Repo
 
-#import "@preview/anti-matter:0.0.2": anti-inner-end as mainmatter-end
 #import "layouts/doc.typ": doc
 #import "layouts/preface.typ": preface
 #import "layouts/mainmatter.typ": mainmatter
@@ -22,18 +21,21 @@
 #import "pages/list-of-tables.typ": list-of-tables
 #import "pages/notation.typ": notation
 #import "pages/acknowledgement.typ": acknowledgement
+#import "pages/loa.typ": loa
+#import "pages/bio.typ": bio
 #import "utils/custom-cuti.typ": *
 #import "utils/bilingual-bibliography.typ": bilingual-bibliography
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": heading-display, active-heading, current-heading
-#import "utils/indent.typ": indent, fake-par
 #import "@preview/i-figured:0.2.4": show-figure, show-equation
 #import "utils/style.typ": 字体, 字号
 
+#let indent = h(2em)
+
 // 使用函数闭包特性，通过 `documentclass` 函数类进行全局信息配置，然后暴露出拥有了全局配置的、具体的 `layouts` 和 `templates` 内部函数。
 #let documentclass(
-  doctype: "bachelor",  // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为本科生 bachelor
-  degree: "academic",  // "academic" | "professional"，学位类型，默认为学术型 academic
+  doctype: "master",  // "bachelor" | "master" | "doctor" | "postdoc"，文档类型，默认为硕士研究生master
+  degree: "professional",  // "academic" | "professional"，学位类型，默认为专业型 professional
   nl-cover: false,  // TODO: 是否使用国家图书馆封面，默认关闭
   twoside: false,  // 双面模式，会加入空白页，便于打印
   anonymous: false,  // 盲审模式
@@ -44,8 +46,9 @@
   // 默认参数
   fonts = 字体 + fonts
   info = (
+    clc = {TP75}, //中图分类号
     title: ("基于 Typst 的", "西安电子科技大学学位论文"),
-    title-en: "NJU Thesis Template for Typst",
+    title-en: "XDU Thesis Template for Typst",
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -70,14 +73,14 @@
     clc: "O643.12",
     udc: "544.4",
     secret-level: "公开",
-    supervisor-contact: "西安电子科技大学 江苏省南京市栖霞区仙林大道163号",
+    supervisor-contact: "南京大学 江苏省南京市栖霞区仙林大道163号",
     email: "xyz@smail.nju.edu.cn",
     school-code: "10284",
     degree: auto,
     degree-en: auto,
   ) + info
 
-  (
+  return (
     // 将传入参数再导出
     doctype: doctype,
     degree: degree,
@@ -114,11 +117,6 @@
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       }
-    },
-    mainmatter-end: (..args) => {
-      mainmatter-end(
-        ..args,
-      )
     },
     appendix: (..args) => {
       appendix(
@@ -182,7 +180,7 @@
         )
       }
     },
-    
+
     // 中文摘要页，通过 type 分发到不同函数
     abstract: (..args) => {
       if doctype == "master" or doctype == "doctor" {
@@ -267,6 +265,13 @@
         ..args,
       )
     },
+    //略缩词表页
+    loa: (..args) => {
+      loa(
+        twoside: twoside,
+        ..args,
+      )
+    },
 
     // 参考文献页
     bilingual-bibliography: (..args) => {
@@ -284,5 +289,14 @@
         ..args,
       )
     },
+    // 个人简介页
+    bio: (..args) => {
+      bio(
+        anonymous: anonymous,
+        twoside: twoside,
+        ..args,
+      )
+    },
+
   )
 }

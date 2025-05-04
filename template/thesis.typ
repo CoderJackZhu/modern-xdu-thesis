@@ -1,22 +1,27 @@
-#import "../lib.typ": documentclass, indent
+#import "@preview/modern-nju-thesis:0.4.0": documentclass
 
-// 你首先应该安装 https://github.com/CoderJackZhu/XDUthesis-Typst/tree/main/fonts/FangZheng 里的所有字体，
+// 你首先应该安装 https://github.com/nju-lug/modern-nju-thesis/tree/main/fonts/FangZheng 里的所有字体，
 // 如果是 Web App 上编辑，你应该手动上传这些字体文件，否则不能正常使用「楷体」和「仿宋」，导致显示错误。
 
 #let (
-  // // // // 布局函数
-  twoside, doc, preface, mainmatter, mainmatter-end, appendix,
+  // 布局函数
+  twoside, doc, preface, mainmatter, appendix,
   // 页面函数
   fonts-display-page, cover, decl-page, abstract, abstract-en, bilingual-bibliography,
   outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
 ) = documentclass(
-  doctype: "master",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为本科生 bachelor
-  // degree: "academic",  // "academic" | "professional", 学位类型，默认为学术型 academic
+  doctype: "master",  // "bachelor" | "master" | "doctor" | "postdoc", 文档类型，默认为硕士生 master
+degree: "professional",  // "academic" | "professional", 学位类型，默认为专业型 professional
   // anonymous: true,  // 盲审模式
   twoside: true,  // 双面模式，会加入空白页，便于打印
-  // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
-  // fonts: (楷体: ("Times New Roman", "FZKai-Z03S")),
+  // 你会发现 Typst 有许多警告，这是因为 modern-nju-thesis 加入了很多不必要的 fallback 字体
+  // 你可以自定义字体消除警告，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
+  // fonts: (楷体: (name: "Times New Roman", covers: "latin-in-cjk"), "FZKai-Z03S")),
   info: (
+    clc : {"TP75"}, //中图分类号
+    degree : {"电子信息硕士"},
+    degree-en: {"Master of Electronic Information"},
+    domain : {"人工智能"},
     title: ("基于 Typst 的", "西安电子科技大学学位论文"),
     title-en: "My Title in English",
     grade: "20XX",
@@ -24,11 +29,15 @@
     author: "张三",
     author-en: "Ming Xing",
     department: "某学院",
-    department-en: "School of Artificial Intelligence",
+    department-en: "School of Chemistry and Chemical Engineering",
     major: "某专业",
     major-en: "Chemistry",
     supervisor: ("李四", "教授"),
     supervisor-en: "Professor My Supervisor",
+    supv-ent : {"校外导师"},
+    supv-ent-en : {"Professor My outsider"},
+    supv-ent-title : {"高级工程师"}, // 职称
+    supv-ent-title-en : {"Senior Engineer"},
     // supervisor-ii: ("王五", "副教授"),
     // supervisor-ii-en: "Professor My Supervisor",
     submit-date: datetime.today(),
@@ -67,24 +76,30 @@
   English abstract
 ]
 
+// 插图目录
+#list-of-figures()
+
+// 表格目录
+#list-of-tables()
+
+// 符号表
+#notation[
+  / DFT: 密度泛函理论 (Density functional theory)
+  / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
+]
+
+// 略缩词表
+// #loa()
 
 // 目录
 #outline-page()
 
-// 插图目录
-// #list-of-figures()
 
-// 表格目录
-// #list-of-tables()
 
 // 正文
 #show: mainmatter
 
-// 符号表
-// #notation[
-//   / DFT: 密度泛函理论 (Density functional theory)
-//   / DMRG: 密度矩阵重正化群密度矩阵重正化群密度矩阵重正化群 (Density-Matrix Reformation-Group)
-// ]
+
 
 = 导　论
 
@@ -111,7 +126,7 @@
 
 == 图表
 
-引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:xdu-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
+引用@tbl:timing，引用@tbl:timing-tlt，以及@fig:nju-logo。引用图表时，表格和图片分别需要加上 `tbl:`和`fig:` 前缀才能正常显示编号。
 
 #align(center, (stack(dir: ltr)[
   #figure(
@@ -141,9 +156,9 @@
 ]))
 
 #figure(
-  image("images/xidian-logo.jpg", width: 20%),
+  image("images/nju-emblem.svg", width: 20%),
   caption: [图片测试],
-) <xdu-logo>
+) <nju-logo>
 
 
 == 数学公式
@@ -204,6 +219,9 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
   感谢 NJU-LUG，感谢 NJUThesis LaTeX 模板。
 ]
 
+// // 作者个人简介
+// #bio()
+
 // 手动分页
 #if twoside {
   pagebreak() + " "
@@ -222,11 +240,6 @@ $ F_n = floor(1 / sqrt(5) phi.alt^n) $
 附录内容，这里也可以加入图片，例如@fig:appendix-img。
 
 #figure(
-  image("images/xidian-logo.jpg", width: 20%),
+  image("images/nju-emblem.svg", width: 20%),
   caption: [图片测试],
 ) <appendix-img>
-
-
-// 正文结束标志，不可缺少
-// 这里放在附录后面，使得页码能正确计数
-#mainmatter-end()

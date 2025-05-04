@@ -36,7 +36,7 @@
   // 1.  默认参数
   fonts = 字体 + fonts
   info = (
-    title: ("基于 Typst 的", "西安电子科技大学学位论文"),
+    title: ("基于 Typst 的", "南京大学学位论文"),
     grade: "20XX",
     student-id: "1234567890",
     author: "张三",
@@ -69,8 +69,8 @@
     info.bottom-date = datetime-display(info.bottom-date)
   }
   // 2.4 处理 degree
-  if (info.degree == auto) {
-    if (doctype == "doctor") {
+  if info.degree == auto {
+    if doctype == "doctor" {
       info.degree = "工程博士"
     } else {
       info.degree = "工程硕士"
@@ -102,7 +102,7 @@
         font: if is-meta { fonts.宋体 } else { fonts.楷体 },
         size: if is-meta { 字号.小五 } else { 字号.三号 },
         bottom-edge: "descender",
-        if (anonymous and (key in anonymous-info-keys)) {
+        if anonymous and (key in anonymous-info-keys) {
           if is-meta { "█████" } else { "██████████" }
         } else {
           body
@@ -112,7 +112,7 @@
   }
 
   let anonymous-text(key, body) = {
-    if (anonymous and (key in anonymous-info-keys)) {
+    if anonymous and (key in anonymous-info-keys) {
       "██████████"
     } else {
       body
@@ -148,15 +148,12 @@
   set align(center)
 
   // 匿名化处理去掉封面标识
-  if (anonymous) {
+  if anonymous {
     v(70pt)
   } else {
     // 封面图标
-    v(6pt)
-    image("../assets/vi/xidian-logo.jpg", width: 1.42cm)
-    // 调整一下左边的间距
-    pad(image("../assets/vi/xidian-text.jpg", width: 4cm))
-    v(34pt)
+    
+    v(100pt)
   }
 
   // 将中文之间的空格间隙从 0.25 em 调整到 0.5 em
@@ -164,7 +161,7 @@
     if doctype == "doctor" { "博 士 学 位 论 文" } else { "硕 士 学 位 论 文" },
   )
   
-  if (anonymous) {
+  if anonymous {
     v(132pt)
   } else {
     v(30pt)
@@ -266,7 +263,7 @@
 
   [
     A dissertation submitted to  \
-    the graduate school of #(if not anonymous { "Xidian University" })  \
+    the graduate school of #(if not anonymous { "Nanjing University" })  \
     in partial fulfilment of the requirements for the degree of  \
   ]
 
@@ -285,7 +282,7 @@
   v(46pt)
 
   if not anonymous {
-    image("../assets/vi/xidian-logo.jpg", width: 2.14cm)
+    image("../assets/vi/nju-emblem.svg", width: 2.14cm)
   }
 
   v(28pt)
@@ -295,7 +292,7 @@
   v(2pt)
 
   if not anonymous {
-    [Xidian University]
+    [Nanjing University]
   }
 
   v(28pt)

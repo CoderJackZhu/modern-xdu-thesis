@@ -11,7 +11,7 @@
 
   v(5em)
 
-  image("../assets/vi/xidian-logo.jpg", width: 7cm)
+  image("master-proposal-logo.png", width: 7cm)
 
   v(2em)
 
