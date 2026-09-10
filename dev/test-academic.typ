@@ -5,7 +5,7 @@
 // 正文 / 索引 / 后置部分不按 degree 分支，两档共用同一段代码。
 // 西安电子科技大学硕士学位论文 — 示例论文
 //
-// 本文件由 `typst init @preview/xdu-master-thesis` 复制而来，**不需要仓库里的其他文件**。
+// 本文件由 `typst init @preview/modern-xdu-thesis` 复制而来，**不需要仓库里的其他文件**。
 // 按 `@preview` 引用包（而不是相对路径）是 Typst 模板的硬性要求：
 // `typst init` 只复制 template/ 目录，任何 `../` 引用都会越界报错
 // `path would escape the project root`。

@@ -4,7 +4,7 @@
 版式依据研究生院《研究生学位论文模板》与配套《撰写要求》逐项校准，支持**学术学位 / 专业学位**
 与**盲审模式**，开箱即可写出可送审的 PDF。
 
-![预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/xdu-master-thesis/main/docs/images/preview.png)
+![预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview.png)
 
 ## 特性
 
@@ -44,17 +44,17 @@
 ## 快速开始
 
 ```bash
-git clone https://github.com/CoderJackZhu/xdu-master-thesis
-cd xdu-master-thesis
+git clone https://github.com/CoderJackZhu/modern-xdu-thesis
+cd modern-xdu-thesis
 bash dev/pkg-stage.sh                          # 把本仓库注册为本地 Typst 包，只需运行一次
 typst compile --root . template/thesis.typ out.pdf
 ```
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
-`@preview/xdu-master-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，
+`@preview/modern-xdu-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，
 解除用 `bash dev/pkg-stage.sh --remove`。
 
-模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/xdu-master-thesis:0.1.0`，
+模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/modern-xdu-thesis:0.1.0`，
 请按上面的方式克隆使用。
 
 ## 配置论文信息
