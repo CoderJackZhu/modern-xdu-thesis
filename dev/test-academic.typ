@@ -1,3 +1,8 @@
+// 测试：**完整的学术学位（academic）文档**，用于验收学位分支。
+// 专硕档是 template/thesis.typ；本档 = 同一份内容跑 academic 分支：
+//   封面字段 3 行（作者姓名 / 指导教师姓名、职称 / 申请学位类别），
+//   无企业导师，中英文题名页的学位名称不同。
+// 正文 / 索引 / 后置部分不按 degree 分支，两档共用同一段代码。
 // 西安电子科技大学硕士学位论文 — 示例论文
 //
 // 本文件由 `typst init @preview/xdu-master-thesis` 复制而来，**不需要仓库里的其他文件**。
@@ -9,7 +14,7 @@
 // 全篇只需 宋体 / 黑体 / Times New Roman 三种，详见 README「字体要求」。
 // Windows 自带 SimSun / SimHei / Times New Roman；macOS 用 Songti SC / Heiti SC。
 
-#import "@preview/xdu-master-thesis:0.1.0": documentclass
+#import "../lib.typ": documentclass
 
 #let (
   doc,
@@ -17,7 +22,7 @@
   list-of-figures, list-of-tables, notation, abbreviations, outline-page,
   mainmatter, appendix, references, acknowledgement, bio, 引用, 索引题注,
 ) = documentclass(
-  degree: "professional",   // "academic" 学术学位 | "professional" 专业学位
+  degree: "academic",       // 学术学位（本档专测这条分支）
   blind: false,             // 盲审模式
   info: (
     // ---- 题目 ----
@@ -37,15 +42,15 @@
     domain-en: "Artificial Intelligence",
 
     // ---- 学位 ----
-    degree-name: "电子信息硕士",
-    degree-name-en: "Master of Electronic Information",
+    degree-name: "工学硕士",
+    degree-name-en: "Master of Engineering",
 
     // ---- 导师 ----
     supervisor: ("李四", "教授"),
     supervisor-en: ("Li Si", "Professor"),
     // 企业导师仅专业学位使用；学术学位留 (none, none)
-    enterprise-supervisor: ("王五", "高级工程师"),
-    enterprise-supervisor-en: ("Wang Wu", "Senior Engineer"),
+    enterprise-supervisor: (none, none),
+    enterprise-supervisor-en: (none, none),
 
     // ---- 学院 / 日期 ----
     department: "电子工程学院",
