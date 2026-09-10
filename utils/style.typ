@@ -1,3 +1,13 @@
+// 西安电子科技大学硕士学位论文 Typst 模板 — 字号 / 字体常量
+//
+// 依据：docs/格式规格.md §1 / §2.2、docs/版式实现.md §7.2
+// - 字号表沿用 P1 之前的命名（与官方 Word「磅 / 号」对齐）
+// - 字体表只保留 宋体 / 黑体 / Times New Roman 三种（格式规格 §2.2 字体要求）
+//   不再包含 楷体 / 仿宋 / Arial —— 官方模板正文 0 次出现，无使用场景
+
+// ============================================================
+// 1. 字号（与 Word 中文排版字号体系一致，Typst 直接用 pt）
+// ============================================================
 #let 字号 = (
   初号: 42pt,
   小初: 36pt,
@@ -18,18 +28,27 @@
   小七: 5pt,
 )
 
+// ============================================================
+// 2. 字体（系统字体优先 + 完整回退链，不内置任何字体文件）
+// ============================================================
+// 官方学位论文全篇只需：
+//   宋体（衬线） / 黑体（无衬线） / Times New Roman（西文）
+// - 黑体的西文也用 TNR（格式规格 §2.2 已裁定）
+// - macOS 上无 SimSun/SimHei，按回退链自动落到 Songti SC / Heiti SC
+// - Linux 上落 Noto CJK / Source Han；Typst 找不到时进入 fallback
+//
+// 注：回退链里按平台概率排序：macOS > Windows > Linux 开源
 #let 字体 = (
-  // 宋体，属于「有衬线字体」，一般可以等同于英文中的 Serif Font
-  // 这一行分别是「新罗马体（有衬线英文字体）」、「思源宋体（简体）」、「思源宋体」、「宋体（Windows）」、「宋体（MacOS）」
-  宋体: ((name: "Times New Roman", covers: "latin-in-cjk"), "Source Han Serif SC", "Source Han Serif", "Noto Serif CJK SC", "SimSun", "Songti SC", "STSongti"),
-  // 黑体，属于「无衬线字体」，一般可以等同于英文中的 Sans Serif Font
-  // 这一行分别是「Arial（无衬线英文字体）」、「思源黑体（简体）」、「思源黑体」、「黑体（Windows）」、「黑体（MacOS）」
-  黑体: ((name: "Arial", covers: "latin-in-cjk"), "Source Han Sans SC", "Source Han Sans", "Noto Sans CJK SC", "SimHei", "Heiti SC", "STHeiti"),
-  // 楷体
-  楷体: ((name: "Times New Roman", covers: "latin-in-cjk"), "KaiTi", "Kaiti SC", "STKaiti", "FZKai-Z03S"),
-  // 仿宋
-  仿宋: ((name: "Times New Roman", covers: "latin-in-cjk"), "FangSong", "FangSong SC", "STFangSong", "FZFangSong-Z02S"),
-  // 等宽字体，用于代码块环境，一般可以等同于英文中的 Monospaced Font
-  // 这一行分别是「Courier New（Windows 等宽英文字体）」、「思源等宽黑体（简体）」、「思源等宽黑体」、「黑体（Windows）」、「黑体（MacOS）」
-  等宽: ((name: "Courier New", covers: "latin-in-cjk"), (name: "Menlo", covers: "latin-in-cjk"), (name: "IBM Plex Mono", covers: "latin-in-cjk"), "Source Han Sans HW SC", "Source Han Sans HW", "Noto Sans Mono CJK SC", "SimHei", "Heiti SC", "STHeiti"),
+  宋体: (
+    (name: "Times New Roman", covers: "latin-in-cjk"),
+    "Songti SC", "STSong", "Songti TC",
+    "SimSun", "NSimSun",
+    "Source Han Serif SC", "Noto Serif CJK SC",
+  ),
+  黑体: (
+    (name: "Times New Roman", covers: "latin-in-cjk"),
+    "Heiti SC", "STHeiti", "Heiti TC",
+    "SimHei",
+    "Source Han Sans SC", "Noto Sans CJK SC",
+  ),
 )
