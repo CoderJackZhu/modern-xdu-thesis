@@ -3,12 +3,17 @@
 用 [Typst](https://typst.app) 排版西安电子科技大学本科毕业设计（论文）与硕士学位论文（中文撰写）。
 本科与硕士使用独立实现入口并放在同一个包中；`typst init` 的默认模板仍为硕士。
 
-![预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview.png)
+**本模板不是学校官方发布**，版式数值以官方文件与实物论文实测为准；与官方模板存在差异的地方
+逐条列在[「与官方模板的差异」](#与官方模板的差异)。
+
+| 硕士（学术 / 专业学位） | 本科毕业设计（论文） |
+|---|---|
+| ![硕士预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview.png) | ![本科预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview-bachelor.png) |
 
 ## 特性
 
 - **本科与硕士独立版式**：本科使用 150 × 247mm 版心、1.5 倍行距、页眉外侧页码与 0.75 磅单线；硕士保留 155 × 240.93mm 版心、固定 20 磅行距、页脚页码与双横线。
-- **实物论文压力测试**：硕士 112 页、本科 55 页的总页数、章起始页与参考文献数量均与源论文一致。
+- **实物论文压力测试**：硕士 112 页、本科 55 页；两篇的章起始页、参考文献数量与行距均与源论文一致（本科的分页在转换脚本补页后对齐，说明见验收报告）。
 - **学术学位 / 专业学位**：一个参数切换，差异只在封面与题名页的字段。
 - **盲审模式**：一个开关隐去封面、题名页与作者简介中的身份信息。
 - **图表公式自动编号**：按章编号（图 2.1 / 表 2.1 / 式 (2-1)），插图索引、表格索引、
@@ -43,20 +48,37 @@
 
 ## 快速开始
 
+包已提交 Typst Universe（[typst/packages#5822](https://github.com/typst/packages/pull/5822)），
+**发布后一条命令即可创建项目**：
+
+```bash
+typst init @preview/modern-xdu-thesis:0.2.0 my-thesis   # 硕士（默认模板）
+cd my-thesis && typst compile thesis.typ                # 编译出 PDF
+```
+
+本科没有 `[template]` 入口（一个包只能声明一份默认模板，已留给硕士），
+把 [`examples/bachelor-thesis.typ`](examples/bachelor-thesis.typ) 复制到自己的项目后编译即可。
+
+发布前（或想直接用仓库里的开发版）：
+
 ```bash
 git clone https://github.com/CoderJackZhu/modern-xdu-thesis
 cd modern-xdu-thesis
 bash dev/pkg-stage.sh                          # 把本仓库注册为本地 Typst 包，只需运行一次
-typst compile --root . template/thesis.typ out.pdf             # 硕士默认模板
+typst compile --root . template/thesis.typ out.pdf               # 硕士默认模板
 typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立示例
 ```
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
-`@preview/modern-xdu-thesis:0.2.0` 才能解析到当前工作区。脚本可重复运行，
-解除用 `bash dev/pkg-stage.sh --remove`。
+`@preview/modern-xdu-thesis:0.2.0` 才能解析到当前工作区。脚本可重复运行，解除用
+`bash dev/pkg-stage.sh --remove`。
 
-模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/modern-xdu-thesis:0.2.0`，
-请按上面的方式克隆使用。
+### 在线编辑（typst.app）
+
+把项目上传到 [Typst Web App](https://typst.app) 即可在线编辑、多人协作，不必安装任何东西。
+**但 Web App 没有本机字体**：需要把宋体、黑体、Times New Roman 的字体文件一并上传到项目里
+（Windows 在 `C:\Windows\Fonts`，macOS 在 `/System/Library/Fonts` 与 `/Library/Fonts`），
+否则正文会显示成方框（豆腐块）。字体有版权，仅供自己项目内使用。
 
 ### 本科独立入口
 
@@ -84,6 +106,17 @@ typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立�
   ),
 )
 ```
+
+`info` 字段与硕士基本对应，本科特有的三项：
+
+| 字段 | 说明 |
+|---|---|
+| `title` | 题目，多行写成数组 `("第一行", "第二行")`，居中排在封面横线上 |
+| `class-id` / `student-id` | 班级 / 学号，排在封面右上角 |
+| `supervisor` | 导师，可写两人 `("李四", "王五")` |
+
+其余字段（`author`、`department`、`major`、`abstract`、`abstract-en`、`keywords`、
+`keywords-en`）与硕士含义相同。`cover-enabled: false` 时封面整页不输出，可插入学院提供的封面。
 
 本科正文一级标题只写 `= 引言`，模板自动生成“第一章 引言”；附录连续调用
 `appendix(...)`，会生成“附录 A / B / C”及图 A1、表 B2、式 (C-3)。
@@ -293,6 +326,8 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 | 封面与声明 | 官方 LaTeX 模板有两代实现（2024.04 与新版重写版），本模板采用 2024.04 版与 Word 2025.01 版 |
 | 符号对照表字号 | 本模板 12pt；参考论文为 10.5pt，官方示例未包含此页 |
 | 附录页 | 官方示例与参考论文均无附录页，其坐标按其它后置部分推导 |
+| 本科封面素材 | 校名书法字与校徽在官方封面里是图形（无文字层），本模板按实测坐标以图片随包分发，版权归学校；`cover-enabled: false` 时不引用 |
+| 本科压力测试分页 | 转换脚本为对齐分页骨架补过填充页（Pandoc 丢失复杂表格所致），故「55 页一致」证明的是骨架可对齐；版式数值另有反向测量独立核验（见 `docs/本科验收报告.md`） |
 
 ## 目录结构
 
@@ -327,6 +362,10 @@ docs/            格式规格（权威来源、冲突裁定、硬约束）、各
 - [xduts](https://github.com/note286/xduts) —— 官方 LaTeX 模板
 - [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) —— 本模板的初始骨架（MIT）
 
-## License
+## 反馈与许可
 
-MIT
+排版问题、版式差异请走 [Issues](https://github.com/CoderJackZhu/modern-xdu-thesis/issues)。
+报版式差异时请附上官方文件或实物论文的对应页 —— 本项目所有版式结论都以可测量的证据为准。
+
+代码以 MIT 许可发布。本科封面使用的校名书法字与校徽是学校标识，版权归学校，仅随封面组件
+分发（`cover-enabled: false` 时不引用）；在其它场合使用请另行获得授权。
