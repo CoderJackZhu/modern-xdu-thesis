@@ -26,6 +26,10 @@ cd "$REPO"
 
 OFFICIAL_PDF="${OFFICIAL_PDF:-$HOME/xdu-thesis-official/templet.pdf}"
 STRESS_SRC="${STRESS_SRC:-$HOME/xdu-thesis-stress}"
+UNDERGRAD_STRESS_SRC="${UNDERGRAD_STRESS_SRC:-$HOME/BachelorThesis}"
+UNDERGRAD_REFERENCE="${UNDERGRAD_REFERENCE:-$UNDERGRAD_STRESS_SRC/main.pdf}"
+UNDERGRAD_HANDBOOK="${UNDERGRAD_HANDBOOK:-$HOME/.hermes/assets/xdu-thesis-official/undergrad/jwc-handbook-2019.pdf}"
+UNDERGRAD_WORD="${UNDERGRAD_WORD:-$HOME/.hermes/assets/xdu-thesis-official/undergrad/official-word-template.doc}"
 export OFFICIAL_PDF
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -48,7 +52,8 @@ sec "1) 编译所有入口"
 ENTRIES=(
   template/thesis.typ dev/test-all.typ dev/test-academic.typ dev/test-index.typ
   dev/test-body.typ dev/test-backmatter.typ dev/test-blind.typ dev/test-bib.typ
-  dev/test-official-body.typ dev/stress/thesis.typ
+  dev/test-official-body.typ dev/stress/thesis.typ dev/test-bachelor.typ
+  examples/bachelor-thesis.typ
 )
 for f in "${ENTRIES[@]}"; do compile_one "$f" "$TMP/$(basename "$f").pdf" || true; done
 
@@ -87,6 +92,32 @@ else
   echo "  P5 逐行对照      : 跳过（缺官方 templet.pdf）"
 fi
 
+sec "2b) 本科版式验收"
+if typst compile --root . dev/test-bachelor.typ "$TMP/undergrad.pdf" >/dev/null 2>&1 \
+    && python3 dev/verify-undergrad.py "$TMP/undergrad.pdf" >/dev/null 2>&1; then
+  ok "本科示例 PDF 版式通过"
+else
+  bad "本科示例 PDF 版式失败"
+fi
+if [ -f "$UNDERGRAD_REFERENCE" ]; then
+  if python3 dev/verify-undergrad.py "$UNDERGRAD_REFERENCE" --reference >/dev/null 2>&1; then
+    ok "本科验收尺在 55 页实物论文上自检通过"
+  else
+    bad "本科验收尺未通过实物论文自检"
+  fi
+else
+  echo "  跳过实物论文自检（未找到 $UNDERGRAD_REFERENCE）"
+fi
+if bash dev/test-undergrad-negative.sh >/dev/null 2>&1; then
+  ok "本科验收负向测试通过"
+else
+  bad "本科验收负向测试失败"
+fi
+[ -f "$UNDERGRAD_HANDBOOK" ] \
+  && echo "  官方手册：已找到" || echo "  官方手册：未找到（$UNDERGRAD_HANDBOOK）"
+[ -f "$UNDERGRAD_WORD" ] \
+  && echo "  官方 Word 样例：已找到" || echo "  官方 Word 样例：未找到（$UNDERGRAD_WORD）"
+
 sec "3) 压力测试（真实 112 页论文）"
 if [ -d "$STRESS_SRC" ] && [ -f "$STRESS_SRC/main.pdf" ]; then
   python3 dev/stress/port.py "$STRESS_SRC" dev/stress >/dev/null 2>&1
@@ -100,6 +131,24 @@ PY
   fi
 else
   echo "  跳过（未找到 $STRESS_SRC，可用 STRESS_SRC=… 指定）"
+fi
+
+sec "3b) 压力测试（真实 55 页本科论文）"
+if [ -d "$UNDERGRAD_STRESS_SRC" ] && [ -f "$UNDERGRAD_STRESS_SRC/main.pdf" ]; then
+  UG_OUT="$TMP/undergrad-stress"
+  if python3 dev/undergrad/port.py "$UNDERGRAD_STRESS_SRC" "$UG_OUT" >/dev/null 2>&1; then
+    cp dev/undergrad/stress.typ "$UG_OUT/thesis.typ"
+    if typst compile --root "$UG_OUT" "$UG_OUT/thesis.typ" "$UG_OUT/thesis.pdf" >/dev/null 2>&1 \
+        && python3 dev/verify-undergrad.py "$UG_OUT/thesis.pdf" --stress >/dev/null 2>&1; then
+      ok "本科 55 页压力测试通过（章起始页与 27 条文献一致）"
+    else
+      bad "本科 55 页压力测试编译或验收失败"
+    fi
+  else
+    bad "本科压力测试 LaTeX → Typst 转换失败"
+  fi
+else
+  echo "  跳过（未找到 $UNDERGRAD_STRESS_SRC，可用 UNDERGRAD_STRESS_SRC=… 指定）"
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
@@ -116,6 +165,12 @@ if typst init @preview/modern-xdu-thesis:0.1.0 "$TMP/init" >/dev/null 2>&1; then
   if [ "$CNT" -le 6 ]; then ok "产物自包含（$CNT 个文件）"; else bad "产物混入库文件（$CNT 个）"; fi
 else
   bad "typst init 失败"
+fi
+cp examples/bachelor-thesis.typ "$TMP/bachelor-thesis.typ"
+if typst compile --root "$TMP" "$TMP/bachelor-thesis.typ" "$TMP/bachelor-out.pdf" >/dev/null 2>&1; then
+  ok "本科独立入口可在包外编译"
+else
+  bad "本科独立入口包外编译失败"
 fi
 
 sec "汇总"

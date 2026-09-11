@@ -10,6 +10,8 @@
 #import "utils/style.typ": 字号, 字体
 #import "utils/counters.typ": 索引题注
 #import "utils/bilingual-bib.typ": 双语文献
+// 本科实现保留独立文件入口；这里只导出模块命名空间，不接入任何硕士版式路径。
+#import "bachelor.typ" as bachelor
 #import "layouts/doc.typ": doc
 #import "pages/cover.typ": cover
 #import "pages/title-cn.typ": title-cn

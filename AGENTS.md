@@ -1,7 +1,8 @@
-# AGENTS.md — 西安电子科技大学硕士学位论文 Typst 模板
+# AGENTS.md — 西安电子科技大学毕业设计（论文）Typst 模板
 
 本文件是本仓库的开发与验收规约，供在本仓库工作的人或工具参考。
-格式数值的完整出处见 [docs/格式规格.md](docs/格式规格.md)，本文件只做路由和铁律。
+硕士格式数值只认 [docs/格式规格.md](docs/格式规格.md)，本科格式数值只认
+[docs/本科规格.md](docs/本科规格.md)。
 
 ## 先读这个
 
@@ -14,16 +15,15 @@
 
 ## 项目现状
 
-用 Typst 排版西电硕士学位论文（学术学位 / 专业学位），目标是输出可直接送审的 PDF。
+用 Typst 排版西电本科毕业设计（论文）与硕士学位论文，目标是输出可直接送审的 PDF。
 
 - 包名 `modern-xdu-thesis`，仓库 <https://github.com/CoderJackZhu/modern-xdu-thesis>
-- 已提交 Typst Universe（`typst/packages` 的 PR #5818，审核中）
-- 示例论文 `template/thesis.typ` 输出 33 页（6 个前置页面 + 5 个索引类页面 + 正文两章 +
-  附录 / 参考文献 / 致谢 / 作者简介），支持 `blind: true` 盲审模式
+- `lib.typ` 是硕士入口；`bachelor.typ` 是本科实现入口，`lib.typ` 仅导出 `bachelor` 模块命名空间
+- `typst.toml` 的 `[template]` 保持硕士 `template/thesis.typ`；本科完整示例在 `examples/bachelor-thesis.typ`
+- 硕士支持学术/专业学位与盲审；本科支持可开关封面、中英文摘要、目录、正文、附录、参考文献与致谢
 
-验收分两层：与官方 `templet.pdf` 逐项对照（各部分 0 不合格）；用一份**已通过学校格式检查的
-112 页真实论文**压测（总页数 112 = 112、章起始页一致、参考文献 96 条逐条一致），
-见 [docs/压力测试报告.md](docs/压力测试报告.md)。
+硕士用 112 页论文压测；本科用 55 页论文压测。两者总页数、章起始页与参考文献数量均与源论文一致。
+本科测量与限制见 [docs/本科验收报告.md](docs/本科验收报告.md)。
 
 **改动后先跑 `bash dev/check-all.sh`。**
 
@@ -33,7 +33,8 @@
 
 ## 单源真值（最重要的一条）
 
-**所有格式数值只认 [docs/格式规格.md](docs/格式规格.md) 的冲突裁定表与硬约束表。**
+**硕士格式数值只认 [格式规格](docs/格式规格.md)，本科格式数值只认
+[本科规格](docs/本科规格.md)；两套实现不得互相套用数值。**
 
 - 不得凭记忆、推测或「网上常见做法」填写任何字号 / 间距 / 页边距。
 - 不得直接照抄上游 NJU 代码的数值。
@@ -57,7 +58,8 @@
 | [docs/压力测试报告.md](docs/压力测试报告.md) | 用 112 页真实论文压模板的结果与发现的问题 |
 | [写作要求.md](写作要求.md) | 官方要求对照表 + 提交前自查清单（面向使用者） |
 | [docs/实现笔记.md](docs/实现笔记.md) | Typst 层面的坑与验证过的写法（实现新页面前必读） |
-| [docs/本科规格.md](docs/本科规格.md) | **本科版式规格（尚未实现）**：数值均标注来源 |
+| [docs/本科规格.md](docs/本科规格.md) | 本科版式规格与每项数值来源 |
+| [docs/本科验收报告.md](docs/本科验收报告.md) | 本科 PDF 反向测量、55 页压测、负向测试与已知限制 |
 | [docs/本科实现任务书.md](docs/本科实现任务书.md) | 本科模块的实现任务书（自包含，可直接交给实现者） |
 | [docs/本科模块调研.md](docs/本科模块调研.md) | 本科模块的可行性调研、材料清单、许可盘点 |
 | `dev/` | 验收与维护工具（不进发布包，`typst.toml` 已 exclude） |
@@ -65,8 +67,7 @@
 
 ### 验收工具
 
-**改完模板先跑这一条**，它把下面所有检查串起来（编译 10 个入口 + 各部分验收 +
-压力测试 + 分发验收），末尾打印通过/失败汇总：
+**改完模板先跑这一条**，它把硕士回归、本科版式与负向测试、两份真实论文压力测试和分发验收串起来：
 
 ```bash
 bash dev/check-all.sh
@@ -78,7 +79,10 @@ bash dev/check-all.sh
 python3 dev/verify-front.py <pdf> --degree <professional|academic>   # 前置部分纵向
 python3 dev/verify-front-x.py <pdf> <professional|academic>          # 前置部分横向
 python3 dev/verify-index.py <pdf>                                    # 索引类页面
-python3 dev/verify-body.py <pdf>                                     # 正文与后置部分
+python3 dev/verify-body.py <pdf>                                     # 硕士正文与后置部分
+python3 dev/verify-undergrad.py <pdf>                                # 本科版式
+python3 dev/verify-undergrad.py <55页源pdf> --reference               # 本科验收尺自检
+bash dev/test-undergrad-negative.sh                                  # 本科负向测试
 python3 dev/compare-pages.py <官方pdf> <本模板pdf> <输出目录>          # 逐页并排对照图
 python3 dev/compare-lines.py <官方pdf> <本模板pdf> <起始页> --map=…   # 逐行版式对照
 ```
