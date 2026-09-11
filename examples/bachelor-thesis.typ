@@ -4,7 +4,7 @@
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   appendix, acknowledgement, references, 引用) = bachelor.documentclass(
   info: (
-    title: ("基于深度学习的城市交通流量预测", "算法研究"),
+    title: ("基于深度学习的城市交通流量预测", "方法研究"),
     author: "张三",
     department: "电子工程学院",
     major: "电子信息工程",
@@ -12,18 +12,19 @@
     class-id: "2101011",
     student-id: "21010100001",
     abstract: [
-      基于深度学习的城市交通流量预测是人工智能领域的重要研究课题，其目的在于设计智能算法预测视频中
-      发生的人体动作类别，使计算机能够理解人的行为。本文围绕交通流量预测模型展开研究，分析模型
-      的基本原理、实现方法和实验结果，并总结后续可以改进的方向。本段用于演示本科模板的摘要
-      版式，实际使用时应替换为不少于三百字的真实摘要内容。
+      城市交通流量预测是智能交通系统的基础问题之一，其目标是依据历史观测数据推断未来一段时间
+      内的路段流量，为信号配时、出行诱导和路网调度提供依据。本文以某城市的线圈检测数据为对象，
+      构建了融合时间卷积与注意力机制的预测模型，并通过对比实验分析了不同输入窗口和损失函数
+      对预测精度的影响。本文用于演示本科模板的摘要版式，实际使用时应替换为不少于三百字的
+      真实摘要内容。
     ],
     abstract-en: [
-      Video-based human action recognition is an important research topic in artificial
-      intelligence. Replace this sample with the complete English abstract when writing
-      the thesis.
+      Urban traffic flow prediction is a fundamental problem in intelligent transportation
+      systems. Replace this sample with the complete English abstract when writing the
+      thesis.
     ],
     keywords: ("交通流量预测", "时空序列建模", "注意力机制"),
-    keywords-en: ("action recognition", "3D convolution", "attention mechanism"),
+    keywords-en: ("traffic flow prediction", "spatio-temporal modeling", "attention mechanism"),
     acknowledgement: [感谢导师在本科毕业设计期间给予的指导和帮助。],
   ),
 )
@@ -43,14 +44,15 @@
 
 = 引言
 
-== 研究目的及意义
+== 研究背景与意义
 
-目前我们处于信息快速增长的时代，视频已经成为重要的信息载体。交通流量预测是视频理解的
-基础任务，在智能安防、人机交互和智能家居等领域具有应用价值。
+城市路网的通行状态受通勤、天气与节假日等因素影响，具有明显的周期性与突发性。交通流量
+预测是智能交通系统的基础任务，在信号配时、出行诱导和路网调度等场景中具有应用价值。
 
 === 国内外研究现状
 
-传统方法依赖手工特征，深度学习方法可以自动学习视频中的时空特征#引用(1)。
+早期方法多依赖时间序列模型或统计学习模型，难以刻画路网的空间相关性；近年基于深度学习的
+方法可以同时学习时间依赖与空间结构#引用(1)。
 
 = 方法与实验
 

@@ -23,7 +23,7 @@
   degree: "professional",
   blind: false,
   info: (
-    title: ("复杂场景下的图像分析", "与理解"),
+    title: ("复杂场景下的图像分析与理解", "方法研究"),
     title-en: ("Key Technologies for Controllable Multimodal Generation",
                "and Their Application to Interior Scenes"),
     author: "张三", author-en: "Zhang San",

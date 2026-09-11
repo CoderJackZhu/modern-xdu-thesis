@@ -4,7 +4,7 @@
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   acknowledgement, references) = bachelor.documentclass(
   info: (
-    title: ("基于深度学习的城市交通流量预测", "算法研究"),
+    title: ("基于深度学习的城市交通流量预测", "方法研究"),
     department: "电子工程学院",
     major: "电子信息工程",
     author: "张三",
@@ -14,7 +14,7 @@
     abstract: include "abstract-zh.typ",
     abstract-en: include "abstract-en.typ",
     keywords: ("交通流量预测", "时空序列建模", "残差网络", "注意力机制", "Non-Local 模型"),
-    keywords-en: ("Action Recognition", "I3D", "ResNet", "Attentional Mechanisms", "Non-Local model"),
+    keywords-en: ("Traffic Flow Prediction", "I3D", "ResNet", "Attentional Mechanisms", "Non-Local model"),
     acknowledgement: include "acknowledgements.typ",
   ),
 )
