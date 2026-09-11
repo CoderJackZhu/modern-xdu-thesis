@@ -42,7 +42,7 @@
     department: "电子工程学院", department-en: "School of Artificial Intelligence",
     submit-date: (year: 2025, month: 6),
 
-    school-code: "10701", clc: "TP18", student-id: "22171214772", secret-level: "公开",
+    school-code: "10701", clc: "TP18", student-id: "20220000000", secret-level: "公开",
 
     abstract: include "abstract-zh.typ",
     abstract-en: include "abstract-en.typ",
