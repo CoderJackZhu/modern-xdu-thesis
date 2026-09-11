@@ -115,7 +115,7 @@ typst compile --root . dev/stress/thesis.typ /tmp/stress.pdf
    它复制的是**磁盘内容**，不是 git 里的内容 —— 所以 `.gitignore` 拦不住残留文件（实测
    `template/thesis.pdf` 这类编译产物会被原样发给用户）。**动过 `template/` 前后都要
    `ls template/`**，确认只有示例论文和它的素材（现为 `thesis.typ` + `ref.bib`）。
-   改完必须实测：`bash dev/pkg-stage.sh && typst init @preview/modern-xdu-thesis:0.1.0 /tmp/t
+   改完必须实测：`bash dev/pkg-stage.sh && typst init @preview/modern-xdu-thesis:0.2.0 /tmp/t
    && cd /tmp/t && typst compile thesis.typ` —— 初始化目录 2 个文件、能编译出 33 页才算通过。
 6. **中文文档。** 新增注释与文档用中文，与现有风格一致。
 7. **不擅自改元数据。** 包名 / 版本 / 作者 / 许可由人决定。改动需同步三处：
@@ -132,10 +132,10 @@ bash dev/pkg-stage.sh                               # 首次必跑：把仓库�
 typst compile --root . template/thesis.typ out.pdf   # --root . 仍需要
 ```
 
-**为什么必须先挂软链**：`template/thesis.typ` 用 `@preview/modern-xdu-thesis:0.1.0` 引用包，
+**为什么必须先挂软链**：`template/thesis.typ` 用 `@preview/modern-xdu-thesis:0.2.0` 引用包，
 不用 `../lib.typ`。因为 `typst init` 只复制 `template/` 目录，相对引用会让初始化出来的项目报
 `path would escape the project root`（已实测）。挂上软链后，`typst compile --root . template/thesis.typ`
-与 `typst init @preview/modern-xdu-thesis:0.1.0 <dir>` 都不需要额外参数。
+与 `typst init @preview/modern-xdu-thesis:0.2.0 <dir>` 都不需要额外参数。
 
 - **不需要 `--font-path`**：模板不内置字体，按系统字体解析（见格式规格 §2.2）。
 - `unknown font family: simsun / source han serif sc` 的警告是**预期行为** —— 回退链里本机没有的

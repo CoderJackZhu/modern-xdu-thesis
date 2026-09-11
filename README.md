@@ -52,10 +52,10 @@ typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立�
 ```
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
-`@preview/modern-xdu-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，
+`@preview/modern-xdu-thesis:0.2.0` 才能解析到当前工作区。脚本可重复运行，
 解除用 `bash dev/pkg-stage.sh --remove`。
 
-模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/modern-xdu-thesis:0.1.0`，
+模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/modern-xdu-thesis:0.2.0`，
 请按上面的方式克隆使用。
 
 ### 本科独立入口
@@ -64,7 +64,7 @@ typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立�
 `bachelor` 模块进入，完整文件见 `examples/bachelor-thesis.typ`：
 
 ```typ
-#import "@preview/modern-xdu-thesis:0.1.0": bachelor
+#import "@preview/modern-xdu-thesis:0.2.0": bachelor
 
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   appendix, references, acknowledgement) = bachelor.documentclass(

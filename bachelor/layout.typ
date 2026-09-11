@@ -4,6 +4,7 @@
 // 本科与硕士的页面几何、行距、页眉页码均不同，本文件不得导入 layouts/ 下的硕士版式。
 
 #import "../utils/style.typ": 字体
+#import "../utils/counters.typ": 汉字序
 
 #let 纸张宽 = 210mm
 #let 纸张高 = 297mm
@@ -28,10 +29,6 @@
 #let 附录号 = counter("xdu-bachelor-appendix")
 #let 前置编号开始 = state("xdu-bachelor-front-numbering", false)
 
-#let 汉字序 = (
-  "一", "二", "三", "四", "五", "六", "七", "八", "九", "十",
-  "十一", "十二", "十三", "十四", "十五", "十六", "十七", "十八", "十九", "二十",
-)
 #let 章序(n) = 汉字序.at(n - 1, default: str(n))
 #let 附录序(n) = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".clusters().at(n - 1, default: str(n))
 

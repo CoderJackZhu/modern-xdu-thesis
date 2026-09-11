@@ -152,10 +152,10 @@ else
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
-PKG="$HOME/Library/Application Support/typst/packages/preview/modern-xdu-thesis/0.1.0"
-[ -e "$PKG" ] || PKG="$HOME/.local/share/typst/packages/preview/modern-xdu-thesis/0.1.0"
+PKG="$HOME/Library/Application Support/typst/packages/preview/modern-xdu-thesis/0.2.0"
+[ -e "$PKG" ] || PKG="$HOME/.local/share/typst/packages/preview/modern-xdu-thesis/0.2.0"
 [ -e "$PKG" ] || bash dev/pkg-stage.sh >/dev/null 2>&1
-if typst init @preview/modern-xdu-thesis:0.1.0 "$TMP/init" >/dev/null 2>&1; then
+if typst init @preview/modern-xdu-thesis:0.2.0 "$TMP/init" >/dev/null 2>&1; then
   CNT=$(find "$TMP/init" -type f | wc -l | tr -d ' ')
   if typst compile "$TMP/init/thesis.typ" "$TMP/init/out.pdf" 2>&1 | grep -q '^error'; then
     bad "typst init 产物编译失败"

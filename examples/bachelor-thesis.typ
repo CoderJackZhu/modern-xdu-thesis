@@ -1,5 +1,5 @@
 // 西安电子科技大学本科毕业设计（论文）完整示例
-#import "@preview/modern-xdu-thesis:0.1.0": bachelor
+#import "@preview/modern-xdu-thesis:0.2.0": bachelor
 
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   appendix, acknowledgement, references, 引用) = bachelor.documentclass(
