@@ -72,10 +72,12 @@ def main(source: Path, output: Path) -> None:
     output.mkdir(parents=True, exist_ok=True)
     keys = bib_keys(source / "references.bib")
     body = clean(pandoc(source / "chapter" / "Chapters.tex"), keys)
-    # Pandoc 丢掉复杂表格和浮动体的占位高度。按源论文已知章起始页补回 4 个页面，
-    # 使压力测试仍能核对 1/7/19/27/41 的分页骨架；正文行距与版心另由 verify-undergrad.py 实测。
-    for chapter in ("时空序列建模", "总结和展望"):
-        body = body.replace(f"= {chapter}", f"#pagebreak()\n#pagebreak()\n\n= {chapter}", 1)
+    # Pandoc 丢掉复杂表格和浮动体的占位高度，需按源论文的章起始页补回页面，
+    # 使压力测试仍能核对 1/7/19/27/41 的分页骨架。目标章按出现顺序取
+    # （对应源论文的第 3、5 章），不写死章标题；正文行距与版心另由 verify-undergrad.py 实测。
+    heads = [line for line in body.split("\n") if line.startswith("= ")]
+    for chapter in [heads[i] for i in (2, 4) if i < len(heads)]:
+        body = body.replace(chapter, "#pagebreak()\n#pagebreak()\n\n" + chapter, 1)
     (output / "body.typ").write_text(body)
 
     for source_name, target_name in (
