@@ -4,7 +4,7 @@
 !docs/source/**/*.pdf
 
 # 字体不入库 —— 官方模板只需系统字体（宋体/黑体/Times New Roman）
-# 详见 PLAN.md §2.2 字体要求
+# 详见 docs/格式规格.md §2.2 字体要求
 fonts/
 
 # macOS
