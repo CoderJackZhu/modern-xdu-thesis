@@ -1,6 +1,6 @@
 // 压力测试：把一份真实的 112 页硕士论文（专业学位）用本模板重排
 //
-// 源：github.com/未公开的硕士论文仓库 —— 已通过学校格式检查的成品
+// 源：一份已通过学校格式检查的硕士学位论文（未公开）
 // 生成方式：`python3 dev/stress/port.py <源仓库> dev/stress`（正文）
 //           `python3 dev/stress/front-data.py <源chapter> dev/stress/front-data.typ`（前置数据）
 //

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""把 未公开的本科论文仓库 转成本科模板的全尺寸压力测试输入。"""
+"""把一份真实本科论文仓库转成本科模板的全尺寸压力测试输入。"""
 
 from __future__ import annotations
 

@@ -357,7 +357,6 @@ docs/            格式规格（权威来源、冲突裁定、硬约束）、各
 ## 参考资料
 
 - 西安电子科技大学《毕业设计手册》2019 与教务处优秀毕业设计（论文）Word 样例
-- [未公开的本科论文仓库](（未公开）) —— 55 页本科实物论文压力测试基准（MIT）
 - 西安电子科技大学研究生院《研究生学位论文模板（2015 年修订版）2025.01 修订》及配套《撰写要求》
 - [xduts](https://github.com/note286/xduts) —— 官方 LaTeX 模板
 - [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) —— 本模板的初始骨架（MIT）

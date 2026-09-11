@@ -11,8 +11,7 @@ export OFFICIAL_PDF="$HOME/xdu-thesis-official/templet.pdf"
 # 硕士真实论文仓库目录 —— 压力测试用，需含 main.pdf 与 LaTeX 源码
 export STRESS_SRC="$HOME/xdu-thesis-stress"
 
-# 本科实物论文仓库目录 —— 本科压力测试用，需含 main.pdf、references.bib 与 LaTeX 源码
-# （dev/check-all.sh 默认找 $HOME/xdu-undergrad-thesis；不在该位置时在此指定，
-#   否则本科压力测试那一段会被跳过而不是报错）
+# 本科论文仓库目录 —— 本科压力测试用，需含 main.pdf、references.bib 与 LaTeX 源码。
+# 不设默认值（这类素材通常不公开）：未指定时 dev/check-all.sh 会跳过本科压测一节。
 export UNDERGRAD_STRESS_SRC="$HOME/xdu-undergrad-thesis"
 export UNDERGRAD_REFERENCE="$UNDERGRAD_STRESS_SRC/main.pdf"
