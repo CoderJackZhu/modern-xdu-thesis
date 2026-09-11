@@ -20,20 +20,27 @@
       header: none, footer: none, numbering: none,
     )[
       #封面文字("班　级", 129.1mm, 28.2mm, size: 12pt, font: 字体集.宋体, weight: "bold")
-      #封面文字(info.class-id, 153mm, 28.2mm, width: 35mm, alignment: center,
+      #place(top + left, dx: 146mm, dy: 29.1mm, line(length: 28.8mm, stroke: 0.5pt))
+      #封面文字(info.class-id, 146mm, 28.2mm, width: 28.8mm, alignment: center,
         size: 12pt, font: 字体集.宋体, weight: "bold")
       #封面文字("学　号", 129.1mm, 36.5mm, size: 12pt, font: 字体集.宋体, weight: "bold")
-      #封面文字(info.student-id, 153mm, 36.5mm, width: 35mm, alignment: center,
+      #place(top + left, dx: 146mm, dy: 37.4mm, line(length: 28.8mm, stroke: 0.5pt))
+      #封面文字(info.student-id, 146mm, 36.5mm, width: 28.8mm, alignment: center,
         size: 12pt, font: 字体集.宋体, weight: "bold")
 
-      // 官方类在此放学校标准字；不把校徽/标准字文件打进包，避免重复分发学校版权素材。
-      #封面文字("西安电子科技大学", 40mm, 61mm, width: 130mm, alignment: center,
-        size: 28pt, font: 字体集.黑体)
+      // 校名书法字与校徽取自官方封面（图片形式随包分发，保证在未装学校标准字的机器上
+      // 也能正确呈现；版权归学校所有，见 docs/本科规格.md「封面」一节）。
+      #place(top + left, dx: 77.7mm, dy: 49.5mm, image("assets/xdu-name.png", width: 64.5mm))
       #封面文字("本科毕业设计论文", 30mm, 84.2mm, width: 150mm, alignment: center,
         size: 42pt, font: 字体集.黑体)
+      #place(top + left, dx: 89mm, dy: 107.2mm, image("assets/xdu-emblem.png", width: 42.1mm))
 
+      // 填写横线：官方封面共 6 条 —— 题目每行一条 + 字段四行各一条，
+      // 均为 x 82.1~166.8mm（宽 84.7mm），题目与字段值都居中于横线。
       #for (i, 行) in 题目.enumerate() {
-        封面文字(行, 88mm, 171.7mm + 16.5mm * i, width: 78mm, alignment: center,
+        place(top + left, dx: 82.1mm, dy: 172.9mm + 16.5mm * i,
+          line(length: 84.7mm, stroke: 0.5pt))
+        封面文字(行, 82.1mm, 171.7mm + 16.5mm * i, width: 84.7mm, alignment: center,
           size: 16pt, font: 字体集.黑体)
       }
       #封面文字("题　　目", 53.6mm, 171.7mm, size: 16pt, font: 字体集.宋体, weight: "bold")
@@ -47,9 +54,9 @@
       #for (i, (标签, 值)) in 字段.enumerate() {
         let y = 204.8mm + 16.5mm * i
         封面文字(标签, 53.6mm, y, size: 16pt, font: 字体集.宋体, weight: "bold")
-        place(top + left, dx: 82mm, dy: y + 1.1mm,
-          line(length: 84mm, stroke: 0.5pt))
-        封面文字(值, 82mm, y, width: 84mm, alignment: center,
+        place(top + left, dx: 82.1mm, dy: y + 1.1mm,
+          line(length: 84.7mm, stroke: 0.5pt))
+        封面文字(值, 82.1mm, y, width: 84.7mm, alignment: center,
           size: 15pt, font: 字体集.宋体)
       }
     ]
@@ -101,7 +108,11 @@
     let 编号方式 = loc.page-numbering()
     let 页码 = if 编号方式 == none { str(loc.page()) } else { numbering(编号方式, loc.page()) }
     let nums = counter(heading).at(loc)
-    let 编号 = if lv == 1 {
+    // 只有真正带编号的标题才加章号/节号：附录、参考文献、致谢等后置部分
+    // 的标题以 numbering: none 登记，目录条目必须与页面一致，不加任何编号。
+    let 编号 = if it.element.numbering == none {
+      none
+    } else if lv == 1 {
       "第" + 章序(nums.first()) + "章"
     } else {
       numbering(if lv == 2 { "1.1" } else { "1.1.1" }, ..nums)
@@ -110,7 +121,11 @@
       columns: (if lv == 1 { 0mm } else if lv == 2 { 6mm } else { 16mm }, auto, 1fr, auto),
       column-gutter: 1mm,
       [],
-      text(weight: if lv == 1 { "bold" } else { "regular" }, [#编号 #it.element.body]),
+      if 编号 == none {
+        text(weight: if lv == 1 { "bold" } else { "regular" }, it.element.body)
+      } else {
+        text(weight: if lv == 1 { "bold" } else { "regular" }, [#编号 #it.element.body])
+      },
       it.fill,
       text(页码),
     )

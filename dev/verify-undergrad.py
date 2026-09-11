@@ -169,6 +169,34 @@ def main() -> int:
         full_text = "\n".join(texts)
         check("附录图编号独立", "图 A1" in full_text)
         check("附录公式编号独立", "(A-1)" in full_text)
+
+        # 目录里的后置部分条目不得带章号：附录/参考文献/致谢的页面标题以
+        # numbering: none 登记，目录条目必须与页面一致（官方实物论文同此）。
+        toc_text = texts[6] if len(texts) > 6 else ""
+        bad_entries = []
+        for line in toc_text.split("\n"):
+            for kw in ("附录", "参考文献", "致谢"):
+                if re.search(r"第[一二三四五六七八九十]+章\s*" + kw, line):
+                    bad_entries.append(line.strip()[:24])
+        check("目录后置条目无章号", not bad_entries, "；".join(bad_entries))
+
+        # 封面填写横线共 8 条：班级/学号 2 条（146.0~174.8mm）+ 题目 2 条与
+        # 字段 4 条（82.1~166.8mm）。官方封面实测同此。
+        cover_rects = []
+        for drawing in doc[0].get_drawings():
+            rect = drawing["rect"]
+            if rect.width > mm(20):
+                cover_rects.append((round(rect.x0 / 72 * 25.4, 1),
+                                    round(rect.width / 72 * 25.4, 1)))
+        top_rows = [r for r in cover_rects if abs(r[0] - 146.0) <= 0.5 and abs(r[1] - 28.8) <= 0.5]
+        field_rows = [r for r in cover_rects if abs(r[0] - 82.1) <= 0.5 and abs(r[1] - 84.7) <= 0.5]
+        check("封面填写横线 8 条", len(top_rows) == 2 and len(field_rows) == 6,
+              f"班级/学号 {len(top_rows)} 条、题目与字段 {len(field_rows)} 条")
+
+        # 校名书法字与校徽以图片形式随包分发（官方封面该处为学校标准字与校徽，
+        # 不是可排文字；缺图则封面不完整）。
+        cover_images = doc[0].get_images(full=True)
+        check("封面含校名与校徽图片", len(cover_images) >= 2, f"{len(cover_images)} 张")
     else:
         profile = "实物论文" if args.reference else "压力测试稿"
         check(f"{profile}总页数 55", len(doc) == 55)
