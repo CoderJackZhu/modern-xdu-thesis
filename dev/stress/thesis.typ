@@ -115,7 +115,7 @@
 // ============================================================
 
 #pagebreak(to: "odd")
-#references(bib: "/dev/stress/references.bib")
+#references(body: bibliography("/references.bib", style: "gb-7714-2015-numeric", title: none))
 
 #pagebreak(to: "odd")
 #acknowledgement(body: include "acknowledgements.typ")

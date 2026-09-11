@@ -120,14 +120,26 @@ fi
 
 sec "3) 压力测试（真实 112 页论文）"
 if [ -d "$STRESS_SRC" ] && [ -f "$STRESS_SRC/main.pdf" ]; then
-  python3 dev/stress/port.py "$STRESS_SRC" dev/stress >/dev/null 2>&1
-  python3 dev/stress/front-data.py "$STRESS_SRC/chapter" dev/stress/front-data.typ >/dev/null 2>&1
-  if compile_one dev/stress/thesis.typ "$TMP/stress.pdf" >/dev/null 2>&1; then
-    python3 - "$TMP/stress.pdf" "$STRESS_SRC/main.pdf" <<'PY'
-import sys, fitz
-a, b = len(fitz.open(sys.argv[1])), len(fitz.open(sys.argv[2]))
-print(f"  {'✅' if a == b else '❌'} 页数：本模板 {a} / 源论文 {b}")
-PY
+  # 在临时目录里生成素材并编译。压测输入是私有论文的正文，不放进仓库；
+  # 验收脚本也不应改写工作区（曾因此把真实姓名与正文带进过提交）。
+  MS_OUT="$TMP/stress"
+  mkdir -p "$MS_OUT"
+  cp dev/stress/thesis.typ "$MS_OUT/thesis.typ"
+  if python3 dev/stress/port.py "$STRESS_SRC" "$MS_OUT" >/dev/null 2>&1; then
+    python3 dev/stress/front-data.py "$STRESS_SRC/chapter" "$MS_OUT/front-data.typ" >/dev/null 2>&1
+    if typst compile --root "$MS_OUT" "$MS_OUT/thesis.typ" "$TMP/stress.pdf" >/dev/null 2>&1; then
+      A=$(python3 -c "import fitz;print(len(fitz.open('$TMP/stress.pdf')))" 2>/dev/null)
+      B=$(python3 -c "import fitz;print(len(fitz.open('$STRESS_SRC/main.pdf')))" 2>/dev/null)
+      if [ "$A" = "$B" ]; then
+        ok "压力测试页数一致（本模板 ${A} = 源论文 ${B}）"
+      else
+        bad "压力测试页数不一致（本模板 ${A} / 源论文 ${B}）"
+      fi
+    else
+      bad "压力测试稿编译失败"
+    fi
+  else
+    bad "压力测试 LaTeX → Typst 转换失败"
   fi
 else
   echo "  跳过（未找到 $STRESS_SRC，可用 STRESS_SRC=… 指定）"

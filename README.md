@@ -262,22 +262,19 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 ### 参考文献
 
 标准为 GB/T 7714-2015。把文献写进 `.bib` 文件，正文用 `#cite(<条目键>)` 引用，
-末尾调用 `#references`：
+末尾在**论文文件里**构造好 bibliography，再交给 `#references`：
 
 ```typ
 正文……#cite(<koseki2002>)。          // 输出上标 [1]
 
-#references(bib: "/refs.bib")
-```
-
-`.bib` 的路径要写成**根相对**（前导 `/`，相对 `typst --root`）。本科从包模块调用时，
-应在论文文件中先构造 bibliography 内容，避免路径按包目录解析：
-
-```typ
 #references(body: bibliography(
   "/refs.bib", style: "gb-7714-2015-numeric", title: none,
 ))
 ```
+
+必须写成 `body:` 而不是 `#references(bib: "/refs.bib")`：`bib` 是一个路径字符串，
+Typst 会**在包内部**解析它，指向包目录而不是你的项目，所以对使用者不可用。
+换成文档侧构造的 `bibliography` 之后，路径就按你的项目根解析。
 
 也可以直接把排好的条目交给模板：
 

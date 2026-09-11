@@ -41,6 +41,9 @@
   info: (:),
   title: "参考文献",
   bib: none,
+  // 文档侧构造好的 bibliography（推荐用法）。bib 参数保留兼容，但其路径在包内解析，
+  // 对使用者不可用 —— 详见 docs/实现笔记.md 的「参考文献」一节。
+  body: none,
   entries: none,
   // 中文文献用「等」、英文文献用「et al.」——Typst 只能整篇统一选择，故这里做后处理。
   // 原理与取舍见 utils/bilingual-bib.typ 的注释。
@@ -66,7 +69,18 @@
   // 首条基线 60.02mm
   v(到内容区(60.02mm) - 条目Δ)
 
-  if bib != none {
+  if body != none {
+    // ①′ 由文档侧构造的 bibliography。在论文文件里写：
+    //     #references(body: bibliography("/ref.bib", style: "gb-7714-2015-numeric", title: none))
+    //   路径按文档根解析，这是唯一对使用者可用的方式 —— 见「参考文献」一节。
+    show bibliography: set text(font: 字体集.宋体, size: 10.5pt, lang: "zh",
+      top-edge: 条目Δ, bottom-edge: "baseline")
+    if 双语 {
+      双语文献(body)
+    } else {
+      body
+    }
+  } else if bib != none {
     // ① 由 .bib 自动生成 GB/T 7714-2015 格式；标题已由页面大标题给出，故 title: none
     show bibliography: set text(font: 字体集.宋体, size: 10.5pt, lang: "zh",
       top-edge: 条目Δ, bottom-edge: "baseline")
