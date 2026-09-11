@@ -39,7 +39,7 @@
   blind: false,
   fonts: (:),
   info: (:),
-  twoside: false,         // 兼容旧签名（P2 不做空白页）
+  twoside: false,         // 兼容旧签名（此处不补空白页）
 ) = {
   let 字体集 = 字体 + fonts
 

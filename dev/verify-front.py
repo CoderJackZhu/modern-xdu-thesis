@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P2 验收：把测得的 PDF 与 docs/前置部分规格.md 的官方数值逐项对照。
+"""验收：把测得的 PDF 与 docs/前置部分规格.md 的官方数值逐项对照。
 
 用法:
     python3 dev/verify-front.py <pdf> --degree professional

@@ -3,13 +3,13 @@
 #
 # 为什么需要它
 # ------------
-# `template/thesis.typ` 用 `@preview/xdu-master-thesis:0.1.0` 引用包，而不是 `../lib.typ`。
+# `template/thesis.typ` 用 `@preview/modern-xdu-thesis:0.1.0` 引用包，而不是 `../lib.typ`。
 # 这是 Typst 模板的硬性要求：`typst init` 只复制 template/ 目录，任何 `../` 引用都会
 # 让初始化出来的项目报 `path would escape the project root`。
 #
 # 挂上软链后这些命令都能直接用，不需要额外参数：
 #   typst compile --root . template/thesis.typ out.pdf      # 编译本仓库的示例论文
-#   typst init @preview/xdu-master-thesis:0.1.0 ../my-thesis  # 生成一份新的论文项目
+#   typst init @preview/modern-xdu-thesis:0.1.0 ../my-thesis  # 生成一份新的论文项目
 #
 # 用软链而不是复制，是为了让仓库里的改动立刻生效。
 #

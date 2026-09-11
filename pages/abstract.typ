@@ -27,7 +27,7 @@
   前置编号开始.update(true)
 
   // 页眉 / 页脚：前置部分，罗马页码。
-  // 页眉用 doc.typ 的 页眉()（P1 验证过的零高度框写法），
+  // 页眉用 doc.typ 的 页眉()（零高度框写法），
   // 配 header-ascent = 上边距 − 页眉顶，页眉帧顶落在 20mm、文字基线 24.94mm。
   set page(
     numbering: "I",

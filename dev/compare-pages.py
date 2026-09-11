@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P5 逐页对照：把官方 templet.pdf 与本模板输出按「同一页面」配对，渲染成并排 PNG。
+"""逐页对照：把官方 templet.pdf 与本模板输出按「同一页面」配对，渲染成并排 PNG。
 
 用法: python3 dev/compare-pages.py <官方pdf> <本模板pdf> <输出目录>
 

@@ -1,4 +1,4 @@
-// 测试：参考文献走 .bib + GB/T 7714-2005（Typst 内置 CSL 样式）
+// 测试：参考文献走 .bib + GB/T 7714-2015（Typst 内置 CSL 样式）
 #import "../lib.typ": documentclass
 
 #let (doc, mainmatter, references, 引用) = documentclass(

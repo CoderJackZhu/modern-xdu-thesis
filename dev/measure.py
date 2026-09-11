@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""P1 测量工具：编译 .typ 并用 PyMuPDF 读取文字基线与字号。
+"""测量工具：编译 .typ 并用 PyMuPDF 读取文字基线与字号。
 
 用法: python3 dev/measure.py <file.typ> [--pages N]
 """

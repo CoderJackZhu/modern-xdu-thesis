@@ -1,6 +1,6 @@
 // 西安电子科技大学硕士学位论文 — 示例论文
 //
-// 本文件由 `typst init @preview/xdu-master-thesis` 复制而来，**不需要仓库里的其他文件**。
+// 本文件由 `typst init @preview/modern-xdu-thesis` 复制而来，**不需要仓库里的其他文件**。
 // 按 `@preview` 引用包（而不是相对路径）是 Typst 模板的硬性要求：
 // `typst init` 只复制 template/ 目录，任何 `../` 引用都会越界报错
 // `path would escape the project root`。
@@ -9,7 +9,7 @@
 // 全篇只需 宋体 / 黑体 / Times New Roman 三种，详见 README「字体要求」。
 // Windows 自带 SimSun / SimHei / Times New Roman；macOS 用 Songti SC / Heiti SC。
 
-#import "@preview/xdu-master-thesis:0.1.0": documentclass
+#import "@preview/modern-xdu-thesis:0.1.0": documentclass
 
 #let (
   doc,
@@ -73,7 +73,7 @@
     keywords: ("深度学习", "毫米波", "大规模 MIMO", "信道估计"),
     keywords-en: ("deep learning", "millimeter wave", "massive MIMO", "channel estimation"),
 
-    // ---- 符号对照表 / 缩略语对照表（P3）----
+    // ---- 符号对照表 / 缩略语对照表 ----
     notation: (
       ("α", "路径损耗指数"), ("λ", "载波波长"),
       ("f_c", "载波频率"), ("T_s", "符号周期"),
@@ -112,7 +112,7 @@
 #abstract-en()
 
 // ============================================================
-// 索引类（P3）
+// 索引类
 // ============================================================
 
 #pagebreak(to: "odd")
@@ -136,7 +136,7 @@
 #outline-page()
 
 // ============================================================
-// 正文（P4）—— 每章从奇数页起，编号由模板生成，不要手写
+// 正文 —— 每章从奇数页起，编号由模板生成，不要手写
 // ============================================================
 
 #show: mainmatter.with(header-title: "西安电子科技大学硕士学位论文")
@@ -196,7 +196,7 @@ $bold(y)$ 中恢复 $bold(h)$#引用(1)。基于压缩感知的方法利用信�
 可以通过求解凸优化问题精确恢复稀疏信号。
 
 // ============================================================
-// 后置部分（P4）
+// 后置部分
 // ============================================================
 
 #pagebreak(to: "odd")

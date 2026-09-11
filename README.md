@@ -1,20 +1,24 @@
-# 西安电子科技大学硕士学位论文 Typst 模板
+# 西安电子科技大学学位论文 Typst 模板
 
-用 [Typst](https://typst.app) 排版西安电子科技大学硕士学位论文（中文撰写）。
-版式依据研究生院《研究生学位论文模板》与配套《撰写要求》逐项校准，支持**学术学位 / 专业学位**
-与**盲审模式**，开箱即可写出可送审的 PDF。
+用 [Typst](https://typst.app) 排版西安电子科技大学本科毕业设计（论文）与硕士学位论文（中文撰写）。
+本科与硕士使用独立实现入口并放在同一个包中；`typst init` 的默认模板仍为硕士。
 
-![预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/xdu-master-thesis/main/docs/images/preview.png)
+**本模板不是学校官方发布**，版式数值以官方文件与实物论文实测为准；与官方模板存在差异的地方
+逐条列在[「与官方模板的差异」](#与官方模板的差异)。
+
+| 硕士（学术 / 专业学位） | 本科毕业设计（论文） |
+|---|---|
+| ![硕士预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview.png) | ![本科预览：封面 / 目录 / 正文](https://raw.githubusercontent.com/CoderJackZhu/modern-xdu-thesis/main/docs/images/preview-bachelor.png) |
 
 ## 特性
 
-- **版式与官方模板一致**：页边距、版心、固定 20 磅行距、章标题间距、页眉双横线、
-  奇偶页码、每章奇数页起等逐项对照官方输出，并用一份 112 页的真实论文验证过总页数与分页。
+- **本科与硕士独立版式**：本科使用 150 × 247mm 版心、1.5 倍行距、页眉外侧页码与 0.75 磅单线；硕士保留 155 × 240.93mm 版心、固定 20 磅行距、页脚页码与双横线。
+- **实物论文压力测试**：硕士 112 页、本科 55 页；两篇的章起始页、参考文献数量与行距均与源论文一致（本科的分页在转换脚本补页后对齐，说明见验收报告）。
 - **学术学位 / 专业学位**：一个参数切换，差异只在封面与题名页的字段。
 - **盲审模式**：一个开关隐去封面、题名页与作者简介中的身份信息。
 - **图表公式自动编号**：按章编号（图 2.1 / 表 2.1 / 式 (2-1)），插图索引、表格索引、
   目录自动生成，交叉引用直接写 `@标签`。
-- **参考文献**：GB/T 7714-2005，写作样式由 Typst 内置引擎完成；中文文献「等」与英文文献
+- **参考文献**：GB/T 7714-2015，写作样式由 Typst 内置引擎完成；中文文献「等」与英文文献
   「et al.」自动区分。
 - **不依赖额外字体**：全篇只用宋体、黑体、Times New Roman，按系统字体解析，不内置字体文件。
 
@@ -25,7 +29,8 @@
 | 硕士学位论文（中文撰写） | 包含：封面、中英文题名页、声明、中英文摘要、插图索引、表格索引、符号对照表、缩略语对照表、目录、正文、附录、参考文献、致谢、作者简介 |
 | 学术学位 / 专业学位 | 包含：由一个参数切换 |
 | 盲审模式 | 包含：由一个开关控制 |
-| 本科毕业设计 | 不包含：请用 [typst_xdutemplate](https://github.com/Hubert9982/typst_xdutemplate) |
+| 本科毕业设计（论文） | 包含：可开关封面、中英文摘要、目录、正文、附录、参考文献、致谢；独立 `bachelor` 入口 |
+| 本科装订独立表单 | 不包含：诚信书、任务书、中期检查表、成绩评定表、查重报告等由学院另行发放 |
 | 博士学位论文 | 不包含 |
 | 英文撰写的学位论文 | 不包含 |
 | 开题报告 / 中期考核 / 答辩表格 | 不包含：不属于学位论文正文 |
@@ -43,21 +48,80 @@
 
 ## 快速开始
 
+包已提交 Typst Universe（[typst/packages#5822](https://github.com/typst/packages/pull/5822)），
+**发布后一条命令即可创建项目**：
+
 ```bash
-git clone https://github.com/CoderJackZhu/xdu-master-thesis
-cd xdu-master-thesis
+typst init @preview/modern-xdu-thesis:0.1.0 my-thesis   # 硕士（默认模板）
+cd my-thesis && typst compile thesis.typ                # 编译出 PDF
+```
+
+本科没有 `[template]` 入口（一个包只能声明一份默认模板，已留给硕士），
+把 [`examples/bachelor-thesis.typ`](examples/bachelor-thesis.typ) 复制到自己的项目后编译即可。
+
+发布前（或想直接用仓库里的开发版）：
+
+```bash
+git clone https://github.com/CoderJackZhu/modern-xdu-thesis
+cd modern-xdu-thesis
 bash dev/pkg-stage.sh                          # 把本仓库注册为本地 Typst 包，只需运行一次
-typst compile --root . template/thesis.typ out.pdf
+typst compile --root . template/thesis.typ out.pdf               # 硕士默认模板
+typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立示例
 ```
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
-`@preview/xdu-master-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，
-解除用 `bash dev/pkg-stage.sh --remove`。
+`@preview/modern-xdu-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，解除用
+`bash dev/pkg-stage.sh --remove`。
 
-模板目前未发布到 Typst Universe，因此暂时不能用 `typst init @preview/xdu-master-thesis:0.1.0`，
-请按上面的方式克隆使用。
+### 在线编辑（typst.app）
 
-## 配置论文信息
+把项目上传到 [Typst Web App](https://typst.app) 即可在线编辑、多人协作，不必安装任何东西。
+**但 Web App 没有本机字体**：需要把宋体、黑体、Times New Roman 的字体文件一并上传到项目里
+（Windows 在 `C:\Windows\Fonts`，macOS 在 `/System/Library/Fonts` 与 `/Library/Fonts`），
+否则正文会显示成方框（豆腐块）。字体有版权，仅供自己项目内使用。
+
+### 本科独立入口
+
+`typst.toml` 的 `[template]` 仍指向硕士 `template/thesis.typ`。本科从包导出的独立
+`bachelor` 模块进入，完整文件见 `examples/bachelor-thesis.typ`：
+
+```typ
+#import "@preview/modern-xdu-thesis:0.1.0": bachelor
+
+#let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
+  appendix, references, acknowledgement) = bachelor.documentclass(
+  cover-enabled: true, // 学院封面不同时可设为 false，再自行插入封面
+  info: (
+    title: ("论文题目第一行", "论文题目第二行"),
+    author: "张三",
+    department: "电子工程学院",
+    major: "电子信息工程",
+    supervisor: ("李四", "王五"),
+    class-id: "2101011",
+    student-id: "21010100001",
+    abstract: [中文摘要……],
+    abstract-en: [English abstract...],
+    keywords: ("关键词一", "关键词二", "关键词三"),
+    keywords-en: ("keyword one", "keyword two", "keyword three"),
+  ),
+)
+```
+
+`info` 字段与硕士基本对应，本科特有的三项：
+
+| 字段 | 说明 |
+|---|---|
+| `title` | 题目，多行写成数组 `("第一行", "第二行")`，居中排在封面横线上 |
+| `class-id` / `student-id` | 班级 / 学号，排在封面右上角 |
+| `supervisor` | 导师，可写两人 `("李四", "王五")` |
+
+其余字段（`author`、`department`、`major`、`abstract`、`abstract-en`、`keywords`、
+`keywords-en`）与硕士含义相同。`cover-enabled: false` 时封面整页不输出，可插入学院提供的封面。
+
+本科正文一级标题只写 `= 引言`，模板自动生成“第一章 引言”；附录连续调用
+`appendix(...)`，会生成“附录 A / B / C”及图 A1、表 B2、式 (C-3)。
+
+## 硕士配置论文信息
 
 打开 `template/thesis.typ`，把 `documentclass(...)` 里的 `info` 换成你自己的信息：
 
@@ -86,7 +150,7 @@ typst compile --root . template/thesis.typ out.pdf
 > 作者简介要求、装订顺序、盲审注意事项等），以及**哪些由模板自动满足、哪些必须自己保证**，
 > 见 [写作要求](写作要求.md)。提交前可对照其中的自查清单逐项检查。
 
-### 页面顺序
+### 硕士页面顺序
 
 前置与后置部分按下面的顺序调用，页与页之间用 `#pagebreak(to: "odd")` 分隔，
 使每页都从奇数页开始：
@@ -133,6 +197,33 @@ typst compile --root . template/thesis.typ out.pdf
 
 `template/thesis.typ` 就是一份可运行的完整示例，直接改它即可。
 
+### 本科页面顺序
+
+```typ
+#show: doc
+#cover()
+#pagebreak(to: "odd")
+#counter(page).update(1) // 中文摘要从 i 开始；必须放在摘要页面之前
+#abstract()
+#pagebreak(to: "odd")
+#abstract-en()
+#pagebreak(to: "odd")
+#outline-page()
+
+#show: mainmatter
+= 引言
+…
+
+#appendix(title: "补充材料", body: […])
+#pagebreak(to: "odd")
+#acknowledgement()
+#pagebreak(to: "odd")
+#references(entries: (…))
+```
+
+封面默认输出并自动留空背面。`cover-enabled: false` 时 `cover()` 不输出内容，可插入学院提供的封面。
+完整示例见 `examples/bachelor-thesis.typ`。
+
 ### 标题
 
 编号由模板生成，正文里不要手写数字：
@@ -143,6 +234,8 @@ typst compile --root . template/thesis.typ out.pdf
 === 毫米波信道特性      // 自动编号 1.1.1
 ==== 路径损耗模型       // 自动编号（1），不进目录
 ```
+
+上例是硕士写法。本科一级标题写 `= 绪论`，由 `bachelor` 入口自动补“第一章”。
 
 ### 图、表与公式
 
@@ -168,7 +261,7 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 
 ### 参考文献
 
-标准为 GB/T 7714-2005。把文献写进 `.bib` 文件，正文用 `#cite(<条目键>)` 引用，
+标准为 GB/T 7714-2015。把文献写进 `.bib` 文件，正文用 `#cite(<条目键>)` 引用，
 末尾调用 `#references`：
 
 ```typ
@@ -177,7 +270,14 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 #references(bib: "/refs.bib")
 ```
 
-`.bib` 的路径要写成**根相对**（前导 `/`，相对 `typst --root`）。
+`.bib` 的路径要写成**根相对**（前导 `/`，相对 `typst --root`）。本科从包模块调用时，
+应在论文文件中先构造 bibliography 内容，避免路径按包目录解析：
+
+```typ
+#references(body: bibliography(
+  "/refs.bib", style: "gb-7714-2015-numeric", title: none,
+))
+```
 
 也可以直接把排好的条目交给模板：
 
@@ -226,35 +326,46 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 | 封面与声明 | 官方 LaTeX 模板有两代实现（2024.04 与新版重写版），本模板采用 2024.04 版与 Word 2025.01 版 |
 | 符号对照表字号 | 本模板 12pt；参考论文为 10.5pt，官方示例未包含此页 |
 | 附录页 | 官方示例与参考论文均无附录页，其坐标按其它后置部分推导 |
+| 本科封面素材 | 校名书法字与校徽在官方封面里是图形（无文字层），本模板按实测坐标以图片随包分发，版权归学校；`cover-enabled: false` 时不引用 |
+| 本科压力测试分页 | 转换脚本为对齐分页骨架补过填充页（Pandoc 丢失复杂表格所致），故「55 页一致」证明的是骨架可对齐；版式数值另有反向测量独立核验（见 `docs/本科验收报告.md`） |
 
 ## 目录结构
 
 ```
-lib.typ          包入口，documentclass(degree:, blind:, fonts:, info:)
-layouts/         页面版式核心
-pages/           各页面组件：封面、题名页、声明、摘要、索引、目录、后置部分
-utils/           字体映射、样式常量、计数器
-template/        可运行的示例论文，也是 typst init 复制的目录
+lib.typ          硕士包入口，并导出 bachelor 模块命名空间
+bachelor.typ     本科独立实现入口，bachelor.documentclass(info:, cover-enabled:)
+bachelor/        本科专用版式、页面与正文规则（不导入硕士 layouts/pages）
+layouts/         硕士页面版式核心
+pages/           硕士各页面组件
+utils/           字体映射与无状态共用工具
+template/        硕士示例，也是 typst init 默认复制的目录
+examples/        本科完整示例（手动复制使用）
 写作要求.md       官方撰写要求对照表 + 提交前自查清单
 dev/             验收与维护工具，使用者不需要（不进发布包）
                  ├── check-all.sh        一条命令跑完全部验收
-                 ├── verify-*.py         各部分版式验收（前置 / 索引 / 正文）
+                 ├── verify-*.py         硕士与本科 PDF 反向测量
                  ├── compare-*.py        与官方 PDF 逐行、逐页对照
-                 ├── probe-*.typ         早期技术验证用例
-                 ├── test-*.typ          各场景编译入口
-                 ├── stress/             用真实论文压测模板
+                 ├── test-*.typ          各场景编译入口与负向测试
+                 ├── stress/             硕士 112 页压力测试
+                 ├── undergrad/          本科 55 页转换与压力测试
                  └── local-paths.example.sh  本地素材路径配置示例
 docs/            格式规格（权威来源、冲突裁定、硬约束）、各部分页面规格、验证报告
 ```
 
-撰写论文只需要 `template/` 目录。
+硕士从 `template/thesis.typ` 开始；本科复制 `examples/bachelor-thesis.typ` 到自己的项目。
 
 ## 参考资料
 
+- 西安电子科技大学《毕业设计手册》2019 与教务处优秀毕业设计（论文）Word 样例
+- [未公开的本科论文仓库](（未公开）) —— 55 页本科实物论文压力测试基准（MIT）
 - 西安电子科技大学研究生院《研究生学位论文模板（2015 年修订版）2025.01 修订》及配套《撰写要求》
 - [xduts](https://github.com/note286/xduts) —— 官方 LaTeX 模板
 - [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) —— 本模板的初始骨架（MIT）
 
-## License
+## 反馈与许可
 
-MIT
+排版问题、版式差异请走 [Issues](https://github.com/CoderJackZhu/modern-xdu-thesis/issues)。
+报版式差异时请附上官方文件或实物论文的对应页 —— 本项目所有版式结论都以可测量的证据为准。
+
+代码以 MIT 许可发布。本科封面使用的校名书法字与校徽是学校标识，版权归学校，仅随封面组件
+分发（`cover-enabled: false` 时不引用）；在其它场合使用请另行获得授权。

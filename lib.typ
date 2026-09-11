@@ -1,15 +1,17 @@
-// 西安电子科技大学硕士学位论文 Typst 模板 — 包入口
+// 西安电子科技大学学位论文 Typst 模板 — 包入口（硕士；本科入口见 bachelor.typ）
 //
-// 依据：docs/格式规格.md（唯一规则源）、docs/ 下各阶段规格
+// 依据：docs/格式规格.md（硕士数值的唯一规则源）、docs/本科规格.md（本科数值）
 // 公开 API：
 //   documentclass(degree:, blind:, info:, fonts:) — 配置入口
 //   返回的对象暴露全部页面函数（前置 6 页 / 索引 5 页 / 正文 / 后置 4 部分）
 //   以及辅助：引用、索引题注、双语文献。
-//   版本：P0–P6 已完成，版式经官方 templet.pdf 逐页对照 + 一份 112 页真实论文压测。
+//   版本：硕士页面与版式已全部实现，经官方 templet.pdf 逐页对照 + 一份 112 页真实论文压测。
 
 #import "utils/style.typ": 字号, 字体
 #import "utils/counters.typ": 索引题注
 #import "utils/bilingual-bib.typ": 双语文献
+// 本科实现保留独立文件入口；这里只导出模块命名空间，不接入任何硕士版式路径。
+#import "bachelor.typ" as bachelor
 #import "layouts/doc.typ": doc
 #import "pages/cover.typ": cover
 #import "pages/title-cn.typ": title-cn
@@ -39,14 +41,11 @@
 }
 
 // ============================================================
-// 占位函数。P0–P6 的页面均已实现，此处保留该机制以防后续新增页面时
+// 占位函数。现有页面均已实现，此处保留该机制以防后续新增页面时
 // 忘记接线——未实现的页面会给出明确中文提示而不是静默失败。
 // ============================================================
-#let 未实现(名称, 阶段) = {
-  panic(
-    "页面函数 `" + 名称 + "` 尚未实现 —— 将在 " + 阶段 + " 阶段补齐。"
-      + "请暂时不要在论文模板中调用它。"
-  )
+#let 未实现(名称) = {
+  panic("页面函数 `" + 名称 + "` 尚未实现，请暂时不要在论文模板中调用它。")
 }
 
 // ============================================================
@@ -87,7 +86,7 @@
     submit-date: (year: 2025, month: 6),
     keywords: ("关键词一", "关键词二", "关键词三"),
     keywords-en: ("Keyword One", "Keyword Two", "Keyword Three"),
-    // P4：后置部分数据
+    // 后置部分数据
     acknowledgement: [请在此撰写致谢内容。],
     appendix: [请在此撰写附录内容。],
     references: (
@@ -102,7 +101,7 @@
       ("攻读硕士学位期间的研究成果", "1. 发表学术论文（第一作者）：张三, 李四. 论文题目[J]. 期刊名, 2025, 12(3): 45-52.\n2. 申请（授权）专利（第一发明人）：张三, 李四. 专利名称: 中国, 专利号[P]. 2025-01-01."),
     ),
 
-    // P3：符号对照表 / 缩略语对照表数据
+    // 符号对照表 / 缩略语对照表数据
     notation: (("α", "衰减系数"), ("λ", "波长"), ("f", "频率")),
     abbreviations: (("MIMO", "Multiple-Input Multiple-Output", "多输入多输出"),
       ("OFDM", "Orthogonal Frequency Division Multiplexing", "正交频分复用")),
@@ -130,7 +129,7 @@
       ..args,
     ),
 
-    // ---- P2 已实现的 6 个页面 ----
+    // ---- 前置部分的 6 个页面 ----
     cover: (..args) => cover(
       degree: degree, blind: blind,
       fonts: fonts, info: 合并info, ..args,
@@ -156,7 +155,7 @@
       fonts: fonts, info: 合并info, ..args,
     ),
 
-    // ---- P3 已实现的 5 个索引类页面 ----
+    // ---- 5 个索引类页面 ----
     list-of-figures: (..args) => list-of-figures(
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
     list-of-tables: (..args) => list-of-tables(
@@ -168,11 +167,11 @@
     outline-page: (..args) => outline-page(
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
 
-    // ---- P4 已实现：正文 ----
+    // ---- 正文 ----
     mainmatter: (..args) => mainmatter(
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
 
-    // ---- P4 已实现：后置部分 ----
+    // ---- 后置部分 ----
     appendix: (..args) => appendix(
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
     references: (..args) => references(

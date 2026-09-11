@@ -1,4 +1,4 @@
-// 测试：渲染 P3 五个索引类页面（专业学位字段）
+// 测试：渲染 五个索引类页面（专业学位字段）
 #import "../lib.typ": documentclass
 
 #let (
@@ -47,7 +47,7 @@
 
 #pagebreak(to: "odd")
 #counter(page).update(9)
-// 先造几个 heading 供目录收录（P4 的正文会自然提供）
+// 先造几个 heading 供目录收录（的正文会自然提供）
 = 第一章 绪论
 == 1.1 研究背景
 === 1.1.1 国内研究现状
