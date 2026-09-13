@@ -33,6 +33,12 @@ UNDERGRAD_WORD="${UNDERGRAD_WORD:-$HOME/.hermes/assets/xdu-thesis-official/under
 export OFFICIAL_PDF
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
+# 包注册和子检查产物均限制在本次临时目录，避免调用 pkg-stage 改写用户环境。
+export TMPDIR="$TMP"
+export PYTHONPYCACHEPREFIX="$TMP/pycache"
+export TYPST_PACKAGE_PATH="$TMP/packages"
+mkdir -p "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis"
+ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.1.0"
 
 PASS=0
 FAIL=0
@@ -90,6 +96,13 @@ if [ -f "$OFFICIAL_PDF" ] && [ -f "$TMP/ob.pdf" ]; then
         --map=23,24,25,26,27,28,29,30,31,32 2>&1 | last)"
 else
   echo "  逐行对照      : 跳过（缺官方 templet.pdf）"
+fi
+
+sec "2a) 评审缺陷回归"
+if python3 dev/verify-review-regressions.py; then
+  ok "匿名、跨页、页码与参考文献 API 回归通过"
+else
+  bad "评审缺陷回归失败"
 fi
 
 sec "2b) 本科版式验收"
@@ -164,9 +177,6 @@ else
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
-PKG="$HOME/Library/Application Support/typst/packages/preview/modern-xdu-thesis/0.1.0"
-[ -e "$PKG" ] || PKG="$HOME/.local/share/typst/packages/preview/modern-xdu-thesis/0.1.0"
-[ -e "$PKG" ] || bash dev/pkg-stage.sh >/dev/null 2>&1
 if typst init @preview/modern-xdu-thesis:0.1.0 "$TMP/init" >/dev/null 2>&1; then
   CNT=$(find "$TMP/init" -type f | wc -l | tr -d ' ')
   if typst compile "$TMP/init/thesis.typ" "$TMP/init/out.pdf" 2>&1 | grep -q '^error'; then

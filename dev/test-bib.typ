@@ -19,4 +19,4 @@
 正文引用示例：#cite(<gb1>)、#cite(<gb3>)、#cite(<gb4>)、#cite(<en4>)。
 
 #pagebreak(to: "odd")
-#references(bib: "/dev/refs-demo.bib")
+#references(body: bibliography("refs-demo.bib", style: "gb-7714-2015-numeric", title: none))
