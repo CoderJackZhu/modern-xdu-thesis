@@ -21,11 +21,11 @@ word_spec.loader.exec_module(word_verifier)
 def main():
     with tempfile.TemporaryDirectory(prefix="xdu-doctor-") as temp:
         tmp = Path(temp)
-        package = tmp / "packages/preview/modern-xdu-thesis/0.2.0"
+        package = tmp / "packages/preview/modern-xdu-thesis/0.3.0"
         package.mkdir(parents=True)
         for name in ("lib.typ", "bachelor.typ", "doctor.typ", "typst.toml"):
             shutil.copy2(ROOT / name, package / name)
-        for name in ("layouts", "pages", "utils", "bachelor"):
+        for name in ("layouts", "pages", "utils", "bachelor", "supporting"):
             shutil.copytree(ROOT / name, package / name)
         project = tmp / "project"
         project.mkdir()
@@ -113,7 +113,7 @@ def main():
             ("bio", 'items: (("攻读博士学位期间的研究成果", text),)'),
         ):
             source.write_text(
-                '#import "@preview/modern-xdu-thesis:0.2.0": doctor-documentclass\n'
+                '#import "@preview/modern-xdu-thesis:0.3.0": doctor-documentclass\n'
                 '#let t = doctor-documentclass()\n#show: t.doc\n'
                 '#let text = [#for i in range(80) [这是一段检查跨页页眉的测试文字。\n\n]]\n'
                 f'#(t.{part})({args})')
@@ -133,19 +133,19 @@ def main():
             print("通过并检出故意错误：跨页 " + part)
         # 覆盖两个公开入口、可覆盖的英文学位名称，以及前置页超宽明确拒绝。
         for entry in (
-            '#import "@preview/modern-xdu-thesis:0.2.0": documentclass\n#let cls = documentclass.with(graduate: "doctor")',
-            '#import "../packages/preview/modern-xdu-thesis/0.2.0/doctor.typ": documentclass as cls',
+            '#import "@preview/modern-xdu-thesis:0.3.0": documentclass\n#let cls = documentclass.with(graduate: "doctor")',
+            '#import "../packages/preview/modern-xdu-thesis/0.3.0/doctor.typ": documentclass as cls',
         ):
             source.write_text(entry + '\n#let t = cls(info: (degree-name-en: "Doctor of Science",))\n'
                               '#show: t.doc\n#(t.cover)()\n#pagebreak(to: "odd")\n#(t.title-en)()')
             result, pdf = compile_pdf("entry")
             assert result.returncode == 0, result.stderr
             assert "Doctor of Science" in "".join(p.get_text() for p in fitz.open(pdf))
-        source.write_text('#import "@preview/modern-xdu-thesis:0.2.0": documentclass\n'
+        source.write_text('#import "@preview/modern-xdu-thesis:0.3.0": documentclass\n'
                           '#let t = documentclass(graduate: "invalid")\n#show: t.doc\nx')
         result, _ = compile_pdf("invalid")
         assert result.returncode != 0 and "graduate" in result.stderr
-        source.write_text('#import "@preview/modern-xdu-thesis:0.2.0": doctor-documentclass\n'
+        source.write_text('#import "@preview/modern-xdu-thesis:0.3.0": doctor-documentclass\n'
                           '#let t = doctor-documentclass(info: (title: ("长" * 60,),))\n'
                           '#show: t.doc\n#(t.cover)()')
         result, _ = compile_pdf("overflow")

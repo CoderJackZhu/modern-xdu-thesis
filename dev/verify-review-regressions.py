@@ -9,7 +9,7 @@ import tempfile
 import fitz
 
 ROOT = Path(__file__).resolve().parents[1]
-IMPORT = '#import "@preview/modern-xdu-thesis:0.2.0": documentclass\n'
+IMPORT = '#import "@preview/modern-xdu-thesis:0.3.0": documentclass\n'
 failures = []
 
 def check(name, fn):
@@ -22,10 +22,11 @@ def check(name, fn):
 
 with tempfile.TemporaryDirectory(prefix='xdu-regression-') as tmp:
     work = Path(tmp)
-    package = work / 'packages/preview/modern-xdu-thesis/0.2.0'
+    package = work / 'packages/preview/modern-xdu-thesis/0.3.0'
     package.mkdir(parents=True)
     # 仅复制发布实现，不读取私人论文或本地配置。
-    for name in ('lib.typ', 'bachelor.typ', 'typst.toml', 'layouts', 'pages', 'utils', 'bachelor', 'assets'):
+    for name in ('lib.typ', 'bachelor.typ', 'typst.toml', 'layouts', 'pages', 'utils',
+                 'bachelor', 'supporting', 'assets'):
         src = ROOT / name
         if src.is_dir():
             shutil.copytree(src, package / name)
@@ -114,7 +115,7 @@ with tempfile.TemporaryDirectory(prefix='xdu-regression-') as tmp:
     check('实际模板长摘要罗马页码连续', counters)
     for bachelor in (False, True):
         name = '本科' if bachelor else '硕士'
-        imp = '#import "@preview/modern-xdu-thesis:0.2.0": bachelor\n#let documentclass = bachelor.documentclass\n' if bachelor else IMPORT
+        imp = '#import "@preview/modern-xdu-thesis:0.3.0": bachelor\n#let documentclass = bachelor.documentclass\n' if bachelor else IMPORT
         check(name+' 拒绝已移除 bib 参数', lambda imp=imp: compile_pdf('removed-bib', imp+'#let (doc, references) = documentclass()\n#show: doc\n#references(bib: none)', rejected=True))
         def body_case(imp=imp):
             shutil.copy2(ROOT/'dev/refs-demo.bib', work/'refs.bib')

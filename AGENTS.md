@@ -15,10 +15,15 @@
 
 ## 项目现状
 
-用 Typst 排版西电本科毕业设计（论文）、硕士与博士学位论文，目标是输出可直接送审的 PDF。
+用 Typst 排版西电本科毕业设计（论文）、硕士与博士学位论文，并提供研究生/本科开题报告、
+中期考核报告和通用课程实验报告。论文目标是输出可送审的 PDF；行政表仍需按学院最新通知、
+签批和学校系统要求复核。
 
 - 包名 `modern-xdu-thesis`，仓库 <https://github.com/CoderJackZhu/modern-xdu-thesis>
 - `lib.typ` 是硕士 / 博士共用入口；`doctor.typ` 是博士独立入口，`bachelor.typ` 是本科入口
+- `supporting/` 是配套材料独立入口：`proposal-documentclass`、`interim-documentclass`、
+  `bachelor-proposal-documentclass`、`bachelor-interim-documentclass`、
+  `course-report-documentclass`
 - `typst.toml` 的 `[template]` 保持硕士 `template/thesis.typ`；本科完整示例在 `examples/bachelor-thesis.typ`
 - 硕士与博士支持学术/专业学位及盲审；博士前置页按学术/专业分别实现；本科支持可开关封面、中英文摘要、目录、正文、附录、参考文献与致谢
 
@@ -68,6 +73,8 @@
 | [docs/博士规格.md](docs/博士规格.md) | 博士 Word 锚点、字段、冲突裁定与验收边界 |
 | [docs/本科模板对比.md](docs/本科模板对比.md) | 与 Hubert9982 本科模板的实测对比 |
 | [docs/公开成品交叉核对.md](docs/公开成品交叉核对.md) | 六份公开成品的来源、指纹、抽样测量、历史差异与验证边界 |
+| [docs/配套材料规格.md](docs/配套材料规格.md) | 开题/中期/课程实验报告的字段、版式数值、来源与验收边界 |
+| [docs/配套材料导航.md](docs/配套材料导航.md) | 四类研究生、两类本科表和课程报告的适用入口与官方链接 |
 | [docs/发布说明.md](docs/发布说明.md) | 本次变更、验证边界及GitHub / Universe发布步骤 |
 | `dev/` | 验收与维护工具（不进发布包，`typst.toml` 已 exclude） |
 | `README.md` | 面向使用者的说明 |
@@ -91,6 +98,7 @@ python3 dev/verify-undergrad.py <pdf>                                # 本科版
 python3 dev/verify-undergrad.py <55页源pdf> --reference               # 本科验收尺自检
 python3 dev/verify-doctor.py <pdf> --degree <academic|professional>   # 博士版式
 python3 dev/test-doctor.py                                          # 博士组合及负向测试
+python3 dev/test-supporting.py                                     # 开题/中期/课程报告与负向测试
 python3 dev/inspect-public-thesis.py <pdf> --chapter-page <物理页>   # 公开成品只读抽样
 bash dev/test-undergrad-negative.sh                                  # 本科负向测试
 python3 dev/compare-pages.py <官方pdf> <本模板pdf> <输出目录>          # 逐页并排对照图
@@ -120,13 +128,15 @@ typst compile --root . dev/stress/thesis.typ /tmp/stress.pdf
    PDF 反向测量（见下）。
 2. **版式改动必须对照官方依据**，不接受「看起来差不多」。研究生共用主体对照官方 `templet.pdf`；
    博士专用前置页对照原始Word，不能用硕士示例证明博士封面已通过。
+   开题/中期报告对照研究生院或本科生院原始 Word 的字段、章节和填写说明；课程实验报告没有
+   校级统一模板，不得宣称官方验收。
 3. **不碰范围外的文件。** `fonts/` 已移出仓库（商业字体，见格式规格 §2.2），不要重新引入。
 4. **不引入不必要的依赖。** 加 `@preview/...` 包前先确认标准库做不到。
 5. **`template/` 必须自包含。** `typst init` 只复制该目录，任何从这里引用的文件都必须在目录内。
    它复制的是**磁盘内容**，不是 git 里的内容 —— 所以 `.gitignore` 拦不住残留文件（实测
    `template/thesis.pdf` 这类编译产物会被原样发给用户）。**动过 `template/` 前后都要
    `ls template/`**，确认只有示例论文和它的素材（现为 `thesis.typ` + `ref.bib`）。
-   改完必须实测：`bash dev/pkg-stage.sh && typst init @preview/modern-xdu-thesis:0.2.0 /tmp/t
+   改完必须实测：`bash dev/pkg-stage.sh && typst init @preview/modern-xdu-thesis:0.3.0 /tmp/t
    && cd /tmp/t && typst compile thesis.typ` —— 初始化目录 2 个文件、能编译出 33 页才算通过。
 6. **中文文档。** 新增注释与文档用中文，与现有风格一致。
 7. **不擅自改元数据。** 包名 / 版本 / 作者 / 许可由人决定。改动需同步三处：
@@ -143,10 +153,10 @@ bash dev/pkg-stage.sh                               # 首次必跑：把仓库�
 typst compile --root . template/thesis.typ out.pdf   # --root . 仍需要
 ```
 
-**为什么必须先挂软链**：`template/thesis.typ` 用 `@preview/modern-xdu-thesis:0.2.0` 引用包，
+**为什么必须先挂软链**：`template/thesis.typ` 用 `@preview/modern-xdu-thesis:0.3.0` 引用包，
 不用 `../lib.typ`。因为 `typst init` 只复制 `template/` 目录，相对引用会让初始化出来的项目报
 `path would escape the project root`（已实测）。挂上软链后，`typst compile --root . template/thesis.typ`
-与 `typst init @preview/modern-xdu-thesis:0.2.0 <dir>` 都不需要额外参数。
+与 `typst init @preview/modern-xdu-thesis:0.3.0 <dir>` 都不需要额外参数。
 
 - **不需要 `--font-path`**：模板不内置字体，按系统字体解析（见格式规格 §2.2）。
 - `unknown font family: simsun / source han serif sc` 的警告是**预期行为** —— 回退链里本机没有的
@@ -217,4 +227,5 @@ python3 dev/verify-index.py <pdf>                       # 索引类页面（按�
 
 ## 明确不做
 
-英文撰写的学位论文、开题报告 / 中期考核 / 答辩表格、详细中文摘要。
+英文撰写的学位论文、科研实验记录本、答辩/评阅/审批/经费表格、详细中文摘要。
+开题报告和中期考核已由 `supporting/` 覆盖；本科周记、任务书、中期检查表等仍以本科生院原表为准。

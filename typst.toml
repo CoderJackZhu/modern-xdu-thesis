@@ -1,12 +1,12 @@
 [package]
 name = "modern-xdu-thesis"
-version = "0.2.0"
+version = "0.3.0"
 entrypoint = "lib.typ"
 authors = ["JackZhu"]
 license = "MIT"
-description = "A thesis template for academic and professional master's and doctoral theses and undergraduate theses at Xidian University. 西安电子科技大学硕士、博士学术/专业学位论文与本科毕业设计论文模板。"
+description = "Xidian University thesis, proposal, interim, and course report templates. 西安电子科技大学本科、硕士、博士学位论文及开题、中期、课程实验报告 Typst 模板。"
 repository = "https://github.com/CoderJackZhu/modern-xdu-thesis"
-keywords = ["Xidian University", "thesis", "xdu", "master thesis", "doctoral thesis", "bachelor thesis"]
+keywords = ["Xidian University", "thesis", "xdu", "master thesis", "doctoral thesis", "bachelor thesis", "proposal", "interim report", "course report"]
 categories = ["thesis"]
 exclude = ["docs", "dev", "AGENTS.md", ".gitignore", "examples"]
 compiler = "0.15.0"

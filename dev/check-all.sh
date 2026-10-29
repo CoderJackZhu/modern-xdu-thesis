@@ -56,7 +56,7 @@ export TMPDIR="$TMP"
 export PYTHONPYCACHEPREFIX="$TMP/pycache"
 export TYPST_PACKAGE_PATH="$TMP/packages"
 mkdir -p "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis"
-ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.2.0"
+ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.3.0"
 
 PASS=0
 FAIL=0
@@ -170,6 +170,9 @@ verify_one "验收总入口退出码负向测试" bash dev/test-check-all.sh
 verify_one "博士学术/专业/盲审/可选导师、包外入口与负向测试" python3 dev/test-doctor.py
 verify_one "本科摘要标题、后置顺序与两种引用及负向测试" python3 dev/test-bachelor-adjustments.py
 
+sec "2d) 配套材料版式与失败注入"
+verify_one "开题、中期、课程报告及负向测试" python3 dev/test-supporting.py
+
 sec "3) 压力测试（真实 112 页论文）"
 if [ -d "$STRESS_SRC" ] && [ -f "$STRESS_SRC/main.pdf" ]; then
   # 在临时目录里生成素材并编译。压测输入是私有论文的正文，不放进仓库；
@@ -216,7 +219,7 @@ else
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
-if typst init @preview/modern-xdu-thesis:0.2.0 "$TMP/init" >/dev/null 2>&1; then
+if typst init @preview/modern-xdu-thesis:0.3.0 "$TMP/init" >/dev/null 2>&1; then
   CNT=$(find "$TMP/init" -type f | wc -l | tr -d ' ')
   if typst compile "$TMP/init/thesis.typ" "$TMP/init/out.pdf" >"$TMP/init.log" 2>&1; then
     PAGES=$(python3 -c "import fitz; print(len(fitz.open('$TMP/init/out.pdf')))")
