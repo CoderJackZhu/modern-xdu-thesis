@@ -1,5 +1,5 @@
 // 本科毕业设计（论文）中期报告示例
-#import "@preview/modern-xdu-thesis:0.3.0": bachelor-interim-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": bachelor-interim-documentclass
 
 #let (doc, interim) = bachelor-interim-documentclass(
   info: (

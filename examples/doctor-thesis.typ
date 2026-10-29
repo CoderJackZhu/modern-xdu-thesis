@@ -1,5 +1,5 @@
 // 博士完整示例；编译参数示例：--input degree=professional --input blind=true。
-#import "@preview/modern-xdu-thesis:0.3.0": doctor-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": doctor-documentclass
 
 #let 专业 = sys.inputs.at("degree", default: "academic") == "professional"
 #let 匿名 = sys.inputs.at("blind", default: "false") == "true"

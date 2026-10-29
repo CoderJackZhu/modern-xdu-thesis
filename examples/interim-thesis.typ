@@ -1,5 +1,5 @@
 // 研究生中期考核报告示例；编译参数：--input graduate=doctor --input degree=professional
-#import "@preview/modern-xdu-thesis:0.3.0": interim-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": interim-documentclass
 
 #let 层次 = sys.inputs.at("graduate", default: "master")
 #let 学位 = sys.inputs.at("degree", default: "academic")

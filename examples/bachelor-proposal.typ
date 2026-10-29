@@ -1,5 +1,5 @@
 // 本科毕业设计（论文）开题报告示例
-#import "@preview/modern-xdu-thesis:0.3.0": bachelor-proposal-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": bachelor-proposal-documentclass
 
 #let (doc, proposal) = bachelor-proposal-documentclass(
   info: (

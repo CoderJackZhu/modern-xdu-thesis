@@ -1,5 +1,5 @@
 // 通用课程实验报告示例（非学校统一行政表，教师有指定模板时以教师模板为准）
-#import "@preview/modern-xdu-thesis:0.3.0": course-report-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": course-report-documentclass
 
 #let (doc, report) = course-report-documentclass(
   info: (

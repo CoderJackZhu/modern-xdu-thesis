@@ -1,5 +1,5 @@
 // 研究生开题报告示例；编译参数：--input graduate=doctor --input degree=professional
-#import "@preview/modern-xdu-thesis:0.3.0": proposal-documentclass
+#import "@preview/modern-xdu-thesis:0.3.1": proposal-documentclass
 
 #let 层次 = sys.inputs.at("graduate", default: "master")
 #let 学位 = sys.inputs.at("degree", default: "academic")
