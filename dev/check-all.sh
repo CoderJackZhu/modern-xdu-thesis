@@ -56,7 +56,7 @@ export TMPDIR="$TMP"
 export PYTHONPYCACHEPREFIX="$TMP/pycache"
 export TYPST_PACKAGE_PATH="$TMP/packages"
 mkdir -p "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis"
-ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.1.0"
+ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.2.0"
 
 PASS=0
 FAIL=0
@@ -216,7 +216,7 @@ else
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
-if typst init @preview/modern-xdu-thesis:0.1.0 "$TMP/init" >/dev/null 2>&1; then
+if typst init @preview/modern-xdu-thesis:0.2.0 "$TMP/init" >/dev/null 2>&1; then
   CNT=$(find "$TMP/init" -type f | wc -l | tr -d ' ')
   if typst compile "$TMP/init/thesis.typ" "$TMP/init/out.pdf" >"$TMP/init.log" 2>&1; then
     PAGES=$(python3 -c "import fitz; print(len(fitz.open('$TMP/init/out.pdf')))")

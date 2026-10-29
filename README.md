@@ -47,11 +47,12 @@
 
 ## 快速开始
 
-包已发布至 [Typst Universe](https://typst.app/universe/package/modern-xdu-thesis/0.1.0)（[typst/packages#5823](https://github.com/typst/packages/pull/5823)），
-**一条命令即可创建项目**：
+当前版本为 `0.2.0`。Universe 收录进度以 [包页面](https://typst.app/universe/package/modern-xdu-thesis)
+和 [版本提交记录](https://github.com/typst/packages/pulls?q=is%3Apr+modern-xdu-thesis) 为准。
+如果新版本尚未收录，请先按下方步骤注册本地包；新版本可用后，一条命令即可创建项目：
 
 ```bash
-typst init @preview/modern-xdu-thesis:0.1.0 my-thesis   # 硕士（默认模板）
+typst init @preview/modern-xdu-thesis:0.2.0 my-thesis   # 硕士（默认模板）
 cd my-thesis && typst compile thesis.typ                # 编译出 PDF
 ```
 
@@ -59,13 +60,13 @@ cd my-thesis && typst compile thesis.typ                # 编译出 PDF
 把 [`examples/bachelor-thesis.typ`](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/examples/bachelor-thesis.typ)
 复制到自己的项目后编译即可。
 
-本次本科格式修正与博士支持目前位于仓库开发版，Universe的 `0.1.0` 尚不包含这些更新。
-使用前按下方步骤运行 `dev/pkg-stage.sh`。博士没有默认 `[template]` 入口，
+`0.2.0` 包含本科格式修正与博士支持，已收录的旧版 `0.1.0` 不包含这些更新。
+博士没有默认 `[template]` 入口，
 从包导入 `doctor-documentclass`（本地源码也可导入 `doctor.typ` 的 `documentclass`），完整示例见
 [`examples/doctor-thesis.typ`](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/examples/doctor-thesis.typ)：
 
 ```typst
-#import "@preview/modern-xdu-thesis:0.1.0": doctor-documentclass
+#import "@preview/modern-xdu-thesis:0.2.0": doctor-documentclass
 #let thesis = doctor-documentclass(
   degree: "professional",             // academic / professional
   blind: false,
@@ -80,7 +81,7 @@ cd my-thesis && typst compile thesis.typ                # 编译出 PDF
 #(thesis.cover)()
 ```
 
-想直接用仓库里的开发版：
+想直接使用仓库源码（Universe 尚未收录新版本时也适用）：
 
 ```bash
 git clone https://github.com/CoderJackZhu/modern-xdu-thesis
@@ -107,7 +108,7 @@ Doctor of Philosophy（学术）、工程博士 / Doctor of Engineering（专业
 本次变更及发布步骤见 [发布说明](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/docs/发布说明.md)。
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
-`@preview/modern-xdu-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，解除用
+`@preview/modern-xdu-thesis:0.2.0` 才能解析到当前工作区。脚本可重复运行，解除用
 `bash dev/pkg-stage.sh --remove`。
 
 ### 在线编辑（typst.app）
@@ -134,7 +135,7 @@ Doctor of Philosophy（学术）、工程博士 / Doctor of Engineering（专业
 `assets/xdu-emblem.png`。然后用调用方构造的 `path(...)` 传给模板：
 
 ```typ
-#import "@preview/modern-xdu-thesis:0.1.0": bachelor
+#import "@preview/modern-xdu-thesis:0.2.0": bachelor
 
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   appendix, references, acknowledgement) = bachelor.documentclass(

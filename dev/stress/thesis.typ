@@ -11,7 +11,7 @@
 // 编译（需先 bash dev/pkg-stage.sh）：
 //   typst compile --root . dev/stress/thesis.typ /tmp/stress.pdf
 
-#import "@preview/modern-xdu-thesis:0.1.0": documentclass
+#import "@preview/modern-xdu-thesis:0.2.0": documentclass
 #import "front-data.typ": 符号表, 缩略语表, 简介
 
 #let (

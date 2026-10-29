@@ -1,5 +1,5 @@
 // 55 页真实本科论文压力测试入口；由 check-all.sh 复制到 port.py 的输出目录后编译。
-#import "@preview/modern-xdu-thesis:0.1.0": bachelor
+#import "@preview/modern-xdu-thesis:0.2.0": bachelor
 
 #let (doc, cover, abstract, abstract-en, outline-page, mainmatter,
   acknowledgement, references) = bachelor.documentclass(
