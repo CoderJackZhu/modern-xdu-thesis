@@ -71,14 +71,6 @@ $ bold(y) = bold(W) bold(x) + bold(b) $ <eq:model>
 
 图 @fig:model、表 @tab:params 和式 @eq:model 均按章编号。
 
-#appendix(title: "补充实验", body: [
-  附录中的图、表和公式与正文分开编号。
-
-  #figure(rect(width: 45mm, height: 20mm), caption: [附录实验结果]) <fig:appendix>
-
-  $ y = a x + b $ <eq:appendix>
-])
-
 #pagebreak(to: "odd")
 #acknowledgement()
 
@@ -87,3 +79,13 @@ $ bold(y) = bold(W) bold(x) + bold(b) $ <eq:model>
   "作者. 本科毕业设计参考文献示例[J]. 示例期刊, 2025, 1(1): 1-8.",
   "AUTHOR A. An undergraduate thesis reference example[J]. Journal, 2024, 2(1): 9-16.",
 ))
+
+
+#pagebreak(to: "odd")
+#appendix(title: "补充实验", body: [
+  附录中的图、表和公式与正文分开编号。
+
+  #figure(rect(width: 45mm, height: 20mm), caption: [附录实验结果]) <fig:appendix>
+
+  $ y = a x + b $ <eq:appendix>
+])

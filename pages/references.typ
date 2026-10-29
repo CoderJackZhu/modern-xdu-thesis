@@ -19,13 +19,12 @@
 // 与官方「首行缩进 1.85mm、续行顶格」的做法不同（Typst 是悬挂缩进）。
 // 字号、行距、首条基线三项仍然对齐。
 
-#import "../layouts/doc.typ": 基线偏移, 到内容区, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶
+#import "../layouts/doc.typ": 基线偏移, 到内容区, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶, 学位论文固定标题
 #import "../utils/style.typ": 字体 as 字体集
 #import "../utils/bilingual-bib.typ": 双语文献
 
 #let 正文Δ = 基线偏移(20pt, 12pt)
 #let 条目Δ = 基线偏移(20pt, 10.5pt)
-#let 固定标题 = "西安电子科技大学硕士学位论文"
 // 文献样式由调用方在自己的 bibliography(…) 里指定：GB/T 7714-2015（格式规格 §6）。
 // Typst 0.15 内置 gb-7714-2015-numeric，实测可用；本模板不再替调用方解析 .bib 路径，
 // 因此这里没有样式常量可给（原 `文献样式` 随 bib: 参数一并移除）。
@@ -33,6 +32,7 @@
 // 官方 Word 原文与旧版类仍写 2005；两版仅差 @standard 的 [M]/[Z]，这里跟随新版官方类。
 
 #let references(
+  graduate: "master",
   degree: "academic",
   blind: false,
   fonts: (:),
@@ -47,6 +47,7 @@
 ) = {
   let 字体集 = 字体集 + fonts
   let 条目 = if entries != none { entries } else { info.at("references", default: ()) }
+  let 固定标题 = 学位论文固定标题(graduate)
 
   set page(
     numbering: "1",

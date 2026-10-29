@@ -80,3 +80,5 @@ for label, pno, ey, kw, ex, dg in CHECKS:
     print(f"{label:<22}{ex:>8.2f}{hit[1]:>8.2f}{dx:>+7.2f}  {'✅' if ok else '❌'}")
 print("-" * 58)
 print(f"不合格：{bad} / {checked}（容差 2mm）")
+
+sys.exit(bool(bad))

@@ -10,7 +10,7 @@
   "(" + numbering("1", counter(heading).get().first()) + "-" + numbering("1", ..n) + ")"
 }
 
-#let 引用(..序号) = super(text(font: ("Times New Roman",), size: 0.9em,
+#let 引用(..序号) = super(typographic: false, size: 8pt, text(font: ("Times New Roman",),
   "[" + 序号.pos().map(str).join(",") + "]"))
 
 #let 题注(前缀, 章, 序, 内容) = {
@@ -96,7 +96,11 @@
   show heading.where(level: 3): it => 小节标题(it)
   show heading.where(level: 4): it => 小节标题(it, 方式: "（1）")
 
-  show cite: it => super(text(font: ("Times New Roman",), size: 0.9em, it))
+  show cite: it => {
+    // CSL 生成的内部上标也须显式设定，避免字体 sups 再次改变字号。
+    set super(typographic: false, size: 8pt)
+    super(text(font: ("Times New Roman",), it))
+  }
   show figure.where(kind: image): 图规则
   show figure.where(kind: table): 表规则
   show table: set table(stroke: 0.5pt)

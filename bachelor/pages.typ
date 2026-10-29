@@ -103,7 +103,7 @@
   let 正文 = if body != none { body } else { info.abstract-en }
   let 关键词 = if keywords != () { keywords } else { info.keywords-en }
   set page(..本科页面参数(纯题目(info), numbering: "i", 当前标题: "ABSTRACT"))
-  页面标题("ABSTRACT")
+  页面标题("ABSTRACT", english: true)
   正文样式({
     set text(font: 字体集.宋体, lang: "en")
     正文

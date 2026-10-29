@@ -1,8 +1,8 @@
 # AGENTS.md — 西安电子科技大学学位论文 Typst 模板
 
 本文件是本仓库的开发与验收规约，供在本仓库工作的开发者参考。
-硕士格式数值只认 [docs/格式规格.md](docs/格式规格.md)，本科格式数值只认
-[docs/本科规格.md](docs/本科规格.md)。
+硕士格式数值只认 [docs/格式规格.md](docs/格式规格.md)，本科只认
+[docs/本科规格.md](docs/本科规格.md)，博士差异只认 [docs/博士规格.md](docs/博士规格.md)。
 
 ## 先读这个
 
@@ -15,16 +15,19 @@
 
 ## 项目现状
 
-用 Typst 排版西电本科毕业设计（论文）与硕士学位论文，目标是输出可直接送审的 PDF。
+用 Typst 排版西电本科毕业设计（论文）、硕士与博士学位论文，目标是输出可直接送审的 PDF。
 
 - 包名 `modern-xdu-thesis`，仓库 <https://github.com/CoderJackZhu/modern-xdu-thesis>
-- `lib.typ` 是硕士入口；`bachelor.typ` 是本科实现入口，`lib.typ` 仅导出 `bachelor` 模块命名空间
+- `lib.typ` 是硕士 / 博士共用入口；`doctor.typ` 是博士独立入口，`bachelor.typ` 是本科入口
 - `typst.toml` 的 `[template]` 保持硕士 `template/thesis.typ`；本科完整示例在 `examples/bachelor-thesis.typ`
-- 硕士支持学术/专业学位与盲审；本科支持可开关封面、中英文摘要、目录、正文、附录、参考文献与致谢
+- 硕士与博士支持学术/专业学位及盲审；博士前置页按学术/专业分别实现；本科支持可开关封面、中英文摘要、目录、正文、附录、参考文献与致谢
 
 硕士用 112 页论文压测；本科用 55 页论文压测。两者的章起始页、参考文献数量与行距均与源论文一致；
 本科的分页骨架是在转换脚本补过填充页之后对齐的，「55 页一致」不等于逐页复现（原因见验收报告）。
 本科测量与限制见 [docs/本科验收报告.md](docs/本科验收报告.md)。
+另抽查六份公开成品（本科、硕士、博士各两份），来源、指纹、测量与历史差异见
+[docs/公开成品交叉核对.md](docs/公开成品交叉核对.md)。
+专业博士尚缺采用2026.5专用前置页的公开成品，当前按官网Word原始锚点核对。
 
 **改动后先跑 `bash dev/check-all.sh`。**
 
@@ -34,8 +37,8 @@
 
 ## 单源真值（最重要的一条）
 
-**硕士格式数值只认 [格式规格](docs/格式规格.md)，本科格式数值只认
-[本科规格](docs/本科规格.md)；两套实现不得互相套用数值。**
+**硕士格式数值只认 [格式规格](docs/格式规格.md)，本科只认
+[本科规格](docs/本科规格.md)，博士差异只认 [博士规格](docs/博士规格.md)；实现不得互相套用数值。**
 
 - 不得凭记忆、推测或「网上常见做法」填写任何字号 / 间距 / 页边距。
 - 不得直接照抄上游 NJU 代码的数值。
@@ -62,6 +65,10 @@
 | [docs/本科规格.md](docs/本科规格.md) | 本科版式规格与每项数值来源 |
 | [docs/本科验收报告.md](docs/本科验收报告.md) | 本科 PDF 反向测量、55 页压测、负向测试与已知限制 |
 | [docs/本科模块调研.md](docs/本科模块调研.md) | 本科模块的可行性调研、材料清单、许可盘点 |
+| [docs/博士规格.md](docs/博士规格.md) | 博士 Word 锚点、字段、冲突裁定与验收边界 |
+| [docs/本科模板对比.md](docs/本科模板对比.md) | 与 Hubert9982 本科模板的实测对比 |
+| [docs/公开成品交叉核对.md](docs/公开成品交叉核对.md) | 六份公开成品的来源、指纹、抽样测量、历史差异与验证边界 |
+| [docs/发布说明.md](docs/发布说明.md) | 本次变更、验证边界及GitHub / Universe发布步骤 |
 | `dev/` | 验收与维护工具（不进发布包，`typst.toml` 已 exclude） |
 | `README.md` | 面向使用者的说明 |
 
@@ -82,6 +89,9 @@ python3 dev/verify-index.py <pdf>                                    # 索引类
 python3 dev/verify-body.py <pdf>                                     # 硕士正文与后置部分
 python3 dev/verify-undergrad.py <pdf>                                # 本科版式
 python3 dev/verify-undergrad.py <55页源pdf> --reference               # 本科验收尺自检
+python3 dev/verify-doctor.py <pdf> --degree <academic|professional>   # 博士版式
+python3 dev/test-doctor.py                                          # 博士组合及负向测试
+python3 dev/inspect-public-thesis.py <pdf> --chapter-page <物理页>   # 公开成品只读抽样
 bash dev/test-undergrad-negative.sh                                  # 本科负向测试
 python3 dev/compare-pages.py <官方pdf> <本模板pdf> <输出目录>          # 逐页并排对照图
 python3 dev/compare-lines.py <官方pdf> <本模板pdf> <起始页> --map=…   # 逐行版式对照
@@ -108,7 +118,8 @@ typst compile --root . dev/stress/thesis.typ /tmp/stress.pdf
    无任何警告、输出是错的」：首行缩进全局失效、正文首页页码错、公式无法引用、
    索引编号丢章前缀、填空横线画成点线、前置空白填充页缺页眉页码。版式改动必须用
    PDF 反向测量（见下）。
-2. **版式改动必须对照官方输出**，不接受「看起来差不多」。对照目标是官方 `templet.pdf`。
+2. **版式改动必须对照官方依据**，不接受「看起来差不多」。研究生共用主体对照官方 `templet.pdf`；
+   博士专用前置页对照原始Word，不能用硕士示例证明博士封面已通过。
 3. **不碰范围外的文件。** `fonts/` 已移出仓库（商业字体，见格式规格 §2.2），不要重新引入。
 4. **不引入不必要的依赖。** 加 `@preview/...` 包前先确认标准库做不到。
 5. **`template/` 必须自包含。** `typst init` 只复制该目录，任何从这里引用的文件都必须在目录内。
@@ -171,7 +182,7 @@ python3 dev/verify-index.py <pdf>                       # 索引类页面（按�
 
 ### 与官方对照
 
-官方 `templet.pdf` 的关键实测值（本模板应对齐）：
+官方2024.04 `templet.pdf` 的关键实测值（源文件参照；与本模板的差异按格式规格裁定）：
 
 | 项 | 官方值 |
 |---|---|
@@ -182,6 +193,9 @@ python3 dev/verify-index.py <pdf>                       # 索引类页面（按�
 | 页码基线 | 788.84bp |
 | 章首页章标题 / 正文首行 | 125.44bp / 163.29bp |
 | 版心宽 | 439.37bp = 155.00mm |
+
+本模板页眉基线70.68bp、双横线77.12 / 78.12bp、页码792.28bp。
+这些差异已记录在格式规格与公开成品报告，不得将上表写成本模板的实测值。
 
 前置部分页码位置：封面 p1 / 中文题名页 p3 / 英文题名页 p5 / 声明 p7 / 摘要 p9 / ABSTRACT p11 /
 插图索引 p13 / 表格索引 p15 / 符号对照表 p17 / 缩略语对照表 p19 / 目录 p21。
@@ -203,4 +217,4 @@ python3 dev/verify-index.py <pdf>                       # 索引类页面（按�
 
 ## 明确不做
 
-本科毕业设计、博士学位论文、英文撰写的学位论文、开题报告 / 中期考核 / 答辩表格、详细中文摘要。
+英文撰写的学位论文、开题报告 / 中期考核 / 答辩表格、详细中文摘要。

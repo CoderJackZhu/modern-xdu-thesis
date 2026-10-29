@@ -19,7 +19,7 @@
 //   正文 12pt，固定 20 磅行距，首行缩进 2 字符，首行基线 = 章标题 + 13.36mm
 //   页眉：奇数页 `第一章 <章名>`，偶数页 `西安电子科技大学硕士学位论文`
 
-#import "doc.typ": 基线偏移, 到内容区, 页眉, 默认页脚, 上边距, 页眉顶, 行距, 正文号, 上伸, 行隙
+#import "doc.typ": 基线偏移, 到内容区, 页眉, 默认页脚, 上边距, 页眉顶, 行距, 正文号, 上伸, 行隙, 学位论文固定标题
 #import "../utils/style.typ": 字体
 
 // ============================================================
@@ -178,14 +178,20 @@ show cite: it => super(text(font: ("Times New Roman",), size: 0.9em, it))
 // ============================================================
 
 #let mainmatter(
+  graduate: "master",
   degree: "academic",
   blind: false,
   fonts: (:),
   info: (:),
-  header-title: "西安电子科技大学硕士学位论文",
+  header-title: none,
   it,
 ) = {
   let 字体集 = 字体 + fonts
+  let 固定标题 = if header-title == none {
+    学位论文固定标题(graduate)
+  } else {
+    header-title
+  }
 
   // 注意：顺序很关键，实测踩过两次坑：
   //   1. `set page` / `counter.update` 不能写在 `show heading` 里 —— show 规则的
@@ -202,14 +208,14 @@ show cite: it => super(text(font: ("Times New Roman",), size: 0.9em, it))
     // 按官方习惯：空白页**保留页眉与页码** —— 官方 p24 / p34 实测都是固定页眉 + 页码。
     // 这里补的页落在偶数页 → 页眉用固定标题；页码续前置部分的罗马数字，
     // 正文的阿拉伯页码从下一页（正文首页）重新开始。
-    page(numbering: "I", header: 页眉(header-title))[]
+    page(numbering: "I", header: 页眉(固定标题))[]
   }
 
   set page(
     numbering: "1",
     header-ascent: 上边距 - 页眉顶,
     footer-descent: 0mm,
-    header: 正文页眉(header-title),
+    header: 正文页眉(固定标题),
     footer: 默认页脚,
   )
 

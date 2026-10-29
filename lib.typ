@@ -1,4 +1,4 @@
-// 西安电子科技大学学位论文 Typst 模板 — 包入口（硕士；本科入口见 bachelor.typ）
+// 西安电子科技大学学位论文 Typst 模板 — 包入口（硕士 / 博士；本科入口见 bachelor.typ）
 //
 // 依据：docs/格式规格.md（硕士数值的唯一规则源）、docs/本科规格.md（本科数值）
 // 公开 API：
@@ -13,6 +13,7 @@
 // 本科实现保留独立文件入口；这里只导出模块命名空间，不接入任何硕士版式路径。
 #import "bachelor.typ" as bachelor
 #import "layouts/doc.typ": doc
+#import "pages/doctor-front.typ" as doctor-front
 #import "pages/cover.typ": cover
 #import "pages/title-cn.typ": title-cn
 #import "pages/title-en.typ": title-en
@@ -33,7 +34,8 @@
 // ============================================================
 // 校验
 // ============================================================
-#let 校验参数(degree, blind) = {
+#let 校验参数(graduate, degree, blind) = {
+  assert(graduate in ("master", "doctor"), message: "graduate 必须是 master 或 doctor")
   assert(degree in ("academic", "professional"),
     message: "degree 必须是 \"academic\" 或 \"professional\"，当前是 " + repr(degree))
   assert(type(blind) == bool,
@@ -52,13 +54,14 @@
 // documentclass
 // ============================================================
 #let documentclass(
+  graduate: "master",
   degree: "academic",
   blind: false,
   fonts: (:),
   info: (:),
   ..rest,
 ) = {
-  校验参数(degree, blind)
+  校验参数(graduate, degree, blind)
 
   // 默认 info 字段（与 doc.typ 内的默认值一致；这里再放一份方便测试时不依赖 doc）
   let 默认info = (
@@ -73,8 +76,13 @@
     subdiscipline: "电磁场与微波技术",
     domain: "人工智能",
     domain-en: "Artificial Intelligence",
-    degree-name: "工学硕士",
-    degree-name-en: "Master of Engineering",
+    degree-name: if graduate == "doctor" {
+      if degree == "professional" { "工程博士" } else { "工学博士" }
+    } else { "工学硕士" },
+    degree-name-en: if graduate == "doctor" {
+      if degree == "professional" { "Doctor of Engineering" } else { "Doctor of Philosophy" }
+    } else { "Master of Engineering" },
+    category-en: "Engineering",
     supervisor: ("李四", "教授"),
     supervisor-en: ("Li Si", "Professor"),
     enterprise-supervisor: (none, none),
@@ -108,7 +116,24 @@
     abstract: [这是一段示例中文摘要。请用真实内容替换。],
     abstract-en: [This is a sample English abstract. Replace it with real content.],
   )
+  if graduate == "doctor" {
+    默认info.title = ("基于 Typst 的博士学位论文", "排版方法研究")
+    默认info.title-en = ("Doctoral Dissertation Typesetting", "with Typst")
+    默认info.bio = (
+      ("基本情况", "请填写个人基本情况。"),
+      ("教育背景", "请填写教育背景。"),
+      ("攻读博士学位期间的研究成果", "请填写攻读博士学位期间的论文、专利等研究成果。"),
+    )
+  }
   let 合并info = 默认info + info
+  if graduate == "doctor" and degree == "professional" {
+    let 有导师(对) = 对 != none and 对 != () and 对.first() != none
+    assert(有导师(合并info.enterprise-supervisor) == 有导师(合并info.enterprise-supervisor-en),
+      message: "企业导师的中英文信息必须同时填写或同时省略。")
+  }
+  let 封面 = if graduate == "doctor" { doctor-front.cover } else { cover }
+  let 中文题名 = if graduate == "doctor" { doctor-front.title-cn } else { title-cn }
+  let 英文题名 = if graduate == "doctor" { doctor-front.title-en } else { title-en }
 
   return (
     // ---- 正文辅助（供 template 直接调用）----
@@ -117,6 +142,7 @@
     双语文献: 双语文献,
 
     // ---- 顶层元数据 ----
+    graduate: graduate,
     degree: degree,
     blind: blind,
     fonts: fonts,
@@ -124,21 +150,22 @@
 
     // ---- 全局样式入口（被 #show: doc 调用）----
     doc: (..args) => doc(
+      graduate: graduate,
       degree: degree, blind: blind,
       fonts: fonts, info: 合并info,
       ..args,
     ),
 
     // ---- 前置部分的 6 个页面 ----
-    cover: (..args) => cover(
+    cover: (..args) => 封面(
       degree: degree, blind: blind,
       fonts: fonts, info: 合并info, ..args,
     ),
-    title-cn: (..args) => title-cn(
+    title-cn: (..args) => 中文题名(
       degree: degree, blind: blind,
       fonts: fonts, info: 合并info, ..args,
     ),
-    title-en: (..args) => title-en(
+    title-en: (..args) => 英文题名(
       degree: degree, blind: blind,
       fonts: fonts, info: 合并info, ..args,
     ),
@@ -169,16 +196,24 @@
 
     // ---- 正文 ----
     mainmatter: (..args) => mainmatter(
+      graduate: graduate,
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
 
     // ---- 后置部分 ----
     appendix: (..args) => appendix(
+      graduate: graduate,
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
     references: (..args) => references(
+      graduate: graduate,
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
     acknowledgement: (..args) => acknowledgement(
+      graduate: graduate,
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
     bio: (..args) => bio(
+      graduate: graduate,
       degree: degree, blind: blind, fonts: fonts, info: 合并info, ..args),
   )
 }
+
+// 博士入口复用研究生系统，默认硕士入口及其调用方式保持兼容。
+#let doctor-documentclass(..args) = documentclass(graduate: "doctor", ..args)

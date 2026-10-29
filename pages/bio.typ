@@ -8,14 +8,13 @@
 //   正文 12pt，固定 20 磅行距，首行缩进 2 字符
 //   官方条目示例：1. 基本情况 / 2. 教育背景 / 3. 攻读硕士学位期间的研究成果
 
-#import "../layouts/doc.typ": 基线偏移, 到内容区, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶
+#import "../layouts/doc.typ": 基线偏移, 到内容区, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶, 学位论文固定标题
 #import "../utils/style.typ": 字体 as 字体集
 
 #let 正文Δ = 基线偏移(20pt, 12pt)
 #let 小标题Δ = 基线偏移(20pt, 15pt)
-#let 固定标题 = "西安电子科技大学硕士学位论文"
-
 #let bio(
+  graduate: "master",
   degree: "academic",
   blind: false,
   fonts: (:),
@@ -25,6 +24,7 @@
 ) = {
   let 字体集 = 字体集 + fonts
   let 条目 = if items != none { items } else { info.at("bio", default: ()) }
+  let 固定标题 = 学位论文固定标题(graduate)
 
   set page(
     numbering: "1",

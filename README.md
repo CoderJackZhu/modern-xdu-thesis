@@ -1,7 +1,7 @@
 # 西安电子科技大学学位论文 Typst 模板
 
-用 [Typst](https://typst.app) 排版西安电子科技大学本科毕业设计（论文）与硕士学位论文（中文撰写）。
-本科与硕士使用独立实现入口并放在同一个包中；`typst init` 的默认模板仍为硕士。
+用 [Typst](https://typst.app) 排版西安电子科技大学本科毕业设计（论文）、硕士与博士学位论文
+（中文撰写）。三者使用独立入口并放在同一个包中；`typst init` 的默认模板仍为硕士。
 
 **本模板不是学校官方发布**，版式数值以学校发布的 Word / LaTeX 模板及配套规范为准；与官方模板存在差异的地方
 逐条列在[「与官方模板的差异」](#与官方模板的差异)。
@@ -12,9 +12,9 @@
 
 ## 特性
 
-- **本科与硕士独立版式**：本科使用 150 × 247mm 版心、1.5 倍行距、页眉外侧页码与 0.75 磅单线；硕士保留 155 × 240.93mm 版心、固定 20 磅行距、页脚页码与双横线。
+- **本科与研究生独立版式**：本科使用 150 × 247mm 版心、1.5 倍行距、页眉外侧页码与 0.75 磅单线；硕士/博士保留 155 × 240.93mm 版心、固定 20 磅行距、页脚页码与双横线。
 - **学术学位 / 专业学位**：一个参数切换，差异只在封面与题名页的字段。
-- **盲审模式**：一个开关隐去封面、题名页与作者简介中的身份信息。
+- **研究生盲审模式**：一个开关隐去封面、题名页与作者简介中的身份信息。
 - **图表公式自动编号**：按章编号（图 2.1 / 表 2.1 / 式 (2-1)），插图索引、表格索引、
   目录自动生成，交叉引用直接写 `@标签`。
 - **参考文献**：GB/T 7714-2015，写作样式由 Typst 内置引擎完成；中文文献「等」与英文文献
@@ -30,7 +30,7 @@
 | 盲审模式 | 包含：由一个开关控制 |
 | 本科毕业设计（论文） | 包含：可开关封面、中英文摘要、目录、正文、附录、参考文献、致谢；独立 `bachelor` 入口 |
 | 本科装订独立表单 | 不包含：诚信书、任务书、中期检查表、成绩评定表、查重报告等由学院另行发放 |
-| 博士学位论文 | 不包含 |
+| 博士学位论文（中文撰写） | 包含：博士专用封面、中英文题名页，学术博士与专业博士字段；正文及后置部分沿用研究生模板 |
 | 英文撰写的学位论文 | 不包含 |
 | 开题报告 / 中期考核 / 答辩表格 | 不包含：不属于学位论文正文 |
 | 详细中文摘要（单独装订） | 不包含：学校规定与论文分开装订 |
@@ -59,6 +59,27 @@ cd my-thesis && typst compile thesis.typ                # 编译出 PDF
 把 [`examples/bachelor-thesis.typ`](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/examples/bachelor-thesis.typ)
 复制到自己的项目后编译即可。
 
+本次本科格式修正与博士支持目前位于仓库开发版，Universe的 `0.1.0` 尚不包含这些更新。
+使用前按下方步骤运行 `dev/pkg-stage.sh`。博士没有默认 `[template]` 入口，
+从包导入 `doctor-documentclass`（本地源码也可导入 `doctor.typ` 的 `documentclass`），完整示例见
+[`examples/doctor-thesis.typ`](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/examples/doctor-thesis.typ)：
+
+```typst
+#import "@preview/modern-xdu-thesis:0.1.0": doctor-documentclass
+#let thesis = doctor-documentclass(
+  degree: "professional",             // academic / professional
+  blind: false,
+  info: (
+    degree-name: "工程博士",
+    degree-name-en: "Doctor of Engineering",
+    category-en: "Electronic Information",
+    // 其余字段同硕士；专业博士的企业导师中英文须同时填写或同时省略
+  ),
+)
+#show: thesis.doc
+#(thesis.cover)()
+```
+
 想直接用仓库里的开发版：
 
 ```bash
@@ -67,7 +88,23 @@ cd modern-xdu-thesis
 bash dev/pkg-stage.sh                          # 把本仓库注册为本地 Typst 包，只需运行一次
 typst compile --root . template/thesis.typ out.pdf               # 硕士默认模板
 typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立示例
+typst compile --root . examples/doctor-thesis.typ doctor.pdf     # 学术博士
+typst compile --root . --input degree=professional examples/doctor-thesis.typ doctor-pro.pdf
 ```
+
+博士示例使用 `examples/doctor-ref.bib`，包外使用时将两个文件一起复制到项目。
+也可直接调用 `documentclass(graduate: "doctor", ...)`。博士默认学位名为工学博士 /
+Doctor of Philosophy（学术）、工程博士 / Doctor of Engineering（专业），请按实际学位覆盖。
+专业博士的 `category-en` 是学位类别英文，学术博士用 `discipline-en`；
+`domain` 仍用于中文题名页的领域。
+
+博士前置页按官方 Word 的原始文本框锚点重建，主体沿用研究生排版；来源、
+字段与验收边界见 [博士规格](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/docs/博士规格.md)。尚未经过原生 Word 逐像素比对或学校格式检测。
+与 Hubert9982 本科模板的对比和本次三项修正见 [本科模板对比](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/docs/本科模板对比.md)。
+另已抽查六份公开成品（本科、硕士、博士各两份），包括李瑞远2020年158页博士论文；
+来源、文件指纹、测量结果及历史版本差异见 [公开成品交叉核对](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/docs/公开成品交叉核对.md)。
+专业博士2026.5专用前置页的公开成品尚未取得，当前依据仍为官网原始Word。
+本次变更及发布步骤见 [发布说明](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/main/docs/发布说明.md)。
 
 `dev/pkg-stage.sh` 把仓库挂到 Typst 的本地包目录，模板里的
 `@preview/modern-xdu-thesis:0.1.0` 才能解析到当前工作区。脚本可重复运行，解除用
@@ -235,11 +272,12 @@ typst compile --root . examples/bachelor-thesis.typ bachelor.pdf # 本科独立�
 = 引言
 这里填写正文内容。
 
-#appendix(title: "补充材料", body: [这里填写附录内容。])
 #pagebreak(to: "odd")
 #acknowledgement()
 #pagebreak(to: "odd")
 #references(entries: ("作者. 题名[M]. 北京: 出版社, 1993.",))
+#pagebreak(to: "odd")
+#appendix(title: "补充材料", body: [这里填写附录内容。])
 ```
 
 封面默认输出并自动留空背面；未配置学校标识时显示固定尺寸的浅灰色占位框。
@@ -346,8 +384,10 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 
 | 项 | 说明 |
 |---|---|
-| 逐行位置 | 官方 PDF 嵌入 SimSun，本模板使用系统宋体，字体度量不同导致换行点不同，因此逐行位置无法逐行对齐；行距、字号、边界、章标题起排位置均一致 |
+| 逐行位置 | 字体度量不同导致换行点漂移，不能逐行对齐；固定行距、版心和标题按规格测量，LaTeX与Typst的磅值换算亦有微差 |
+| 研究生页眉与页码 | 当前页眉基线比2024.04官方PDF及李瑞远2020成品高约0.88mm，双线高约0.44mm；页码低约1.21mm，与既有过检论文及两份2026硕士成品一致。数值与裁定见格式规格及公开成品报告 |
 | 封面与声明 | 官方 LaTeX 模板有两代实现（2024.04 与新版重写版），本模板采用 2024.04 版与 Word 2025.01 版 |
+| 博士前置页 | 学术按Word 2025.01、专业按专用Word 2026.5锚点重建；历史博士成品的位置存在版本差异，未作原生Word像素级验收 |
 | 符号对照表字号 | 本模板按《撰写要求》采用 12pt；官方 LaTeX 示例未包含此页 |
 | 附录页 | 官方示例未包含附录页，其坐标按其它后置部分的统一规则处理 |
 | 本科封面标识 | 校名标准字与校徽在官方封面里是图形（无文字层）；因官方再分发条款不可得，本包不附带素材，用户可通过 `cover-wordmark` / `cover-emblem` 提供，未提供时显示固定尺寸占位框 |
@@ -355,26 +395,29 @@ $ bold(y) = bold(A) bold(h) + bold(n) $       // 公式编号「(2-1)」，右�
 ## 目录结构
 
 ```text
-lib.typ          硕士包入口，并导出 bachelor 模块命名空间
+lib.typ          硕士/博士共用入口，导出 doctor-documentclass 与 bachelor 命名空间
+doctor.typ       博士独立入口，导出 documentclass
 bachelor.typ     本科独立实现入口，bachelor.documentclass(info:, cover-enabled:, cover-wordmark:, cover-emblem:)
 bachelor/        本科专用版式、页面与正文规则（不导入硕士 layouts/pages）
-layouts/         硕士页面版式核心
-pages/           硕士各页面组件
+layouts/         研究生页面版式核心
+pages/           研究生页面组件及博士专用前置页
 utils/           字体映射与无状态共用工具
 template/        硕士示例，也是 typst init 默认复制的目录
-examples/        本科完整示例（手动复制使用）
+examples/        本科与博士完整示例（博士配套 doctor-ref.bib）
 写作要求.md       官方撰写要求对照表 + 提交前自查清单
 dev/             仓库开发与验收工具（不进发布包）
 docs/            格式规格、官方要求摘录与实现说明（不进发布包）
 ```
 
-硕士从 `template/thesis.typ` 开始；本科复制 `examples/bachelor-thesis.typ` 到自己的项目。
+硕士从 `template/thesis.typ` 开始；本科复制 `examples/bachelor-thesis.typ`；
+博士复制 `examples/doctor-thesis.typ` 与 `examples/doctor-ref.bib`。
 
 ## 参考资料
 
 - 西安电子科技大学《毕业设计手册》2019 与教务处优秀毕业设计（论文）Word 样例
 - 西安电子科技大学研究生院《研究生学位论文模板（2015 年修订版）2025.01 修订》及配套《撰写要求》
-- [xduts](https://github.com/note286/xduts) —— 官方 LaTeX 模板
+- 研究生院学术博士2025.01资料包、专业博士2026.09资料包及其中的2026.5专用前置页
+- [xduts](https://github.com/note286/xduts) —— 官网推荐的社区 LaTeX 实现参照
 - [modern-nju-thesis](https://github.com/nju-lug/modern-nju-thesis) —— 本模板的初始骨架（MIT）
 
 ## 反馈与许可

@@ -63,7 +63,14 @@
 // 文档级默认页眉/页脚据此切换 —— 这样用户模板里那些 `#pagebreak(to: "odd")`
 // 产生的填充页会自动继承正确样式，不需要改用户写法。
 #let 前置编号开始 = state("前置编号开始", false)
-#let 固定页眉文字 = "西安电子科技大学硕士学位论文"
+// 研究生论文的固定页眉只按“硕士 / 博士”切换；学术 / 专业学位不改变校名标题。
+#let 学位论文固定标题(graduate) = {
+  if graduate == "doctor" {
+    "西安电子科技大学博士学位论文"
+  } else {
+    "西安电子科技大学硕士学位论文"
+  }
+}
 
 // 行距 / 字号
 #let 行距 = 20pt              // 固定行距 20 磅
@@ -197,6 +204,7 @@
 
 #let doc(
   // documentclass 传入参数
+  graduate: "master",          // "master" | "doctor"
   degree: "academic",          // "academic" | "professional"
   blind: false,                 // 盲审模式
   info: (:),                    // 论文信息
@@ -206,7 +214,17 @@
   lang: "zh",
   it,
 ) = {
-  // 1. 默认信息（学硕 / 专硕合并默认值，字段名沿用 XDU 规范）
+  // 1. 默认信息（研究生论文共用字段；学位名称按培养层次给默认值）
+  let 默认学位名 = if graduate == "doctor" {
+    if degree == "professional" { "工程博士" } else { "工学博士" }
+  } else {
+    if degree == "professional" { "电子信息硕士" } else { "工学硕士" }
+  }
+  let 默认学位名英 = if graduate == "doctor" {
+    if degree == "professional" { "Doctor of Engineering" } else { "Doctor of Philosophy" }
+  } else {
+    if degree == "professional" { "Master of Electronic Information" } else { "Master of Engineering" }
+  }
   info = (
     title: ("基于 Typst 的西安电子科技大学学位论文模板",),
     title-en: ("XIDIAN UNIVERSITY Thesis Template for Typst",),
@@ -219,8 +237,8 @@
     subdiscipline: "电磁场与微波技术",  // 学硕：二级学科
     domain: "人工智能",                // 专硕：领域
     domain-en: "Artificial Intelligence",
-    degree-name: "工学硕士",           // 申请学位类别
-    degree-name-en: "Master of Engineering",
+    degree-name: 默认学位名,           // 申请学位类别
+    degree-name-en: 默认学位名英,
     supervisor: ("李四", "教授"),      // 学硕 / 专硕学校导师
     supervisor-en: ("Li Si", "Professor"),
     enterprise-supervisor: (none, none), // 专硕企业导师（学硕为 none）
@@ -280,7 +298,7 @@
     header-ascent: 上边距 - 页眉顶,  // 页眉帧顶落到 20mm
     footer-descent: 0mm,             // 页脚帧顶落到版心下边界
     // 前置填充页：从「摘要」起带固定页眉 + 罗马页码，之前全空（见 前置编号开始 注释）
-    header: context if 前置编号开始.get() { 页眉(固定页眉文字) },
+    header: context if 前置编号开始.get() { 页眉(学位论文固定标题(graduate)) },
     footer: context if 前置编号开始.get() { 默认页脚 },
     numbering: "I",
   )

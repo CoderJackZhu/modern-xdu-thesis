@@ -167,6 +167,28 @@ def main() -> int:
 
     if not args.reference and not args.stress:
         full_text = "\n".join(texts)
+        abstract_titles = [s for page in doc for b in page.get_text("dict")["blocks"]
+                           for line in b.get("lines", []) for s in line["spans"]
+                           if s["text"] == "ABSTRACT" and abs(s["size"] - 16) < .1]
+        check("英文摘要标题16pt加粗TNR", len(abstract_titles) == 1
+              and bool(abstract_titles[0]["flags"] & 16)
+              and "Times" in abstract_titles[0]["font"])
+        citations = [s for page in doc for b in page.get_text("dict")["blocks"]
+                     for line in b.get("lines", []) for s in line["spans"]
+                     if re.fullmatch(r"\[\d+(?:,\d+)*\]", s["text"]) and s["size"] < 9]
+        check("正文手动引用8pt", bool(citations)
+              and all(abs(s["size"] - 8) < .05 for s in citations))
+        starts = {
+            keyword: next((pn for pn, page in enumerate(all_lines, 1)
+                           if any(keyword in line["text"] and abs(line["size"] - 16) < .1
+                                  and abs(line["y"] - mm(42.8)) < mm(.7) for line in page)), 0)
+            for keyword in ("参考文献", "附录")
+        }
+        # 致谢标题可能被字体拆成两行（“致”“谢”），不能沿用单行关键字判定。
+        starts["致谢"] = next((pn for pn, page in enumerate(all_lines, 1)
+                            if "致谢" in "".join(line["text"] for line in page)), 0)
+        check("后置顺序致谢参考文献附录", 0 < starts["致谢"] < starts["参考文献"] < starts["附录"],
+              str(starts))
         check("附录图编号独立", "图 A1" in full_text)
         check("附录公式编号独立", "(A-1)" in full_text)
 

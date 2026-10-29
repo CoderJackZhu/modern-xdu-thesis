@@ -4,13 +4,12 @@
 // 官方实测（templet.pdf 第 41 页）：标题基线 44.2x mm（黑体 16pt 居中）；
 // 正文 12pt，固定 20 磅行距，首行缩进 2 字符；页码续正文阿拉伯数字。
 
-#import "../layouts/doc.typ": 基线偏移, 到内容区, 页眉, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶
+#import "../layouts/doc.typ": 基线偏移, 到内容区, 页眉, 默认页脚, 页面大标题, 后置页页眉, 上边距, 页眉顶, 学位论文固定标题
 #import "../utils/style.typ": 字体 as 字体集
 
 #let 正文Δ = 基线偏移(20pt, 12pt)
-#let 固定标题 = "西安电子科技大学硕士学位论文"
-
 #let acknowledgement(
+  graduate: "master",
   degree: "academic",
   blind: false,
   fonts: (:),
@@ -19,6 +18,7 @@
   body: none,
 ) = {
   let 字体集 = 字体集 + fonts
+  let 固定标题 = 学位论文固定标题(graduate)
 
   set page(
     numbering: "1",

@@ -79,13 +79,14 @@
   numbering: numbering,
 )
 
-#let 页面标题(标题, outlined: false, bookmarked: true) = {
+#let 页面标题(标题, outlined: false, bookmarked: true, english: false) = {
   let 字号 = 16pt
   let 上伸 = 基线偏移(字号)
   v(42.8mm - 上边距 - 上伸)
   block(width: 100%, below: 25.4pt, align(center, {
     show heading: it => {
-      set text(font: 字体.黑体, size: 字号, weight: "regular",
+      set text(font: if english { ("Times New Roman",) } else { 字体.黑体 },
+        size: 字号, weight: if english { "bold" } else { "regular" },
         top-edge: 上伸, bottom-edge: "baseline")
       it.body
     }
