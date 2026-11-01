@@ -1,0 +1,4 @@
+{
+  "command": "bash dev/check-all.sh",
+  "exit_code": 0
+}

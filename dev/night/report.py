@@ -35,6 +35,12 @@ def main():
     passed=[c for c in cases if c['compile_rc']==0]
     pages=sum(c['general']['pages'] for c in passed)
     log=(HERE/'out/check-all.log').read_text()
+    status=json.loads((HERE/'check-all-status.json').read_text())
+    assert status['exit_code']==0 and '通过 38 项，失败 0 项' in log
+    blind=json.loads((HERE/'blind-results.json').read_text())
+    assert not blind['failed']
+    package_link=Path.home()/'Library/Application Support/typst/packages/preview/modern-xdu-thesis/0.3.1'
+    assert package_link.is_symlink() and package_link.resolve()==ROOT.parent/'modern-xdu-thesis'
     skips=[line.strip() for line in log.splitlines() if '跳过' in line or '未找到' in line]
     elapsed=int(time.time()-START)
     base=rounds[0]['base']
@@ -163,6 +169,7 @@ def main():
 - 7类通用检查逐PDF执行：按stride读取栅格墨迹；分版式的页眉/页码、罗马到阿拉伯切换；未解析/空引用；图表公式的章前缀和序列；目录内部链接的文字与目的页码；正文连续基线；编号区空白填充页。本科正文按23.4pt实现的1.5倍口径，研究生/行政表按20pt；前置页、表格行内边距、公式高度不能混作普通正文行距。
 - 通用检查14个故障注入样本全部检出，正常多页、正确目录和表格内边距对照均通过，含第二页缺陷、缺章前缀、跳号、错误目录文字/页码、本科行距错误。脚注/公式附近的连续普通正文行亦进入检查；不声称含复杂公式的行盒或表格行高也应恒为20pt。
 - 对140份长内容样本额外记录实际条目数：长表150/160行均完整；70图和70表均可提取；研究生符号/缩略语表140/143条均完整；300条文献标签1～300均存在。中英期刊、会议、学位论文、专利、标准、网页、书籍章节均经过真实cite。此项记录内容存在性，不是对所有文献著录细节逐条作国家标准全文验收。
+- 另以输入中实际虚构姓名、导师名、学号及PDF Author元数据复核126份成功的盲审PDF，零泄漏；专门注入文字/元数据泄漏的负向样本能检出。没有用现有尺里固定的“张三”代替本轮身份字段。
 - 20章、单章、四/五级标题、公式/脚注标题、并排子图、代码/脚注/嵌套列表、多附录及附录内图表公式、多页致谢/简介/成果、盲审开关均已生成并实际编译。长题目、表格字号、多行公式、空字段等另做最小复现和PNG复核，未对全部PDF逐页肉眼审读。
 - 行政表和课程报告没有独立英文题目页、论文摘要/关键词页、图表目录、作者简介、附录API，也没有盲审参数；相关富内容放入其现有body字段，测试其流式分页，不声称提供这些论文页面。课程报告没有校级统一模板。
 - **总回归 `bash dev/check-all.sh`：38项通过，0失败**；真实硕士112页、本科55页压力测试通过，默认init产物2个文件、33页。不可把退出码0理解成全部外部基准均已校验。
@@ -176,10 +183,11 @@ def main():
 - 三轮新增A/B/C问题数：9、0、0；已覆盖全部矩阵，满足连续两轮无新问题的停止条件。
 - D类（检查脚本误报）修正：**4次**。保留原始现有验收尺退出码，不改现有脚本；固定内容/页码的差异不直接计入A/B/C。修正及重跑记录见 `dev/night/triage.json`。
 - 源文件SHA256与最终编译记录逐一一致：**{matched}**；结果与现有尺失败文本见 `results-r01.json`～`results-r03.json`，复现坐标见 `repro-results.json`。
+- 包软链：最终在主仓库目录执行 `bash dev/pkg-stage.sh`，全局 `preview/modern-xdu-thesis/0.3.1` 已指回主仓库；本次批量测试全程使用 `out/packages` 的进程局部路径。主工作区git状态干净。
 - 本地分支：`night/stress-20261102`；worktree：`{ROOT}`。写入范围仅 `dev/night/`（另有用户指定的本机路径配置复制与仓库外报告）；未修改模板、规格、现有脚本、元数据，未引入字体或preview依赖，未push、开PR或发布。
 '''
     REPORT.parent.mkdir(parents=True,exist_ok=True);REPORT.write_text(body)
-    summary=dict(report=str(REPORT),base=base,documents=len(cases),pdfs=len(passed),pages=pages,compile_fail=sum(c['compile_rc']!=0 for c in cases),legacy_failed_documents=sum(any(x['rc'] for x in c['legacy']) for c in cases),general_failed_documents=sum(bool((c.get('general') or {}).get('issues')) for c in cases),negative_tests=14,findings=dict(A=4,B=1,C=4),source_hashes_match=matched,check_all=dict(passed=38,failed=0,skips=skips),elapsed_seconds=elapsed)
+    summary=dict(report=str(REPORT),base=base,documents=len(cases),pdfs=len(passed),pages=pages,compile_fail=sum(c['compile_rc']!=0 for c in cases),legacy_failed_documents=sum(any(x['rc'] for x in c['legacy']) for c in cases),general_failed_documents=sum(bool((c.get('general') or {}).get('issues')) for c in cases),negative_tests=15,blind_pdfs=len(blind['cases']),global_package_target=str(package_link.resolve()),findings=dict(A=4,B=1,C=4),source_hashes_match=matched,check_all=dict(passed=38,failed=0,skips=skips),elapsed_seconds=elapsed)
     (HERE/'summary.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
     print(json.dumps(summary,ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

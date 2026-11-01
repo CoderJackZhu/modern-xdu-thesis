@@ -7,7 +7,9 @@
   "compile_fail": 34,
   "legacy_failed_documents": 305,
   "general_failed_documents": 3,
-  "negative_tests": 14,
+  "negative_tests": 15,
+  "blind_pdfs": 126,
+  "global_package_target": "/Volumes/DATA/Code/Own/modern-xdu-thesis",
   "findings": {
     "A": 4,
     "B": 1,
@@ -23,5 +25,5 @@
       "官方 Word 样例：未找到（/Users/jackzhu/.hermes/assets/xdu-thesis-official/undergrad/official-word-template.doc）"
     ]
   },
-  "elapsed_seconds": 1592
+  "elapsed_seconds": 1903
 }
