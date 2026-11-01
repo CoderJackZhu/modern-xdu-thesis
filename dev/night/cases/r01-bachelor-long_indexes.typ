@@ -35,7 +35,7 @@
 #(t.outline-page)()
 #show: t.mainmatter
 
-= 第一章 测试绪论 <head:one>
+= 测试绪论 <head:one>
 
 本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
 
@@ -57,7 +57,7 @@
 #figure(rect(width: 35mm, height: 6mm), caption: [图题测试3]) <fig:many3>
 #figure(table(columns: 2, [项目], [数值], [测试3], [1]), caption: [表题测试3]) <tab:many3>
 
-= 第二章 图表公式
+= 图表公式
 
 本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
 

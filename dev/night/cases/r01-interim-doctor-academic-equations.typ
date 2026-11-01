@@ -36,6 +36,7 @@
     建立可复现的复杂系统建模流程，形成支持实验验证和结果分析的模板化方法。
   ],
   completed: [
+#set math.equation(numbering: "(1)")
 $ y_0 &= a x + b \ z_0 &= c x + d $ <eq:multi0>
 
 式 @eq:multi0。

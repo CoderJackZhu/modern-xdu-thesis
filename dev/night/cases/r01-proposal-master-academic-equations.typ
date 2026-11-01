@@ -38,6 +38,7 @@
 #proposal(body: (
   topicSource: [国家自然科学基金项目（示例）。],
   abstract: [
+#set math.equation(numbering: "(1)")
 $ y_0 &= a x + b \ z_0 &= c x + d $ <eq:multi0>
 
 式 @eq:multi0。

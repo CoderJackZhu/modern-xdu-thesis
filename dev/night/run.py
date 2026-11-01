@@ -65,10 +65,15 @@ def main():
     if a.only:cases=[c for c in cases if a.only in c['name']]
     start=time.monotonic();results=[]
     if a.recheck:
+        prior=json.loads((HERE/f'results-r{a.round:02}.json').read_text())
+        mapped={x['name']:x for x in prior['cases']}
         for c in cases:
             pdf=OUT/(c['name']+'.pdf')
             if pdf.exists():
                 result=checks.inspect(pdf,c);(OUT/(c['name']+'.checks.json')).write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
+                mapped[c['name']]['general']=result
+        prior['cases']=sorted(mapped.values(),key=lambda x:x['name'])
+        (HERE/f'results-r{a.round:02}.json').write_text(json.dumps(prior,ensure_ascii=False,indent=2)+'\n')
         return
     with concurrent.futures.ThreadPoolExecutor(max_workers=a.workers) as pool:
         futures=[pool.submit(run_case,c,env) for c in cases]
@@ -76,6 +81,10 @@ def main():
             results.append(f.result())
             if len(results)%20==0:print(f'第{a.round}轮 {len(results)}/{len(cases)}，编译失败{sum(x["compile_rc"]!=0 for x in results)}，耗时{time.monotonic()-start:.0f}s',flush=True)
     result=dict(round=a.round,base=command(['git','rev-parse','origin/main'],env)[1].strip(),elapsed=round(time.monotonic()-start,2),cases=sorted(results,key=lambda x:x['name']))
+    if a.only and (HERE/f'results-r{a.round:02}.json').exists():
+        prior=json.loads((HERE/f'results-r{a.round:02}.json').read_text())
+        mapped={x['name']:x for x in prior['cases']};mapped.update({x['name']:x for x in results})
+        result['cases']=sorted(mapped.values(),key=lambda x:x['name']);result['elapsed']+=prior['elapsed']
     (HERE/f'results-r{a.round:02}.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
     print(f'完成第{a.round}轮：{len(results)}份，{result["elapsed"]}秒',flush=True)
 

@@ -25,6 +25,26 @@
     "page": 2
   },
   {
+    "test": "empty_reference",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "question_reference",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "missing_prefix",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "chapter_switch",
+    "caught": 1,
+    "page": 2
+  },
+  {
     "test": "numbering",
     "caught": 1,
     "page": 2
@@ -37,5 +57,9 @@
   {
     "test": "toc",
     "caught": 1
+  },
+  {
+    "test": "toc-title",
+    "caught": 2
   }
 ]

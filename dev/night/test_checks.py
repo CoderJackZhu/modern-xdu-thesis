@@ -33,13 +33,23 @@ def test():
         'header':lambda d:clear(d,1,(0,45,595,80)),
         'blank':lambda d:(clear(d,2,(0,45,595,80)),clear(d,2,(270,780,320,810))),
         'references':lambda d:d[1].insert_text((100,300),'Unresolved ?? reference []',fontsize=12),
+        'empty_reference':lambda d:d[1].insert_text((100,300),'Empty reference []',fontsize=12),
+        'question_reference':lambda d:d[1].insert_text((100,300),'?',fontsize=12),
+        'missing_prefix':lambda d:d[1].insert_text((470,340),'(1)',fontsize=12),
+        'chapter_switch':lambda d:d[0].insert_text((100,280),'第一章',fontname='china-s',fontsize=16),
         'numbering':lambda d:(d[1].insert_text((200,320),'(1)',fontsize=12),d[1].insert_text((470,340),'(1-2)',fontsize=12)),
         'spacing':lambda d:(clear(d,1,(85,140,580,240)),*[d[1].insert_text((100,160+24*j),'Long fictional body paragraph for line spacing verification.',fontsize=12) for j in range(4)]),
     }
     for name,mutate in mutations.items():
-        d=base();mutate(d);r=save(d,name);key='pagination' if name=='header' else name
+        d=base();mutate(d);r=save(d,name);key={'header':'pagination','empty_reference':'references','question_reference':'references','missing_prefix':'numbering','chapter_switch':'pagination'}.get(name,name)
         assert r['counts'][key]>0,(name,r)
         summary.append(dict(test=name,caught=r['counts'][key],page=2 if name!='blank' else 3))
+    # 跨表格行的内边距不应被当作正文基线间距。
+    d=base();clear(d,1,(85,140,580,260))
+    for j in range(4):
+        d[1].insert_text((100,160+25*j),'Long fictional table cell contents for validation.',fontsize=12)
+        d[1].draw_line((90,165+25*j),(540,165+25*j))
+    r=save(d,'table-positive');assert r['counts']['spacing']==0,r
     # 独立目录样本：文字在目的页存在，页码故意写错。
     d=base();clear(d,0,(85,140,580,260));d[0].insert_text((250,125),'目录',fontname='china-s',fontsize=16)
     d[0].insert_text((100,170),'Target Heading',fontsize=12);d[0].insert_text((490,170),'9',fontsize=12)
@@ -47,10 +57,13 @@ def test():
     d[0].insert_link(dict(kind=fitz.LINK_GOTO,from_=fitz.Rect(98,155,520,176),page=1,to=fitz.Point(100,280))) if False else None
     d[0].insert_link({'kind':fitz.LINK_GOTO,'from':fitz.Rect(98,155,520,176),'page':1,'to':fitz.Point(100,280)})
     r=save(d,'toc');assert r['counts']['toc']>0,r;summary.append(dict(test='toc',caught=r['counts']['toc']))
+    # 同时证明目录标题不匹配会被检出。
+    d=fitz.open(OUT/'toc.pdf');clear(d,1,(85,260,580,300));r=save(d,'toc-title');assert any('目录文字' in i['detail'] for i in r['issues']),r
+    summary.append(dict(test='toc-title',caught=r['counts']['toc']))
     # 对该样本改回正确页码后，目录检查应通过，防止一个只会报错的检查。
     d=fitz.open(OUT/'toc.pdf');clear(d,0,(480,153,530,178));d[0].insert_text((490,170),'1',fontsize=12)
     r=save(d,'toc-positive');assert r['counts']['toc']==0,r
     (OUT.parent.parent/'negative-results.json').write_text(json.dumps(summary,ensure_ascii=False,indent=2)+'\n')
-    print('8项故障注入全部检出；正常多页与正确目录通过。')
+    print(f'{len(summary)}项故障注入全部检出；正常多页、表格行距与正确目录通过。')
 
 if __name__=='__main__':test()

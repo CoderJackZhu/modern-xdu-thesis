@@ -20,6 +20,7 @@
 #proposal(body: (
   titleSource: [教师科研项目（示例）。],
   purpose: [
+#set math.equation(numbering: "(1)")
 $ y_0 &= a x + b \ z_0 &= c x + d $ <eq:multi0>
 
 式 @eq:multi0。

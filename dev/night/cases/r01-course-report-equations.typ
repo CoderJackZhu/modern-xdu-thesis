@@ -25,6 +25,7 @@
       操作系统：macOS；编译器：Clang；语言：C++20；输入数据：约 10 MB 的虚构文本。
     ]),
     ("实验原理", [
+#set math.equation(numbering: "(1)")
 $ y_0 &= a x + b \ z_0 &= c x + d $ <eq:multi0>
 
 式 @eq:multi0。

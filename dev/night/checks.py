@@ -6,6 +6,7 @@
 """
 import argparse
 import json
+import math
 import re
 from collections import defaultdict
 from pathlib import Path
@@ -47,6 +48,7 @@ def has_header(ls): return any(48<l['y']<80 and l['size']>=9.5 for l in ls)
 def ink_in(page,rect):
     """按 stride 逐行切片，忽略填充字节，返回真实非白墨迹包围盒。"""
     rect=fitz.Rect(rect)&page.rect
+    rect=fitz.Rect(math.ceil(rect.x0),math.ceil(rect.y0),math.floor(rect.x1),math.floor(rect.y1))
     if rect.is_empty:return None
     pm=page.get_pixmap(matrix=fitz.Matrix(1,1),clip=rect,colorspace=fitz.csGRAY,alpha=False,annots=False)
     samples=pm.samples
@@ -174,26 +176,27 @@ def toc(doc,all_lines,profile):
                     if clean and clean not in target_text:out.append(dict(check='toc',page=i+1,detail=f'目录文字不在目标页{target+1}：{t[:100]}'))
     return out
 
-def spacing(all_lines,profile):
+def spacing(doc,all_lines,profile):
     out=[];expected=23.4 if profile['kind']=='bachelor' else 20.0
     for i,ls in enumerate(all_lines):
         if profile['kind'] in ('thesis','bachelor') and page_number(ls,profile['kind'])[1] is None:continue
         # 同一文字块中的连续长正文行，排除表格单元格、代码、短图题与数学字形。
         groups=defaultdict(list)
+        rules=[float(it[1].y) for dr in doc[i].get_drawings() for it in dr['items'] if it[0]=='l' and abs(it[1].y-it[2].y)<.1 and abs(it[1].x-it[2].x)>10]
         for l in ls:
-            if 85<l['y']<780 and len(l['text'])>=18 and all(abs(s['size']-12)<.15 and 'Math' not in s['font'] for s in l['spans']):groups[0].append(l)
+            if 85<l['y']<780 and len(l['text'])>=18 and all(abs(s['size']-12)<.15 and not(s['flags'] & 16) and 'Hei' not in s['font'] and 'Math' not in s['font'] for s in l['spans']):groups[0].append(l)
         for group in groups.values():
             ys=sorted(set(round(l['y'],3) for l in group))
             for a,b in zip(ys,ys[1:]):
                 delta=b-a
-                if 8<delta<30 and abs(delta-expected)>.08 and not any(a+.2 < z['y'] < b-.2 and z not in group for z in ls):
+                if 8<delta<30 and abs(delta-expected)>.08 and not any(a+.2 < z['y'] < b-.2 and z not in group for z in ls) and not any(a < y < b for y in rules):
                     out.append(dict(check='spacing',page=i+1,detail=f'相邻正文基线 {a:.3f}/{b:.3f}，差{delta:.3f}bp，应为{expected:.3f}bp'))
     return out
 
 def inspect(path,profile):
     with fitz.open(path) as doc:
         ls=[lines(p) for p in doc]
-        issues=geometry(doc,ls,profile)+pagination(doc,ls,profile)+unresolved(ls)+numbering(ls,profile)+toc(doc,ls,profile)+spacing(ls,profile)
+        issues=geometry(doc,ls,profile)+pagination(doc,ls,profile)+unresolved(ls)+numbering(ls,profile)+toc(doc,ls,profile)+spacing(doc,ls,profile)
         return dict(pages=len(doc),issues=issues,counts={k:sum(x['check']==k for x in issues) for k in ('ink','pagination','blank','references','numbering','toc','spacing')})
 
 if __name__=='__main__':

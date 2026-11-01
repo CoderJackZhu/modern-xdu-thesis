@@ -4,7 +4,7 @@
 
 #let (doc, interim) = bachelor-interim-documentclass(
   info: (
-    title: "多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究",
+    title: "多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究 Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems ",
     author: "张三",
     major: "电子信息工程",
     student-id: "22010100001",

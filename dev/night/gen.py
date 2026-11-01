@@ -33,7 +33,7 @@ def bibliography(n):
         typ=types[i%len(types)]
         author='张甲 and 王乙 and 李丙 and 赵丁 and 钱戊' if chinese else 'Alpha, Alice and Beta, Bob and Gamma, Carol and Delta, David and Epsilon, Eve'
         title=f'虚构研究条目{i+1}' if chinese else f'Fictional Research Item {i+1}'
-        result.append(f'@{typ}{{r{i},\n author = {{{author}}},\n title = {{{title}}},\n year = {{2025}},\n date = {{2025-06-01}},\n journal = {{虚构研究期刊}},\n booktitle = {{Fictional Collected Research}},\n publisher = {{Fictional Press}},\n institution = {{Fictional University}},\n school = {{Fictional University}},\n number = {{CN000000{i}}},\n pages = {{1--9}},\n url = {{https://example.com/paper/{i}}},\n urldate = {{2026-10-01}},\n langid = {{{"chinese" if chinese else "english"}}}\n}}')
+        result.append(f'@{typ}{{r{i},\n author = {{{author}}},\n title = {{{title}}},\n year = {{2025}},\n date = {{2025-06-01}},\n journal = {{{"虚构研究期刊" if chinese else "Fictional Research Journal"}}},\n booktitle = {{Fictional Collected Research}},\n publisher = {{Fictional Press}},\n institution = {{Fictional University}},\n school = {{Fictional University}},\n number = {{CN000000{i}}},\n pages = {{1--9}},\n url = {{https://example.com/paper/{i}}},\n urldate = {{2026-10-01}},\n langid = {{{"chinese" if chinese else "english"}}}\n}}')
     return '\n\n'.join(result)+'\n'
 
 def content(s, v):
@@ -122,10 +122,15 @@ def thesis(p,s,v):
     if s=='long_chapter': heading='第一章 '+('复杂系统的鲁棒建模方法与验证 '* (9+v))
     if s=='heading_math': heading='第一章 $alpha + beta$ 模型'
     if s=='heading_footnote': heading='第一章 测试#footnote[章标题脚注测试]'
+    if bachelor: heading=heading.replace('第一章 ', '', 1)
     source+='= '+heading+' <head:one>\n\n'+repeated(4)+'\n\n'
-    source+=content(s,v)+'\n\n'
+    extra_body=content(s,v)
+    if bachelor and s=='twenty_chapters':
+        import re
+        extra_body=re.sub(r'(?m)^= 第[一二三四五六七八九十]+章 ', '= ', extra_body)
+    source+=extra_body+'\n\n'
     if s not in ('twenty_chapters','one_chapter'):
-        source+='= 第二章 图表公式\n\n'+ZH+'\n\n'
+        source+=('= 图表公式' if bachelor else '= 第二章 图表公式')+'\n\n'+ZH+'\n\n'
     source+='#figure(rect(width: 45mm, height: 12mm), caption: [系统框图]) <fig:model>\n#figure(table(columns: 2, [参数], [数值], [实验], [1]), caption: [参数设置]) <tab:model>\n$ y = a x + b $ <eq:model>\n图 @fig:model、表 @tab:model、式 @eq:model；见 @head:one。\n'
     if s=='appendices':
         for i in range(3):
@@ -154,7 +159,7 @@ def supporting(p,s,v):
     # 替换调用参数，不改变行政表的固定字段或章节。
     if s=='long_titles':
         start=source.index('    title: '); end=source.index('\n',start)
-        source=source[:start]+'    title: '+q('多源异构系统验证方法研究'*(10+v))+','+source[end:]
+        source=source[:start]+'    title: '+q('多源异构系统验证方法研究'*(10+v)+' Reliable Modeling and Verification of Complex Systems '*(5+v))+','+source[end:]
     if s in ('long_fields','multiple_supervisors','optional_empty','required_empty','required_none','mixed'):
         import re
         changes={}
@@ -167,8 +172,9 @@ def supporting(p,s,v):
         for k,val in changes.items():
             source=re.sub(r'(?m)^    '+k+r': .*$',lambda m:'    '+k+': '+val+',',source)
     extra=content(s,v)
+    if s=='equations': extra='#set math.equation(numbering: "(1)")\n'+extra
     if s=='long_abstract': extra=repeated(100+v*3)+EN*(90+v*3)
-    if s=='many_keywords': extra='关键词：'+'；'.join(f'关键词{i}' for i in range(60+v))
+    if s=='many_keywords': extra='关键词：'+'；'.join(f'关键词{i} / fictional keyword {i}' for i in range(60+v))
     if s=='abstract_math': extra='English abstract: $alpha + beta = integral_0^1 x dif x$. Ω ± ≤ ≥ 50% C++.'
     if s=='long_chapter': extra='= '+('长章节名称与混排测试 '*20)+'\n\n'+ZH
     if s=='heading_math': extra='= $alpha + beta$ 模型\n\n'+ZH

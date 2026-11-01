@@ -21,6 +21,7 @@
     未更换题目。已完成需求分析、基础数据整理和原型开发，进度与原开题计划基本一致。
   ],
   completed: [
+#set math.equation(numbering: "(1)")
 $ y_0 &= a x + b \ z_0 &= c x + d $ <eq:multi0>
 
 式 @eq:multi0。

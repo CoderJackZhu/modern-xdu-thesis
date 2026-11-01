@@ -10,7 +10,7 @@
   graduate: 层次,
   degree: 学位,
   info: (
-    title: "多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究",
+    title: "多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究多源异构系统验证方法研究 Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems  Reliable Modeling and Verification of Complex Systems ",
     author: "张三",
     student-id: "2026000001",
     department: "电子工程学院",
