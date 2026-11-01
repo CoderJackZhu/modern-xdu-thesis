@@ -55,6 +55,10 @@
     "page": 2
   },
   {
+    "test": "undergraduate-appendix-numbering",
+    "caught": 2
+  },
+  {
     "test": "undergraduate-spacing",
     "caught": 6
   },

@@ -27,7 +27,7 @@ python3 dev/night/check_blind.py
 
 - `cases/`：三轮680份输入；`manifest-r*.json`：入口、场景与参数。
 - `results-r*.json`：源码SHA256、编译状态、现有尺退出码及失败文本、独立PDF检查结果。
-- `checks.py`：墨迹、页眉页码/切换、未解析引用、编号连续、目录链接、正文行距与空白填充页；`test_checks.py`：14项故障注入和正向对照。
+- `checks.py`：墨迹、页眉页码/切换、未解析引用、编号连续、目录链接、正文行距与空白填充页；`test_checks.py`：15项故障注入和正向对照。
 - `repro/`：4条A、1条B、4条C的13份最小Typst文件与1份文献文件；`repro-results.json`记录坐标。
 - `coverage-measurements.json`：长内容条目数的测量记录，配合人工比对预期值，不能替代逐项文献标准审查。
 - `check_blind.py` / `blind-results.json`：本轮实际姓名的126份盲审验证及单独的泄漏故障注入。

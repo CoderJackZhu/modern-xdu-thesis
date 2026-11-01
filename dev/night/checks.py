@@ -124,13 +124,27 @@ def unresolved(all_lines):
 def numbering(all_lines,profile):
     if profile['kind'] not in ('thesis','bachelor'):return []
     out=[];found=defaultdict(list)
-    appendix=False
+    appendix=None
     for i,ls in enumerate(all_lines):
         for l in ls:
             t=compact(l['text'])
             if l['y']<85:continue
-            if l['size']>=15 and ('附录' in t or '补充材料' in t):appendix=True
-            if appendix:continue  # 附录编号另按本科独立口径复核，不将其套入阿拉伯章号。
+            if l['size']>=15 and ('附录' in t or '补充材料' in t):
+                match=re.match(r'^附录([A-Z])',t)
+                appendix=match[1] if profile['kind']=='bachelor' and match else 'unknown'
+            if appendix=='unknown':continue  # 研究生附录编号没有独立明文规则，不套本科字母编号。
+            if appendix:
+                if abs(l['size']-10.5)<.3:
+                    m=re.match(r'^(图|表)([A-Z])(\d+)',t)
+                    if m:found[(m[1],m[2])].append((int(m[3]),i+1))
+                    elif t.startswith(('图','表')):out.append(dict(check='numbering',page=i+1,detail='本科附录图表缺独立字母前缀：'+t))
+                for sp in l['spans']:
+                    st=compact(sp['text'])
+                    if sp['origin'][0]>440 and st.startswith('('):
+                        m=re.fullmatch(r'\(([A-Z])-(\d+)\)',st)
+                        if m:found[('式',m[1])].append((int(m[2]),i+1))
+                        elif re.fullmatch(r'\([0-9-]+\)',st):out.append(dict(check='numbering',page=i+1,detail='本科附录公式缺独立字母前缀：'+st))
+                continue
             if abs(l['size']-10.5)<.3:
                 m=re.match(r'^(图|表)(\d+)\.(\d+)',t)
                 if m:found[(m[1],int(m[2]))].append((int(m[3]),i+1))

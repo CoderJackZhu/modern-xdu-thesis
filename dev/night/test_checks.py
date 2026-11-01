@@ -44,6 +44,15 @@ def test():
         d=base();mutate(d);r=save(d,name);key={'header':'pagination','empty_reference':'references','question_reference':'references','missing_prefix':'numbering','chapter_switch':'pagination'}.get(name,name)
         assert r['counts'][key]>0,(name,r)
         summary.append(dict(test=name,caught=r['counts'][key],page=2 if name!='blank' else 3))
+    # 本科附录有明确的字母编号口径，与研究生附录缺实测坐标是两件事。
+    for sequence,expected in [(1,0),(2,1)]:
+        d=base();d[1].insert_text((200,125),'附录 A',fontname='china-s',fontsize=16)
+        d[1].insert_text((200,310),f'图 A{sequence} 测试',fontname='china-s',fontsize=10.5)
+        d[1].insert_text((470,340),f'(A-{sequence})',fontsize=12)
+        result=checks.numbering([checks.lines(p) for p in d],dict(kind='bachelor'))
+        assert bool(result)==bool(expected),result
+        d.close()
+    summary.append(dict(test='undergraduate-appendix-numbering',caught=len(result)))
     # 本科使用独立23.4pt口径，不能套用研究生20pt。
     for step,expected in [(23.4,0),(20,1)]:
         d=base()
