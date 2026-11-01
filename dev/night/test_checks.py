@@ -44,6 +44,18 @@ def test():
         d=base();mutate(d);r=save(d,name);key={'header':'pagination','empty_reference':'references','question_reference':'references','missing_prefix':'numbering','chapter_switch':'pagination'}.get(name,name)
         assert r['counts'][key]>0,(name,r)
         summary.append(dict(test=name,caught=r['counts'][key],page=2 if name!='blank' else 3))
+    # 本科使用独立23.4pt口径，不能套用研究生20pt。
+    for step,expected in [(23.4,0),(20,1)]:
+        d=base()
+        for i in range(3):
+            clear(d,i,(0,140,595,260))
+            d[i].insert_text((530 if i%2==0 else 58,61.51),['i','1','2'][i],fontsize=9)
+            if i!=2:
+                for j in range(4):d[i].insert_text((120,160+step*j),'Long fictional undergraduate paragraph for line spacing verification.',fontsize=12)
+        f=OUT/f'undergrad-{step}.pdf';d.save(f);d.close()
+        result=checks.inspect(f,dict(kind='bachelor'))
+        assert bool(result['counts']['spacing'])==bool(expected),result
+    summary.append(dict(test='undergraduate-spacing',caught=result['counts']['spacing']))
     # 跨表格行的内边距不应被当作正文基线间距。
     d=base();clear(d,1,(85,140,580,260))
     for j in range(4):

@@ -75,7 +75,9 @@ def geometry(doc,all_lines,profile):
             rects=[(0,85,left*MM-2,page.rect.height if kind=='bachelor' else 780),((210-right)*MM+2,85,page.rect.width,780),(left*MM,bottom+2,(210-right)*MM,780)]
         elif thesis:
             # 封面/题名页有独立绝对定位规格，不能强套正文版心。
-            rects=[(0,0,15*MM,page.rect.height),(195*MM,0,page.rect.width,page.rect.height),(0,0,page.rect.width,12*MM),(0,292*MM,page.rect.width,page.rect.height)]
+            cover_left=30 if kind=='bachelor' else (30 if i%2==0 else 25)
+            cover_right=30 if kind=='bachelor' else (25 if i%2==0 else 30)
+            rects=[(0,0,cover_left*MM-2,page.rect.height),((210-cover_right)*MM+2,0,page.rect.width,page.rect.height),(0,0,page.rect.width,12*MM),(0,292*MM,page.rect.width,page.rect.height)]
         else:
             margin=31.7 if kind=='bachelor-proposal' else (22 if kind=='course-report' else 25.4)
             vertical=22 if kind=='course-report' else 25.4

@@ -1,0 +1,27 @@
+{
+  "report": "/Volumes/DATA/Code/Own/night-reports/xdu-thesis-stress-20261102.md",
+  "base": "432a46d9cc2e54a17368a0f9e5606ff0bab482c4",
+  "documents": 680,
+  "pdfs": 646,
+  "pages": 12000,
+  "compile_fail": 34,
+  "legacy_failed_documents": 305,
+  "general_failed_documents": 3,
+  "negative_tests": 14,
+  "findings": {
+    "A": 4,
+    "B": 1,
+    "C": 4
+  },
+  "source_hashes_match": true,
+  "check_all": {
+    "passed": 38,
+    "failed": 0,
+    "skips": [
+      "逐行对照：跳过（缺官方 templet.pdf）",
+      "官方手册：未找到（/Users/jackzhu/.hermes/assets/xdu-thesis-official/undergrad/jwc-handbook-2019.pdf）",
+      "官方 Word 样例：未找到（/Users/jackzhu/.hermes/assets/xdu-thesis-official/undergrad/official-word-template.doc）"
+    ]
+  },
+  "elapsed_seconds": 1592
+}
