@@ -56,4 +56,3 @@
   text(weight: "bold", "关键词：")
   text(关键词列表.join(", "))
 }
-
