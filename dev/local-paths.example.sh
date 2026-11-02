@@ -8,6 +8,10 @@
 # 官方 templet.pdf —— 前置部分对照与逐行对照的基准（学校分发，仓库不含）
 export OFFICIAL_PDF="$HOME/xdu-thesis-official/templet.pdf"
 
+# 本科官方《毕业设计手册》与 Word 样例 —— 本科格式真值（学校分发，仓库不含）
+export UNDERGRAD_HANDBOOK="$HOME/xdu-thesis-official/undergrad/jwc-handbook-2019.pdf"
+export UNDERGRAD_WORD="$HOME/xdu-thesis-official/undergrad/official-word-template.doc"
+
 # 硕士真实论文仓库目录 —— 压力测试用，需含 main.pdf 与 LaTeX 源码
 export STRESS_SRC="$HOME/xdu-thesis-stress"
 

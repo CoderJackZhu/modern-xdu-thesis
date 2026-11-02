@@ -43,8 +43,8 @@ OFFICIAL_PDF="${OFFICIAL_PDF:-$HOME/xdu-thesis-official/templet.pdf}"
 STRESS_SRC="${STRESS_SRC:-$HOME/xdu-thesis-stress}"
 UNDERGRAD_STRESS_SRC="${UNDERGRAD_STRESS_SRC:-}"
 UNDERGRAD_REFERENCE="${UNDERGRAD_REFERENCE:-$UNDERGRAD_STRESS_SRC/main.pdf}"
-UNDERGRAD_HANDBOOK="${UNDERGRAD_HANDBOOK:-$HOME/.hermes/assets/xdu-thesis-official/undergrad/jwc-handbook-2019.pdf}"
-UNDERGRAD_WORD="${UNDERGRAD_WORD:-$HOME/.hermes/assets/xdu-thesis-official/undergrad/official-word-template.doc}"
+UNDERGRAD_HANDBOOK="${UNDERGRAD_HANDBOOK:-$HOME/xdu-thesis-official/undergrad/jwc-handbook-2019.pdf}"
+UNDERGRAD_WORD="${UNDERGRAD_WORD:-$HOME/xdu-thesis-official/undergrad/official-word-template.doc}"
 export OFFICIAL_PDF
 # 博士原始 Word 是可选外部基准；缺失时子检查会明确报告跳过。
 export DOCTOR_ACADEMIC_WORD="${DOCTOR_ACADEMIC_WORD:-}"
