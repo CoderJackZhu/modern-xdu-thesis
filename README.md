@@ -111,7 +111,7 @@ Doctor of Philosophy（学术）、工程博士 / Doctor of Engineering（专业
 另已抽查六份公开成品（本科、硕士、博士各两份），包括李瑞远2020年158页博士论文；
 来源、文件指纹、测量结果及历史版本差异见 [公开成品交叉核对](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/v0.3.2/docs/公开成品交叉核对.md)。
 专业博士2026.5专用前置页的公开成品尚未取得，当前依据仍为官网原始Word。
-本次变更及发布步骤见 [发布说明](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/v0.3.2/docs/发布说明.md)。
+本次变更与发布说明见 [发布说明](https://github.com/CoderJackZhu/modern-xdu-thesis/blob/v0.3.2/docs/发布说明.md)。
 
 ### 开题、中期与课程实验报告
 
