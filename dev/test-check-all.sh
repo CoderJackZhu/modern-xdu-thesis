@@ -44,7 +44,8 @@ if ! run_check ''; then
   exit 1
 fi
 for gate in compile verify-review-regressions.py verify-front.py verify-front-x.py \
-    verify-index.py verify-body.py test-doctor.py test-bachelor-adjustments.py; do
+    verify-index.py verify-body.py test-doctor.py test-bachelor-adjustments.py \
+    test_fixes.py test-heading-reuse.py; do
   if run_check "$gate"; then
     cat "$TMP/log"
     echo "失败：总入口未传递$gate的失败"

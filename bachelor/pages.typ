@@ -3,7 +3,7 @@
 #import "layout.typ": *
 #import "../utils/style.typ": 字体
 #import "../utils/bilingual-bib.typ": 双语文献
-#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 去除脚注
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 去除脚注, 作者内容
 
 #let 封面文字(内容, x, y, width: auto, size: 12pt, font: 字体.宋体, alignment: left, weight: "regular") = {
   place(top + left, dx: x, dy: y,
@@ -82,7 +82,7 @@
       #let 字段 = (
         ("学　　院", info.department),
         ("专　　业", info.major),
-        ("学生姓名", info.author),
+        ("学生姓名", 作者内容(info.author)),
         ("导师姓名", 导师),
       )
       #for (i, (标签, 值)) in 字段.enumerate() {
@@ -132,6 +132,10 @@
 
 #let outline-page(info: (:), fonts: (:), title: "目录", depth: 3) = {
   let 字体集 = 字体 + fonts
+  // 注文样式按整个分页段生效；隔开目录与正文，防止动态标题脚注附着到目录页。
+  pagebreak(weak: true)
+  show footnote.entry: none
+  set footnote.entry(separator: none, clearance: 0pt, gap: 0pt)
   set page(..本科页面参数(纯题目(info), numbering: "i", 当前标题: title))
   页面标题([目#h(1em)录])
   set text(font: 字体集.宋体, size: 12pt,
@@ -168,6 +172,7 @@
     )
   }
   outline(title: none, depth: depth)
+  pagebreak(weak: true)
 }
 
 #let acknowledgement(info: (:), fonts: (:), body: none, title: "致谢") = {

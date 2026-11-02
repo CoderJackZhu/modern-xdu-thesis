@@ -27,7 +27,7 @@ def main() -> None:
         temp = Path(temp)
         package = temp / "packages/preview/modern-xdu-thesis"
         package.mkdir(parents=True)
-        os.symlink(ROOT, package / "0.3.1")
+        os.symlink(ROOT, package / "0.3.2")
         env = dict(os.environ, TYPST_PACKAGE_PATH=str(temp / "packages"))
 
         def compile_source(source: Path, output_name: str) -> tuple[subprocess.CompletedProcess[str], Path]:

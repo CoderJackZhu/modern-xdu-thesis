@@ -53,11 +53,14 @@
   }
   let 安全中间 = 去除脚注(中间)
   let 宽 = measure(text(font: 字体.宋体, size: 10.5pt, 安全中间)).width
-  assert(宽 <= 版心宽,
-    message: "本科页眉内容过长（" + str(calc.round(宽 / 1pt, digits: 2))
-      + "pt），超过版心 " + str(calc.round(版心宽 / 1pt, digits: 2))
-      + "pt；请缩短题目或章名。")
   let 数字 = counter(page).display()
+  let 页码宽 = measure(text(font: 字体.宋体, size: 9pt, 数字)).width
+  // 标题仍以版心居中；两端各扣掉实际页码宽度，兼顾奇偶页与多位页码。
+  let 可用宽 = 版心宽 - 2 * 页码宽
+  assert(宽 <= 可用宽,
+    message: "本科页眉内容过长（" + str(calc.round(宽 / 1pt, digits: 2))
+      + "pt），预留页码后可用宽度为 " + str(calc.round(可用宽 / 1pt, digits: 2))
+      + "pt；请缩短题目或章名，避免与页码重叠。")
   box(height: 0pt, width: 100%, {
     set text(font: 字体.宋体, top-edge: "baseline", bottom-edge: "baseline")
     place(top + center, dy: 页眉基线 - 页眉顶,
@@ -119,7 +122,10 @@
     top-edge: 正文上伸, bottom-edge: "baseline")
   set par(leading: 行隙, spacing: 行隙, justify: true,
     first-line-indent: (amount: 2em, all: true))
-  set document(title: 纯题目(info), author: info.author)
+  set document(title: 纯题目(info), author: if type(info.author) == str or
+    (type(info.author) == array and info.author.all(a => type(a) == str)) {
+    info.author
+  } else { () })
   let 默认页面 = 本科页面参数(纯题目(info)) + (
     header: context if 前置编号开始.get() { 单线页眉(纯题目(info)) },
   )

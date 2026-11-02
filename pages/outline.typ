@@ -40,6 +40,10 @@
   depth: 3,
 ) = {
   let 字体集 = 字体集 + fonts
+  // 注文样式按整个分页段取交集；前后显式分页，避免正文样式抵消目录的抑制规则。
+  pagebreak(weak: true)
+  show footnote.entry: none
+  set footnote.entry(separator: none, clearance: 0pt, gap: 0pt)
 
   set page(
     numbering: "I",
@@ -56,6 +60,7 @@
     top-edge: 正文Δ, bottom-edge: "baseline")
   set par(leading: 20pt - 正文Δ, spacing: 20pt - 正文Δ)
 
+  // 目录中的脚注来自复用标题；包括排版时才展开的 context，均不生成注文或分隔线。
   // 首条基线 57.76mm
   v(到内容区(57.76mm) - 正文Δ)
 
@@ -85,4 +90,5 @@
   }
 
   outline(title: none, depth: depth)
+  pagebreak(weak: true)
 }

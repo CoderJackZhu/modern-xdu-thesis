@@ -1,6 +1,7 @@
 // 博士专用封面与题名页；所有数值来源见 docs/博士规格.md。
 #import "../layouts/doc.typ": 基线偏移, 页面坐标
 #import "../utils/style.typ": 字体
+#import "../utils/validation.typ": 作者内容
 
 #let profile(degree) = if degree == "professional" {
   (
@@ -63,7 +64,7 @@
   set page(header: none, footer: none, numbering: none)
   let f = 字体 + fonts
   let p = profile(degree)
-  let 字段 = (("作者姓名", info.author),)
+  let 字段 = (("作者姓名", 作者内容(info.author)),)
   字段 += if degree == "academic" {
     (("指导教师姓名、职称", 导师文字(info.supervisor)),)
   } else {
@@ -92,7 +93,7 @@
   set page(header: none, footer: none, numbering: none)
   let f = 字体 + fonts
   let p = profile(degree)
-  let 字段 = (("作者姓名：", info.author),)
+  let 字段 = (("作者姓名：", 作者内容(info.author)),)
   字段 += if degree == "academic" {
     (("一级学科：", info.discipline), ("二级学科（研究方向）：", info.subdiscipline),
       ("学位类别：", info.degree-name), ("指导教师姓名、职称：", 导师文字(info.supervisor)))

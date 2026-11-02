@@ -31,6 +31,9 @@
   }
 }
 
+// 页面用全角空格连接多位作者；元数据仍保留调用方的字符串数组。
+#let 作者内容(值) = if type(值) == array { 值.join("　") } else { 值 }
+
 #let 校验必填字段(info) = {
   assert(合法题目(info.at("title", default: none)),
     message: "必填字段 `title`（题目）不能为空；请填写字符串或由非空字符串组成的题目行数组。")
@@ -69,21 +72,18 @@
       + "pt，请缩短题目或调整显式分行。")
 }
 
-// 从结构化内容中移除脚注，供目录与页眉复用标题文字。
-// 只显示 none 会隐藏标号，但脚注正文仍会附着到当前页；这里改为真正删除元素。
-#let 去除脚注(body) = {
+// 只重建已知的文本容器；其它元素保持原样，避免把字段误当成构造参数。
+#let 去除脚注元素(body) = {
   if type(body) != content { return body }
   if body.func() == footnote { return [] }
-  if body.has("children") {
-    body.func()(body.children.map(去除脚注))
+  if body.func() == ([a] + [b]).func() {
+    body.children.map(去除脚注元素).join()
   } else if body.has("child") and body.has("styles") {
-    // text(...) 和局部 set 规则使用 styled 包裹，必须保留样式并进入 child。
-    body.func()(去除脚注(body.child), body.styles)
-  } else if body.has("body") {
+    body.func()(去除脚注元素(body.child), body.styles)
+  } else if body.func() in (strong, emph, link) {
     let 参数 = body.fields()
-    let 内容 = 去除脚注(参数.remove("body"))
+    let 内容 = 去除脚注元素(参数.remove("body"))
     if body.func() == link {
-      // link 的目的地和正文都是位置参数，不能把目的地当作可选命名字段。
       let 目的地 = 参数.remove("dest")
       body.func()(目的地, 内容, ..参数)
     } else {
@@ -92,4 +92,13 @@
   } else {
     body
   }
+}
+
+// context 与公式等容器可能在排版时才产生脚注，不能仅靠静态遍历。
+// 目录在独立分页段内关闭注文；这里隐藏其余动态标号并抵消定义脚注的计数。
+#let 去除脚注(body) = {
+  show footnote: it => {
+    if type(it.body) != label { counter(footnote).update(n => n - 1) }
+  }
+  去除脚注元素(body)
 }

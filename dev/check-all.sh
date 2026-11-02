@@ -56,7 +56,7 @@ export TMPDIR="$TMP"
 export PYTHONPYCACHEPREFIX="$TMP/pycache"
 export TYPST_PACKAGE_PATH="$TMP/packages"
 mkdir -p "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis"
-ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.3.1"
+ln -s "$REPO" "$TYPST_PACKAGE_PATH/preview/modern-xdu-thesis/0.3.2"
 
 PASS=0
 FAIL=0
@@ -133,6 +133,8 @@ if python3 dev/verify-review-regressions.py; then
 else
   bad "评审缺陷回归失败"
 fi
+verify_one "压测版式、文献与输入校验回归" python3 dev/night/test_fixes.py
+verify_one "标题复用、作者数组与本科页眉碰撞回归" python3 dev/test-heading-reuse.py
 
 sec "2b) 本科版式验收"
 if typst compile --root . dev/test-bachelor.typ "$TMP/undergrad.pdf" >/dev/null 2>&1 \
@@ -219,7 +221,7 @@ else
 fi
 
 sec "4) 分发验收（typst init 产物自包含且可编译）"
-if typst init @preview/modern-xdu-thesis:0.3.1 "$TMP/init" >/dev/null 2>&1; then
+if typst init @preview/modern-xdu-thesis:0.3.2 "$TMP/init" >/dev/null 2>&1; then
   CNT=$(find "$TMP/init" -type f | wc -l | tr -d ' ')
   if typst compile "$TMP/init/thesis.typ" "$TMP/init/out.pdf" >"$TMP/init.log" 2>&1; then
     PAGES=$(python3 -c "import fitz; print(len(fitz.open('$TMP/init/out.pdf')))")

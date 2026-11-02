@@ -33,8 +33,12 @@ python3 dev/night/test_fixes.py
 - `coverage-measurements.json`：长内容条目数的测量记录，配合人工比对预期值，不能替代逐项文献标准审查。
 - `check_blind.py` / `blind-results.json`：本轮实际姓名的126份盲审验证及单独的泄漏故障注入。
 - `test_fixes.py`：对压测报告9条A/B/C问题修复后的PDF实测、中文诊断与拒绝边界回归。
+- `../test-heading-reuse.py`：标题容器、作者数组、动态脚注和本科页眉碰撞的补修回归。
 - `fixes.md`：修复结果、输入限制、最终回归结果与未验证的外部基准。
 - `official-results.json`：官方URL、日期和附件名；`triage.json`：人工分类、误报修正和停止依据。
 - `out/`：PDF、PNG、完整日志和局部包路径，均忽略，不提交。
 
 目录校验依赖内部链接及文字层；墨迹以72dpi灰度栅格和2bp容差测量；正文基线差容差0.08bp。前置页使用自己的独立区域口径；不把封面或行政表套进正文版心。无正文行/目录/图表的页面相应检查没有可比较对象，不能将零告警解释为全格式正确。模板内容块无法自动匿名的已知约定不列作新问题。
+
+历史 `cases/` 与 JSON 结果保留修复前快照，不批量升级其中的版本或重写证据。
+`test_fixes.py` 与 `../test-heading-reuse.py` 使用当前包版本，并已纳入总入口。

@@ -33,7 +33,7 @@ def main() -> int:
         write(root / "typst.toml", """\
 [package]
 name = "release-scan-test"
-version = "0.3.1"
+version = "0.3.2"
 entrypoint = "lib.typ"
 exclude = ["docs", "dev"]
 """)

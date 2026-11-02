@@ -14,7 +14,7 @@
 
 #import "../layouts/doc.typ": 基线偏移, 到内容区, 页面坐标
 #import "../utils/style.typ": 字体 as 字体集
-#import "../utils/validation.typ": 断言单行宽度, 断言块高度
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 作者内容
 
 // 行盒与 Δ
 #let 信息Δ = 基线偏移(17pt, 10.5pt)
@@ -40,7 +40,7 @@
 
   // 学硕 / 专硕字段表（唯一差异）
   let 学硕 = (
-    ("作者姓名：", info.author),
+    ("作者姓名：", 作者内容(info.author)),
     ("一级学科：", info.discipline),
     ("二级学科（研究方向）：", info.subdiscipline),
     ("学位类别：", info.degree-name),
@@ -51,7 +51,7 @@
       str(info.submit-date.year) + " 年 " + str(info.submit-date.month) + " 月"),
   )
   let 专硕 = (
-    ("作者姓名：", info.author),
+    ("作者姓名：", 作者内容(info.author)),
     ("领　　域：", info.domain),
     ("学位类别：", info.degree-name),
     ("学校导师姓名、职称：",

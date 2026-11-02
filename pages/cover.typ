@@ -17,7 +17,7 @@
 
 #import "../layouts/doc.typ": 行距, 基线偏移, 到内容区, 页面坐标
 #import "../utils/style.typ": 字号, 字体
-#import "../utils/validation.typ": 断言单行宽度, 断言块高度
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 作者内容
 
 #let 标题行距 = 30pt
 #let 标题Δ = 基线偏移(标题行距, 22pt)
@@ -51,13 +51,13 @@
 
   // 学硕 / 专硕字段表（唯一差异）
   let 学硕字段 = (
-    ("作者姓名", info.author),
+    ("作者姓名", 作者内容(info.author)),
     ("指导教师姓名、职称",
       if info.supervisor == none { "" } else { info.supervisor.join(" ") }),
     ("申请学位类别", info.degree-name),
   )
   let 专硕字段 = (
-    ("作者姓名", info.author),
+    ("作者姓名", 作者内容(info.author)),
     ("学校导师姓名、职称",
       if info.supervisor == none { "" } else { info.supervisor.join(" ") }),
     ("企业导师姓名、职称",
