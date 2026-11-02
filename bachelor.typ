@@ -8,6 +8,7 @@
 #import "bachelor/pages.typ": cover, abstract, abstract-en, outline-page, acknowledgement, references, appendix
 #import "bachelor/mainmatter.typ": mainmatter, 引用
 #import "utils/bilingual-bib.typ": 双语文献
+#import "utils/validation.typ": 校验必填字段
 
 #let documentclass(
   cover-enabled: true,
@@ -34,6 +35,7 @@
     references: (),
   )
   let 合并info = 默认info + info
+  校验必填字段(合并info)
   let 默认封面校名 = cover-wordmark
   let 默认封面校徽 = cover-emblem
   (

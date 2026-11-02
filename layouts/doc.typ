@@ -9,6 +9,7 @@
 // 把所有度量常量都做成可导出的形式，方便 pages/ 下各页直接复用。
 
 #import "../utils/style.typ": 字号, 字体
+#import "../utils/validation.typ": 去除脚注
 
 // ============================================================
 // 1. 度量常量（可导出）
@@ -115,15 +116,26 @@
 // - 文字下方两条 0.5pt 横线，宽度 = 正文宽（不外扩）
 // - 偶数页：固定标题「西安电子科技大学硕士学位论文」
 // - 奇数页：当前章节名（由 mainmatter 接入，参数在此提供）
-#let 页眉(文字) = box(height: 0pt, width: 100%, {
-  set text(size: 10.5pt, font: 字体.宋体,
-    top-edge: "baseline", bottom-edge: "baseline")
-  // 文字基线 = 页眉顶 + 五号 Δ = 20mm + 4.94mm = 24.94mm（与官方差 0.88mm）
-  place(top + center, dy: 页眉基线, text(文字))
-  // 双横线基线 = 文字基线 + 行距 − 五号Δ + 1pt
-  // （两条 0.5pt，中心距 1pt；line 默认在基线下绘制）
-  place(top + center, dy: 页眉基线 + 行距 - 上伸 + 1pt, 双横线)
-})
+#let 页眉(文字) = {
+  // 标题脚注只应在正文标题处生成一次；页眉复用标题时不复制脚注。
+  let 安全文字 = 去除脚注(文字)
+  context {
+    let 宽 = measure(text(font: 字体.宋体, size: 10.5pt, 安全文字)).width
+    assert(宽 <= 版心宽,
+      message: "页眉中的章节名过长（" + str(calc.round(宽 / 1pt, digits: 2))
+        + "pt），超过版心 " + str(calc.round(版心宽 / 1pt, digits: 2))
+        + "pt；请缩短章名。")
+    box(height: 0pt, width: 100%, {
+      set text(size: 10.5pt, font: 字体.宋体,
+        top-edge: "baseline", bottom-edge: "baseline")
+      // 文字基线 = 页眉顶 + 五号 Δ = 20mm + 4.94mm = 24.94mm（与官方差 0.88mm）
+      place(top + center, dy: 页眉基线, text(安全文字))
+      // 双横线基线 = 文字基线 + 行距 − 五号Δ + 1pt
+      // （两条 0.5pt，中心距 1pt；line 默认在基线下绘制）
+      place(top + center, dy: 页眉基线 + 行距 - 上伸 + 1pt, 双横线)
+    })
+  }
+}
 
 // 页脚帧：零高度，帧顶 = 版心下边界（297mm − 下边距）
 // - 页码字号 9pt（格式规格 §1 裁定：官方 Word 用小五，2024.04 LaTeX 错用五号）

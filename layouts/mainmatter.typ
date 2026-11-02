@@ -233,7 +233,10 @@ show cite: it => super(text(font: ("Times New Roman",), size: 0.9em, it))
     if n.len() <= 1 { none }
     else if n.len() == 2 { numbering("1.1", ..n) }
     else if n.len() == 3 { numbering("1.1.1", ..n) }
-    else { numbering("（1）", n.last()) }
+    else if n.len() == 4 { numbering("（1）", n.last()) }
+    else {
+      panic("标题最多支持四级；五级及更深标题没有学校规格，请合并或上移一级标题。")
+    }
   })
   // 四级标题不进目录（格式规格 §2.4）
   show heading.where(level: 4): set heading(outlined: false)
@@ -242,11 +245,14 @@ show cite: it => super(text(font: ("Times New Roman",), size: 0.9em, it))
   show figure.where(kind: image): 图规则
   show figure.where(kind: table): 表规则
   // 公式：分章编号，可被 @eq: 引用（序号由 Typst 右对齐排版）
-  set math.equation(numbering: 公式编号)
+  set math.equation(numbering: 公式编号, number-align: bottom)
 
-  // 表格线：官方《撰写要求》「表格线统一用单线条，磅值 0.5 磅」。
-  // Typst 的 table 默认线宽是 1pt，比要求粗一倍，故在此统一。
-  show table: set table(stroke: 0.5pt)
+  // 表格内容为五号 10.5pt，线宽 0.5pt（格式规格 §2.2 与 §2.5）。
+  show table: it => {
+    set text(font: 字体集.宋体, size: 10.5pt, lang: "zh")
+    set table(stroke: 0.5pt)
+    it
+  }
   // 图 / 表：同样需要真正的 numbering，索引与引用才拿得到「章.序」
   set figure(numbering: 图表编号)
 

@@ -4,6 +4,7 @@
 // 教师已提供模板时，应以教师模板为准。本模块只提供可直接修改的通用实验报告骨架。
 
 #import "layout.typ": *
+#import "../utils/validation.typ": 校验必填字段
 
 #let 默认信息 = (
   course: "课程名称",
@@ -42,6 +43,7 @@
   lang: "zh",
 ) = {
   let 合并 = 默认信息 + info
+  校验必填字段(合并)
   let doc = (it,) => 文档页(
     info: 合并,
     fonts: fonts,

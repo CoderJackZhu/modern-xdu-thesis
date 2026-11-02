@@ -11,9 +11,12 @@
 // 缺省时退回中文（会中西混排，但不会缺字）。
 
 #import "../layouts/doc.typ": 基线偏移, 到内容区, 页面坐标
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度
 
 #let 标题Δ = 基线偏移(30pt, 22pt)
 #let 正Δ = 基线偏移(30pt, 16pt)
+#let 题目首行基线 = 45.03mm
+#let 中部首行基线 = 103.88mm
 
 #let title-en(
   degree: "academic",
@@ -61,18 +64,31 @@
   // 尾部：By / 作者 / Supervisor… / 日期，从 253.63mm 起（学硕、专硕同起点）
   // 盲审（格式规格 §2.6）：不显示作者与导师
   let 尾部 = if blind { (日期英,) } else { sup列表 + (日期英,) }
+  let 题目内容 = {
+    set text(font: TNR, size: 22pt, weight: "bold",
+      top-edge: 标题Δ, bottom-edge: "baseline")
+    set par(leading: 30pt - 标题Δ, spacing: 30pt - 标题Δ,
+      first-line-indent: 0pt, justify: false)
+    题目列表.join(linebreak())
+  }
+  let 题目最大高 = 中部首行基线 - 题目首行基线 - 正Δ + 标题Δ
+  断言块高度(题目内容, 155mm, 题目最大高, "英文题名页题目")
+  for (i, 行) in 上半.enumerate() {
+    断言单行宽度(行, 155mm, "英文题名页中部第 " + str(i + 1) + " 行", TNR, 16pt)
+  }
+  if not blind {
+    断言单行宽度("By", 155mm, "英文题名页 By", TNR, 16pt)
+    断言单行宽度(info.author-en, 155mm, "英文作者姓名", TNR, 16pt)
+  }
+  for (i, 行) in 尾部.enumerate() {
+    断言单行宽度(行, 155mm, "英文题名页尾部第 " + str(i + 1) + " 行", TNR, 16pt)
+  }
 
   // 整页用页面绝对坐标（见 doc.typ 的 页面坐标）
   页面坐标({
-    // 题目区 22pt Bold
-    for (i, 行) in 题目列表.enumerate() {
-      place(top + left, dx: 30mm, dy: 到内容区(45.03mm) + 30pt * i - 标题Δ,
-        box(width: 155mm, align(center, {
-          set text(font: TNR, size: 22pt, weight: "bold",
-            top-edge: 标题Δ, bottom-edge: "baseline")
-          行
-        })))
-    }
+    // 题目区 22pt Bold；自然折行与显式分行共用固定 30pt 行距
+    place(top + left, dx: 30mm, dy: 到内容区(题目首行基线) - 标题Δ,
+      box(width: 155mm, align(center, 题目内容)))
 
     // 中部说明 16pt
     for (i, 行) in 上半.enumerate() {

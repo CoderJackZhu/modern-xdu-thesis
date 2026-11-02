@@ -5,6 +5,7 @@
 
 #import "../utils/style.typ": 字体
 #import "../utils/counters.typ": 汉字序
+#import "../utils/validation.typ": 去除脚注
 
 #let 纸张宽 = 210mm
 #let 纸张高 = 297mm
@@ -50,11 +51,17 @@
       [第#章序(n)章 #h.body]
     }
   }
+  let 安全中间 = 去除脚注(中间)
+  let 宽 = measure(text(font: 字体.宋体, size: 10.5pt, 安全中间)).width
+  assert(宽 <= 版心宽,
+    message: "本科页眉内容过长（" + str(calc.round(宽 / 1pt, digits: 2))
+      + "pt），超过版心 " + str(calc.round(版心宽 / 1pt, digits: 2))
+      + "pt；请缩短题目或章名。")
   let 数字 = counter(page).display()
   box(height: 0pt, width: 100%, {
     set text(font: 字体.宋体, top-edge: "baseline", bottom-edge: "baseline")
     place(top + center, dy: 页眉基线 - 页眉顶,
-      text(size: 10.5pt, 中间))
+      text(size: 10.5pt, 安全中间))
     if calc.odd(页) {
       place(top + right, dy: 页眉基线 - 页眉顶,
         text(size: 9pt, 数字))

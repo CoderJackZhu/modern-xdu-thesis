@@ -4,6 +4,7 @@
 // 专业博士 2026.09 资料包中的原始 Word 表；版式数值见 docs/配套材料规格.md。
 
 #import "layout.typ": *
+#import "../utils/validation.typ": 校验必填字段
 
 #let 校验(graduate, degree) = {
   assert(graduate in ("master", "doctor"), message: "graduate 必须是 master 或 doctor")
@@ -358,6 +359,7 @@
 ) = {
   校验(graduate, degree)
   let 合并 = 默认信息(graduate, degree) + info
+  校验必填字段(合并)
   let doc = (
     it,
   ) => 文档页(info: 合并, fonts: fonts, fallback: fallback, lang: lang, it)

@@ -4,6 +4,7 @@
 // 与本科论文正文模板不是同一种文档，不能复用 bachelor/ 的论文版心。
 
 #import "layout.typ": *
+#import "../utils/validation.typ": 校验必填字段
 
 #let 本科默认信息 = (
   title: ("基于 Typst 的本科毕业设计", "排版方法研究"),
@@ -182,6 +183,7 @@
   lang: "zh",
 ) = {
   let 合并 = 本科默认信息 + info
+  校验必填字段(合并)
   let doc = (it,) => 文档页(
     info: 合并,
     fonts: fonts,
@@ -208,6 +210,7 @@
   lang: "zh",
 ) = {
   let 合并 = 本科默认信息 + info
+  校验必填字段(合并)
   let doc = (it,) => 文档页(
     info: 合并,
     fonts: fonts,

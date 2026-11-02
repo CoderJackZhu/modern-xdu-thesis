@@ -17,6 +17,7 @@
 
 #import "../layouts/doc.typ": 行距, 基线偏移, 到内容区, 页面坐标
 #import "../utils/style.typ": 字号, 字体
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度
 
 #let 标题行距 = 30pt
 #let 标题Δ = 基线偏移(标题行距, 22pt)
@@ -72,18 +73,21 @@
       (标签, if 标签.contains("姓名") { "" } else { 值 })
     })
   }
+  let 题目内容 = {
+    set text(font: 字体集.宋体, size: 22pt, lang: "zh",
+      top-edge: 标题Δ, bottom-edge: "baseline")
+    set par(leading: 标题行距 - 标题Δ, spacing: 标题行距 - 标题Δ,
+      first-line-indent: 0pt, justify: false)
+    题目列表.join(linebreak())
+  }
+  let 题目最大高 = 字段首行基线 - 题目首行基线 - 字段Δ + 标题Δ
+  断言块高度(题目内容, 155mm, 题目最大高, "封面题目")
 
   // 整页内容用页面绝对坐标排版（见 doc.typ 的 页面坐标）
   页面坐标({
-    // ---- 题目：逐行显式定位，行距固定 30pt ----
-    for (i, 行) in 题目列表.enumerate() {
-      place(top + left, dx: 30mm, dy: 到内容区(题目首行基线) + 标题行距 * i - 标题Δ,
-        box(width: 155mm, align(center, {
-          set text(font: 字体集.宋体, size: 22pt, lang: "zh",
-            top-edge: 标题Δ, bottom-edge: "baseline")
-          行
-        })))
-    }
+    // ---- 题目：作为同一段落自然折行，行距固定 30pt ----
+    place(top + left, dx: 30mm, dy: 到内容区(题目首行基线) - 标题Δ,
+      box(width: 155mm, align(center, 题目内容)))
 
     // ---- 字段区 ----
     for (i, (标签文字, 值文字)) in 字段列表.enumerate() {
@@ -107,6 +111,7 @@
 
       // 值：宋体 14pt，居中于该行填空线
       if 值文字 != "" {
+        断言单行宽度(值文字, 填空线宽, 标签文字, 字体集.宋体, 14pt)
         place(top + left, dx: 填空线左, dy: y行顶,
           box(width: 填空线宽, align(center, {
             set text(font: 字体集.宋体, size: 14pt,

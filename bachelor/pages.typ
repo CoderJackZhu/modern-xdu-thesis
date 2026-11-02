@@ -3,6 +3,7 @@
 #import "layout.typ": *
 #import "../utils/style.typ": 字体
 #import "../utils/bilingual-bib.typ": 双语文献
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 去除脚注
 
 #let 封面文字(内容, x, y, width: auto, size: 12pt, font: 字体.宋体, alignment: left, weight: "regular") = {
   place(top + left, dx: x, dy: y,
@@ -31,6 +32,16 @@
   if enabled {
     let 字体集 = 字体 + fonts
     let 题目 = if type(info.title) == str { (info.title,) } else { info.title }
+    let 题目内容 = {
+      set text(font: 字体集.黑体, size: 16pt,
+        top-edge: "baseline", bottom-edge: "baseline")
+      set par(leading: 16.5mm, spacing: 16.5mm,
+        first-line-indent: 0pt, justify: false)
+      题目.join(linebreak())
+    }
+    断言块高度(题目内容, 84.7mm, 16.5mm, "本科封面题目")
+    断言单行宽度(info.class-id, 28.8mm, "本科封面班级", 字体集.宋体, 12pt, weight: "bold")
+    断言单行宽度(info.student-id, 28.8mm, "本科学号", 字体集.宋体, 12pt, weight: "bold")
     let 导师 = if type(info.supervisor) == str { info.supervisor } else { info.supervisor.join("　") }
     page(
       paper: "a4", width: 纸张宽, height: 纸张高, margin: 0mm,
@@ -56,12 +67,16 @@
 
       // 题目与字段填写横线共 6 条 —— 题目每行一条 + 字段四行各一条，
       // 均为 x 82.1~166.8mm（宽 84.7mm），题目与字段值都居中于横线。
-      #for (i, 行) in 题目.enumerate() {
-        place(top + left, dx: 82.1mm, dy: 172.9mm + 16.5mm * i,
-          line(length: 84.7mm, stroke: 0.5pt))
-        封面文字(行, 82.1mm, 171.7mm + 16.5mm * i, width: 84.7mm, alignment: center,
-          size: 16pt, font: 字体集.黑体)
+      #context {
+        let 高度 = measure(width: 84.7mm, 题目内容).height
+        let 行数 = if 高度 == 0pt { 1 } else { int(calc.round(高度 / 16.5mm)) + 1 }
+        for i in range(行数) {
+          place(top + left, dx: 82.1mm, dy: 172.9mm + 16.5mm * i,
+            line(length: 84.7mm, stroke: 0.5pt))
+        }
       }
+      #place(top + left, dx: 82.1mm, dy: 171.7mm,
+        box(width: 84.7mm, align(center, 题目内容)))
       #封面文字("题　　目", 53.6mm, 171.7mm, size: 16pt, font: 字体集.宋体, weight: "bold")
 
       #let 字段 = (
@@ -75,6 +90,7 @@
         封面文字(标签, 53.6mm, y, size: 16pt, font: 字体集.宋体, weight: "bold")
         place(top + left, dx: 82.1mm, dy: y + 1.1mm,
           line(length: 84.7mm, stroke: 0.5pt))
+        断言单行宽度(值, 84.7mm, "本科封面字段 " + 标签, 字体集.宋体, 15pt)
         封面文字(值, 82.1mm, y, width: 84.7mm, alignment: center,
           size: 15pt, font: 字体集.宋体)
       }
@@ -136,14 +152,16 @@
     } else {
       numbering(if lv == 2 { "1.1" } else { "1.1.1" }, ..nums)
     }
+    // 目录只复用标题文字；标题中的脚注应留在正文标题处一次。
+    let 条目内容 = 去除脚注(it.element.body)
     grid(
       columns: (if lv == 1 { 0mm } else if lv == 2 { 6mm } else { 16mm }, auto, 1fr, auto),
       column-gutter: 1mm,
       [],
       if 编号 == none {
-        text(weight: if lv == 1 { "bold" } else { "regular" }, it.element.body)
+        text(weight: if lv == 1 { "bold" } else { "regular" }, 条目内容)
       } else {
-        text(weight: if lv == 1 { "bold" } else { "regular" }, [#编号 #it.element.body])
+        text(weight: if lv == 1 { "bold" } else { "regular" }, [#编号 #条目内容])
       },
       it.fill,
       text(页码),
@@ -171,7 +189,11 @@
   show bibliography: set text(font: 字体集.宋体, size: 10.5pt,
     top-edge: 上伸, bottom-edge: "baseline")
   if body != none {
-    body
+    if 双语 {
+      双语文献(body)
+    } else {
+      body
+    }
   } else {
     set par(hanging-indent: 9mm, first-line-indent: (amount: 0pt, all: true))
     for (i, e) in 条目.enumerate() {

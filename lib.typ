@@ -10,6 +10,7 @@
 #import "utils/style.typ": 字号, 字体
 #import "utils/counters.typ": 索引题注
 #import "utils/bilingual-bib.typ": 双语文献
+#import "utils/validation.typ": 校验必填字段
 // 本科实现保留独立文件入口；这里只导出模块命名空间，不接入任何硕士版式路径。
 #import "bachelor.typ" as bachelor
 #import "layouts/doc.typ": doc
@@ -130,6 +131,7 @@
     )
   }
   let 合并info = 默认info + info
+  校验必填字段(合并info)
   if graduate == "doctor" and degree == "professional" {
     let 有导师(对) = 对 != none and 对 != () and 对.first() != none
     assert(有导师(合并info.enterprise-supervisor) == 有导师(合并info.enterprise-supervisor-en),

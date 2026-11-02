@@ -17,6 +17,7 @@ python3 dev/night/run.py --round 3
 python3 dev/night/measure_repros.py
 python3 dev/night/measure_coverage.py
 python3 dev/night/check_blind.py
+python3 dev/night/test_fixes.py
 ```
 
 `run.py`自动在忽略的`out/packages`中为已有的doctor入口创建本次进程专用包路径，并设置`TYPST_PACKAGE_PATH`，不会改变全局包软链。所有测试文件的直接import都是指向本worktree的相对路径。不要运行worktree内的`dev/pkg-stage.sh`。
@@ -31,6 +32,8 @@ python3 dev/night/check_blind.py
 - `repro/`：4条A、1条B、4条C的13份最小Typst文件与1份文献文件；`repro-results.json`记录坐标。
 - `coverage-measurements.json`：长内容条目数的测量记录，配合人工比对预期值，不能替代逐项文献标准审查。
 - `check_blind.py` / `blind-results.json`：本轮实际姓名的126份盲审验证及单独的泄漏故障注入。
+- `test_fixes.py`：对压测报告9条A/B/C问题修复后的PDF实测、中文诊断与拒绝边界回归。
+- `fixes.md`：修复结果、输入限制、最终回归结果与未验证的外部基准。
 - `official-results.json`：官方URL、日期和附件名；`triage.json`：人工分类、误报修正和停止依据。
 - `out/`：PDF、PNG、完整日志和局部包路径，均忽略，不提交。
 
