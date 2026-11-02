@@ -1,6 +1,6 @@
 // 西安电子科技大学本科毕业设计（论文）Typst 模板 — 独立包入口
 //
-// 用法：#import "@preview/modern-xdu-thesis:0.3.1": bachelor
+// 用法：#import "@preview/modern-xdu-thesis:0.3.2": bachelor
 //      #let (...) = bachelor.documentclass(...)
 // 本文件是本科实现入口；lib.typ 只导出 bachelor 模块命名空间，不复用硕士页面或版式代码。
 
@@ -8,6 +8,7 @@
 #import "bachelor/pages.typ": cover, abstract, abstract-en, outline-page, acknowledgement, references, appendix
 #import "bachelor/mainmatter.typ": mainmatter, 引用
 #import "utils/bilingual-bib.typ": 双语文献
+#import "utils/validation.typ": 校验必填字段
 
 #let documentclass(
   cover-enabled: true,
@@ -34,6 +35,7 @@
     references: (),
   )
   let 合并info = 默认info + info
+  校验必填字段(合并info)
   let 默认封面校名 = cover-wordmark
   let 默认封面校徽 = cover-emblem
   (

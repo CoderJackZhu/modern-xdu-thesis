@@ -1,0 +1,73 @@
+[
+  {
+    "test": "ink",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "pagination",
+    "caught": 2,
+    "page": 2
+  },
+  {
+    "test": "header",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "blank",
+    "caught": 2,
+    "page": 3
+  },
+  {
+    "test": "references",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "empty_reference",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "question_reference",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "missing_prefix",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "chapter_switch",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "numbering",
+    "caught": 1,
+    "page": 2
+  },
+  {
+    "test": "spacing",
+    "caught": 3,
+    "page": 2
+  },
+  {
+    "test": "undergraduate-appendix-numbering",
+    "caught": 2
+  },
+  {
+    "test": "undergraduate-spacing",
+    "caught": 6
+  },
+  {
+    "test": "toc",
+    "caught": 1
+  },
+  {
+    "test": "toc-title",
+    "caught": 2
+  }
+]

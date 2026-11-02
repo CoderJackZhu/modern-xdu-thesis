@@ -1,0 +1,1527 @@
+{
+  "positive_control": {
+    "metadata_author": "",
+    "visible_names": []
+  },
+  "negative_control": {
+    "metadata_author": "测试作者",
+    "visible_names": [
+      "测试作者"
+    ]
+  },
+  "cases": [
+    {
+      "name": "r01-doctor-academic-blind-abstract_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-appendices",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-baseline",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-bib0",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-bib1",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-bib300",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-bib_types",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-code_notes_lists",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-equations",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-heading4",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-heading5",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-heading_footnote",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-heading_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-long_back",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-long_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-many_figures",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-many_keywords",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-mixed",
+      "expected_names": [
+        "阿卜杜拉·测试",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-multiple_supervisors",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "导师甲、导师乙、导师丙",
+        "Advisor Alpha, Advisor Beta, Advisor Gamma"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-one_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-optional_empty",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-required_empty",
+      "expected_names": [
+        "",
+        "Fictional Author",
+        "",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-sub_parallel",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-academic-blind-twenty_chapters",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-abstract_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-appendices",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-baseline",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-bib0",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-bib1",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-bib300",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-bib_types",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-code_notes_lists",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-equations",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-heading4",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-heading5",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-heading_footnote",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-heading_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-long_back",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-long_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-many_figures",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-many_keywords",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-mixed",
+      "expected_names": [
+        "阿卜杜拉·测试",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-multiple_supervisors",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "导师甲、导师乙、导师丙",
+        "Advisor Alpha, Advisor Beta, Advisor Gamma"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-one_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-optional_empty",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-required_empty",
+      "expected_names": [
+        "",
+        "Fictional Author",
+        "",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-sub_parallel",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-doctor-professional-blind-twenty_chapters",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-abstract_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-appendices",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-baseline",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-bib0",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-bib1",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-bib300",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-bib_types",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-code_notes_lists",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-equations",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-heading4",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-heading5",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-heading_footnote",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-heading_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_back",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_fields",
+      "expected_names": [
+        "中英Mixed复杂联合研究authorauthorauthor中心中心中心中心中心中心中心中心中心中心中心中心",
+        "Fictional Author",
+        "202600001",
+        "导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长",
+        "Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name "
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-long_titles",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-many_figures",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-many_keywords",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-mixed",
+      "expected_names": [
+        "阿卜杜拉·测试",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-multiple_supervisors",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "导师甲、导师乙、导师丙",
+        "Advisor Alpha, Advisor Beta, Advisor Gamma"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-one_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-optional_empty",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-required_empty",
+      "expected_names": [
+        "",
+        "Fictional Author",
+        "",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-sub_parallel",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-academic-blind-twenty_chapters",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-abstract_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-appendices",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-baseline",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-bib0",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-bib1",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-bib300",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-bib_types",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-code_notes_lists",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-equations",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-heading4",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-heading5",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-heading_footnote",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-heading_math",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_back",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_fields",
+      "expected_names": [
+        "中英Mixed复杂联合研究authorauthorauthor中心中心中心中心中心中心中心中心中心中心中心中心",
+        "Fictional Author",
+        "202600001",
+        "导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长导师姓名很长",
+        "Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name Very Long Advisor Name "
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-long_titles",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-many_figures",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-many_keywords",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-mixed",
+      "expected_names": [
+        "阿卜杜拉·测试",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-multiple_supervisors",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "导师甲、导师乙、导师丙",
+        "Advisor Alpha, Advisor Beta, Advisor Gamma"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-one_chapter",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-optional_empty",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-required_empty",
+      "expected_names": [
+        "",
+        "Fictional Author",
+        "",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-sub_parallel",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r01-master-professional-blind-twenty_chapters",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-doctor-academic-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-doctor-professional-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-master-academic-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-master-academic-blind-long_titles",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-master-professional-blind-long_indexes",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r02-master-professional-blind-long_titles",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-doctor-academic-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-doctor-academic-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-doctor-professional-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-doctor-professional-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-master-academic-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-master-academic-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-master-professional-blind-long_abstract",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    },
+    {
+      "name": "r03-master-professional-blind-long_table",
+      "expected_names": [
+        "测试作者",
+        "Fictional Author",
+        "202600001",
+        "测试导师",
+        "Fictional Advisor"
+      ],
+      "metadata_author": "",
+      "visible_names": []
+    }
+  ],
+  "failed": []
+}

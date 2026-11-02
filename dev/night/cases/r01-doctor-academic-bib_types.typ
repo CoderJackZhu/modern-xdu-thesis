@@ -1,0 +1,102 @@
+// 虚构测试：doctor-academic/bib_types，变体0
+#import "../../../doctor.typ": documentclass
+#let t = documentclass(degree: "academic", blind: false, info: (
+  title: ("虚构系统验证研究",),
+  title-en: ("Fictional System Verification",),
+  author: "测试作者",
+  author-en: "Fictional Author",
+  department: "电子工程学院",
+  major: "电子信息工程",
+  student-id: "202600001",
+  discipline: "电子科学与技术",
+  subdiscipline: "电路与系统",
+  supervisor: ("测试导师", "教授"),
+  supervisor-en: ("Fictional Advisor", "Professor"),
+  abstract: [本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。],
+  abstract-en: [This fictional experiment studies reliable modeling under controlled conditions. All names and results are synthetic and the assumptions are explicitly stated. This fictional experiment studies reliable modeling under controlled conditions. All names and results are synthetic and the assumptions are explicitly stated. This fictional experiment studies reliable modeling under controlled conditions. All names and results are synthetic and the assumptions are explicitly stated. This fictional experiment studies reliable modeling under controlled conditions. All names and results are synthetic and the assumptions are explicitly stated. This fictional experiment studies reliable modeling under controlled conditions. All names and results are synthetic and the assumptions are explicitly stated. ],
+  acknowledgement: [本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。],
+))
+#show: t.doc
+#(t.cover)()
+#pagebreak(to: "odd")
+#(t.title-cn)()
+#pagebreak(to: "odd")
+#(t.title-en)()
+#pagebreak(to: "odd")
+#(t.declaration)()
+#pagebreak(to: "odd")
+#counter(page).update(1)
+#(t.abstract)()
+#pagebreak(to: "odd")
+#(t.abstract-en)()
+#pagebreak(to: "odd")
+#(t.list-of-figures)()
+#pagebreak(to: "odd")
+#(t.list-of-tables)()
+#pagebreak(to: "odd")
+#(t.notation)()
+#pagebreak(to: "odd")
+#(t.abbreviations)()
+#pagebreak(to: "odd")
+#(t.outline-page)()
+#show: t.mainmatter
+
+= 第一章 测试绪论 <head:one>
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+文献测试条目1#cite(<r0>)。
+
+文献测试条目2#cite(<r1>)。
+
+文献测试条目3#cite(<r2>)。
+
+文献测试条目4#cite(<r3>)。
+
+文献测试条目5#cite(<r4>)。
+
+文献测试条目6#cite(<r5>)。
+
+文献测试条目7#cite(<r6>)。
+
+文献测试条目8#cite(<r7>)。
+
+文献测试条目9#cite(<r8>)。
+
+文献测试条目10#cite(<r9>)。
+
+文献测试条目11#cite(<r10>)。
+
+文献测试条目12#cite(<r11>)。
+
+文献测试条目13#cite(<r12>)。
+
+文献测试条目14#cite(<r13>)。
+
+= 第二章 图表公式
+
+本段研究虚构系统的性能与验证方法，说明实验条件、数据来源和适用边界。所有人物、数据与成果均为虚构，不包含真实论文内容。
+
+#figure(rect(width: 45mm, height: 12mm), caption: [系统框图]) <fig:model>
+#figure(table(columns: 2, [参数], [数值], [实验], [1]), caption: [参数设置]) <tab:model>
+$ y = a x + b $ <eq:model>
+图 @fig:model、表 @tab:model、式 @eq:model；见 @head:one。
+
+#pagebreak(to: "odd")
+#(t.references)(body: bibliography("../refs.bib", style: "gb-7714-2015-numeric", title: none))
+#pagebreak(to: "odd")
+#(t.acknowledgement)()
+#pagebreak(to: "odd")
+#(t.bio)()

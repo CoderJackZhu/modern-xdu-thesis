@@ -88,7 +88,10 @@
     if n.len() == 1 { "第" + 章序(n.first()) + "章" }
     else if n.len() == 2 { numbering("1.1", ..n) }
     else if n.len() == 3 { numbering("1.1.1", ..n) }
-    else { numbering("（1）", n.last()) }
+    else if n.len() == 4 { numbering("（1）", n.last()) }
+    else {
+      panic("标题最多支持四级；五级及更深标题没有学校规格，请合并或上移一级标题。")
+    }
   })
   show heading.where(level: 4): set heading(outlined: false)
   show heading.where(level: 1): 章标题
@@ -105,7 +108,7 @@
   show figure.where(kind: table): 表规则
   show table: set table(stroke: 0.5pt)
   set figure(numbering: 图表编号)
-  set math.equation(numbering: 公式编号)
+  set math.equation(numbering: 公式编号, number-align: bottom)
 
   it
 }

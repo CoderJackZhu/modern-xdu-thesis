@@ -14,6 +14,7 @@
 
 #import "../layouts/doc.typ": 基线偏移, 到内容区, 页面坐标
 #import "../utils/style.typ": 字体 as 字体集
+#import "../utils/validation.typ": 断言单行宽度, 断言块高度, 作者内容
 
 // 行盒与 Δ
 #let 信息Δ = 基线偏移(17pt, 10.5pt)
@@ -21,6 +22,8 @@
 #let 校名26Δ = 基线偏移(30pt, 26pt)
 #let 校名24Δ = 基线偏移(30pt, 24pt)
 #let 字段Δ = 基线偏移(32pt, 14pt)
+#let 题目首行基线 = 150.20mm
+#let 字段首行基线 = 200.69mm
 
 #let title-cn(
   degree: "academic",
@@ -37,7 +40,7 @@
 
   // 学硕 / 专硕字段表（唯一差异）
   let 学硕 = (
-    ("作者姓名：", info.author),
+    ("作者姓名：", 作者内容(info.author)),
     ("一级学科：", info.discipline),
     ("二级学科（研究方向）：", info.subdiscipline),
     ("学位类别：", info.degree-name),
@@ -48,7 +51,7 @@
       str(info.submit-date.year) + " 年 " + str(info.submit-date.month) + " 月"),
   )
   let 专硕 = (
-    ("作者姓名：", info.author),
+    ("作者姓名：", 作者内容(info.author)),
     ("领　　域：", info.domain),
     ("学位类别：", info.degree-name),
     ("学校导师姓名、职称：",
@@ -69,6 +72,15 @@
     })
   }
   let 题目列表 = if type(info.title) == str { (info.title,) } else { info.title }
+  let 题目内容 = {
+    set text(font: 字体集.宋体, size: 22pt,
+      top-edge: 标题Δ, bottom-edge: "baseline")
+    set par(leading: 30pt - 标题Δ, spacing: 30pt - 标题Δ,
+      first-line-indent: 0pt, justify: false)
+    题目列表.join(linebreak())
+  }
+  let 题目最大高 = 字段首行基线 - 题目首行基线 - 字段Δ + 标题Δ
+  断言块高度(题目内容, 155mm, 题目最大高, "中文题名页题目")
 
   // 整页用页面绝对坐标（见 doc.typ 的 页面坐标）
   页面坐标({
@@ -89,6 +101,7 @@
           line(length: 虚线宽,
             stroke: 0.4pt))   // 官方模板的填空线使用实线
         // 值居中于虚线
+        断言单行宽度(值, 虚线宽, 标签, 字体集.宋体, 10.5pt)
         place(top + left, dx: 虚线x, dy: y - 信息Δ,
           box(width: 虚线宽, align(center, {
             set text(font: 字体集.宋体, size: 10.5pt,
@@ -112,19 +125,15 @@
         "硕士学位论文"
       })))
 
-    // ---- 题目 ----
-    for (i, 行) in 题目列表.enumerate() {
-      place(top + left, dx: 30mm, dy: 到内容区(150.20mm) + 30pt * i - 标题Δ,
-        box(width: 155mm, align(center, {
-          set text(font: 字体集.宋体, size: 22pt,
-            top-edge: 标题Δ, bottom-edge: "baseline")
-          行
-        })))
-    }
+    // ---- 题目：自然折行与显式分行共用固定 30pt 行距 ----
+    place(top + left, dx: 30mm, dy: 到内容区(题目首行基线) - 标题Δ,
+      box(width: 155mm, align(center, 题目内容)))
 
     // ---- 字段区 ----
     for (i, (标签, 值)) in 字段列表.enumerate() {
-      place(top + left, dx: 75mm, dy: 到内容区(200.69mm) + 32pt * i - 字段Δ,
+      let 字段内容 = text(标签) + h(2mm) + text(值)
+      断言单行宽度(字段内容, 110mm, 标签, 字体集.宋体, 14pt)
+      place(top + left, dx: 75mm, dy: 到内容区(字段首行基线) + 32pt * i - 字段Δ,
         box(width: 110mm, {
           set text(font: 字体集.宋体, size: 14pt,
             top-edge: 字段Δ, bottom-edge: "baseline")

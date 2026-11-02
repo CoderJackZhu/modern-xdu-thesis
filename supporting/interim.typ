@@ -4,6 +4,7 @@
 // 不把开题报告的章节结构机械复用到中期考核。
 
 #import "layout.typ": *
+#import "../utils/validation.typ": 校验必填字段
 
 #let 校验(graduate, degree) = {
   assert(graduate in ("master", "doctor"), message: "graduate 必须是 master 或 doctor")
@@ -215,6 +216,7 @@
 ) = {
   校验(graduate, degree)
   let 合并 = 默认信息(graduate, degree) + info
+  校验必填字段(合并)
   let doc = (it,) => 文档页(info: 合并, fonts: fonts, fallback: fallback, lang: lang, it)
   let 报告 = (body: (:), ..args) => [
     #封面(合并, graduate: graduate, degree: degree, fonts: fonts)

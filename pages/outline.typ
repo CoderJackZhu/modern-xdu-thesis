@@ -24,6 +24,7 @@
 
 #import "../layouts/doc.typ": 基线偏移, 到内容区, 页眉, 默认页脚, 上边距, 页眉顶, 页面大标题
 #import "../utils/style.typ": 字体 as 字体集
+#import "../utils/validation.typ": 去除脚注
 
 #let 正文Δ = 基线偏移(20pt, 12pt)
 
@@ -39,6 +40,10 @@
   depth: 3,
 ) = {
   let 字体集 = 字体集 + fonts
+  // 注文样式按整个分页段取交集；前后显式分页，避免正文样式抵消目录的抑制规则。
+  pagebreak(weak: true)
+  show footnote.entry: none
+  set footnote.entry(separator: none, clearance: 0pt, gap: 0pt)
 
   set page(
     numbering: "I",
@@ -55,6 +60,7 @@
     top-edge: 正文Δ, bottom-edge: "baseline")
   set par(leading: 20pt - 正文Δ, spacing: 20pt - 正文Δ)
 
+  // 目录中的脚注来自复用标题；包括排版时才展开的 context，均不生成注文或分隔线。
   // 首条基线 57.76mm
   v(到内容区(57.76mm) - 正文Δ)
 
@@ -63,6 +69,8 @@
     let loc = it.element.location()
     let 编号方式 = loc.page-numbering()
     let 页码 = if 编号方式 == none { str(loc.page()) } else { numbering(编号方式, loc.page()) }
+    // 目录只复用标题文字；标题中的脚注应留在正文标题处一次。
+    let 条目内容 = 去除脚注(it.element.body)
 
     grid(
       columns: (缩进.at(lv - 1, default: 15.76mm), auto, 1fr, auto),
@@ -71,9 +79,9 @@
       [],
       // 一级用黑体、其余宋体（格式规格 §2.2）
       if lv == 1 {
-        text(font: 字体集.黑体, it.element.body)
+        text(font: 字体集.黑体, 条目内容)
       } else {
-        text(font: 字体集.宋体, it.element.body)
+        text(font: 字体集.宋体, 条目内容)
       },
       // 点填充（Typst 目录条目自带的 fill）
       it.fill,
@@ -82,4 +90,5 @@
   }
 
   outline(title: none, depth: depth)
+  pagebreak(weak: true)
 }
